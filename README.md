@@ -1,6 +1,6 @@
 # Inkboard — Editorial Job Board Platform
 
-**Inkboard** is a modern, editorial job-board web application built with Django 5, Vanilla CSS, HTMX, and SQLite/PostgreSQL. It connects high-growth companies with talented job seekers through an intuitive, aesthetic interface featuring live previews, Kanban review pipelines, candidate drawers, and role-based permissions.
+**Inkboard** is a modern, editorial job-board web application built with Django 5, Vanilla CSS, HTMX, and SQLite/PostgreSQL. It connects high-growth companies with talented job seekers through an intuitive hiring workflow.
 
 ---
 
@@ -34,6 +34,38 @@
 - **Resume Validation**: Strict upload enforcement (only `.pdf`, `.doc`, `.docx` up to 30 MB).
 - **Database Optimization**: Composite indexes on `Job.status`, `Application.status`, and foreign keys.
 - **UI Hardening**: Toast notification system, HTMX loading spinners, accessible focus rings, and WCAG AA contrast tokens.
+
+---
+
+## Entity Relationship Diagram (ERD)
+
+```mermaid
+erDiagram
+    USER ||--o| EMPLOYER_PROFILE : has
+    USER ||--o| APPLICANT_PROFILE : has
+    USER ||--o{ JOB : posts
+    USER ||--o{ APPLICATION : submits
+    USER ||--o{ FLAG : raises
+    USER ||--o{ AUDIT_LOG : acts_on
+    USER ||--o{ FLAG : resolves
+
+    CATEGORY ||--o{ JOB : categorizes
+    JOB ||--o{ JOB_TAG : contains
+    JOB ||--o{ APPLICATION : receives
+
+    APPLICATION ||--o{ INTERVIEW : schedules
+    APPLICATION ||--o| OFFER : produces
+
+    FLAG }o--|| CONTENT_TYPE : targets_generic
+    AUDIT_LOG }o--|| CONTENT_TYPE : targets_generic
+```
+
+This schema captures the core relationships in Inkboard:
+- `User` is the shared identity for applicants, employers, and admins.
+- `EmployerProfile` and `ApplicantProfile` extend the user with company and candidate-specific metadata.
+- `Category` groups jobs, and each `Job` can have multiple `JobTag` entries.
+- Each `Application` belongs to a single applicant and a single job, and can generate one `Offer` and many `Interview` records.
+- `Flag` and `AuditLog` allow moderation and review workflows across platform content.
 
 ---
 
@@ -92,10 +124,8 @@ When seeded via `python manage.py seed_demo`, the following accounts are ready t
 
 ### Build and Run with Docker
 ```bash
-# Build Docker image
 docker build -t inkboard:latest .
 
-# Run container with Gunicorn
 docker run -d -p 8000:8000 --env-file .env.production inkboard:latest
 ```
 
