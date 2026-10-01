@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Job Moderation — Admin Panel — Inkboard{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-16);">
+
+  <!-- Header -->
+  <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); margin-bottom: var(--space-6);">
+    <div>
+      <h1 class="heading-1" style="margin: 0;">Job Moderation</h1>
+      <p class="text-muted" style="margin: var(--space-1) 0 0;">
+        Review and moderate job listings across the platform. Removed jobs become inaccessible to applicants.
+      </p>
+    </div>
+    <span class="badge badge--neutral" style="font-size: var(--text-sm); font-weight: 700;">
+      {{ total_count }} Total Listing{{ total_count|pluralize }}
+    </span>
+  </div>
+
+  <!-- Admin Panel Secondary Tab Nav -->
+  {% include "admin_panel/nav.html" %}
+
+  {% if messages %}
+  <div style="margin-bottom: var(--space-6);">
+    {% for message in messages %}
+      <div class="alert alert--{{ message.tags|default:'info' }}" style="margin-bottom: var(--space-2);">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Filters & Search Form -->
+  <div class="card" style="padding: var(--space-5); margin-bottom: var(--space-6); background: var(--color-surface-1); border: 1px solid var(--color-border); box-shadow: var(--shadow-sm);">
+    <form method="get" action="{% url 'core:admin_jobs' %}" style="display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: flex-end;">
+      
+      <!-- Keyword search -->
+      <div style="flex: 2; min-width: 220px;">
+        <label for="job-search" class="label" style="font-size: var(--text-xs); margin-bottom: 4px;">Search Listings</label>
+        <input type="text"
+               id="job-search"
+               name="q"
+               value="{{ q }}"
+               placeholder="Job title, company, or location…"
+               class="form-control" />
+      </div>
+
+      <!-- Status Filter -->
+      <div style="flex: 1; min-width: 140px;">
+        <label for="status-filter" class="label" style="font-size: var(--text-xs); margin-bottom: 4px;">Status</label>
+        <select id="status-filter" name="status" class="form-control">
+          <option value="">All Statuses</option>
+          {% for s_val, s_label in status_choices %}
+            <option value="{{ s_val }}" {% if status_filter == s_val %}selected{% endif %}>{{ s_label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Category Filter -->
+      <div style="flex: 1; min-width: 160px;">
+        <label for="cat-filter" class="label" style="font-size: var(--text-xs); margin-bottom: 4px;">Category</label>
+        <select id="cat-filter" name="category" class="form-control">
+          <option value="">All Categories</option>
+          {% for cat in categories %}
+            <option value="{{ cat.pk }}" {% if category_id == cat.pk|stringformat:"i" %}selected{% endif %}>
+              {{ cat.icon }} {{ cat.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Submit & Reset -->
+      <div style="display: flex; gap: var(--space-2);">
+        <button type="submit" class="btn btn--primary">Filter</button>
+        {% if q or status_filter or category_id %}
+          <a href="{% url 'core:admin_jobs' %}" class="btn btn--ghost">Reset</a>
+        {% endif %}
+      </div>
+
+    </form>
+  </div>
+
+  <!-- Jobs Table -->
+  <div class="card--hard-shadow" style="overflow: hidden;">
+    {% if jobs %}
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Job Title</th>
+            <th>Employer / Company</th>
+            <th>Category</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th>Posted</th>
+            <th style="text-align: right;">Moderation</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for j in jobs %}
+          <tr>
+            <!-- Title -->
+            <td>
+              <div style="font-weight: 600; color: var(--color-text-primary); font-size: var(--text-sm);">
+                {{ j.title }}
+              </div>
+              <div style="font-size: var(--text-xs); color: var(--color-text-muted);">
+                {{ j.get_job_type_display }} &middot; ${{ j.salary_min|default:"?" }} – ${{ j.salary_max|default:"?" }}
+              </div>
+            </td>
+
+            <!-- Employer -->
+            <td>
+              <div style="font-weight: 500; font-size: var(--text-sm);">
+                {{ j.employer.employer_profile.company_name|default:j.employer.username }}
+              </div>
+              <div style="font-size: var(--text-xs); color: var(--color-text-muted);">
+                @{{ j.employer.username }}
+              </div>
+            </td>
+
+            <!-- Category -->
+            <td>
+              {% if j.category %}
+                <span class="tag">{{ j.category.icon }} {{ j.category.name }}</span>
+              {% else %}
+                <span class="text-muted" style="font-size: var(--text-xs);">—</span>
+              {% endif %}
+            </td>
+
+            <!-- Location -->
+            <td style="font-size: var(--text-xs); color: var(--color-text-secondary);">
+              📍 {{ j.location }} {% if j.is_remote %}<span class="text-accent font-semibold">(Remote)</span>{% endif %}
+            </td>
+
+            <!-- Status -->
+            <td>
+              <span class="badge {% if j.status == 'open' %}badge--success{% elif j.status == 'removed' %}badge--danger{% elif j.status == 'closed' %}badge--neutral{% else %}badge--warning{% endif %}">
+                {{ j.get_status_display }}
+              </span>
+            </td>
+
+            <!-- Posted Date -->
+            <td style="font-size: var(--text-xs); color: var(--color-text-muted); white-space: nowrap;">
+              {{ j.created_at|date:"M j, Y" }}
+            </td>
+
+            <!-- Action -->
+            <td style="text-align: right;">
+              {% if j.status != 'removed' %}
+                <form method="post" action="{% url 'core:admin_job_remove' j.pk %}" style="display: inline-block;" onsubmit="return confirm('Remove job listing {{ j.title }}?');">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn--danger btn--sm" style="font-size: 0.72rem; padding: 3px 8px;">
+                    Take Down
+                  </button>
+                </form>
+              {% else %}
+                <span class="badge badge--danger" style="font-size: 0.68rem;">
+                  Removed
+                </span>
+              {% endif %}
+            </td>
+
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+    <div style="padding: var(--space-4); border-top: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; background: var(--color-surface-2);">
+      <span class="text-xs text-muted">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+      </span>
+      <div style="display: flex; gap: var(--space-2);">
+        {% if page_obj.has_previous %}
+          <a href="?page={{ page_obj.previous_page_number }}{% if q %}&q={{ q }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if category_id %}&category={{ category_id }}{% endif %}" class="btn btn--ghost btn--sm">&larr; Previous</a>
+        {% endif %}
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}{% if q %}&q={{ q }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if category_id %}&category={{ category_id }}{% endif %}" class="btn btn--ghost btn--sm">Next &rarr;</a>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% else %}
+    <div style="padding: var(--space-12); text-align: center;">
+      <div style="font-size: 2.5rem; margin-bottom: var(--space-2);" aria-hidden="true">💼</div>
+      <h3 class="heading-3" style="margin-bottom: var(--space-1);">No jobs found</h3>
+      <p class="text-muted text-sm" style="margin-bottom: var(--space-4);">
+        No job listings match your current filters.
+      </p>
+      <a href="{% url 'core:admin_jobs' %}" class="btn btn--secondary btn--sm">Clear Filters</a>
+    </div>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+{% block title %}{{ job.title }} at {{ job.employer.employer_profile.company_name|default:job.employer.get_full_name }} — Inkboard{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: var(--space-8); padding-bottom: var(--space-16);">
+
+  <!-- Breadcrumbs & Back -->
+  <div style="margin-bottom: var(--space-6);">
+    <a href="{% url 'jobs:list' %}" class="btn btn--ghost btn--sm" style="display: inline-flex; align-items: center; gap: var(--space-1);">
+      &larr; Back to all open jobs
+    </a>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 340px; gap: var(--space-8); align-items: flex-start;">
+    
+    <!-- Left Column: Role Details -->
+    <div>
+      
+      <!-- Header -->
+      <div style="margin-bottom: var(--space-6);">
+        <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); flex-wrap: wrap;">
+          {% if job.category %}
+            <span class="tag">{{ job.category.icon }} {{ job.category.name }}</span>
+          {% endif %}
+          <span class="tag">{{ job.get_job_type_display }}</span>
+          <span class="tag">{{ job.get_experience_level_display }}</span>
+          {% if job.is_remote %}
+            <span class="badge badge--accent">🌐 Remote</span>
+          {% endif %}
+          {% if not is_active %}
+            <span class="badge badge--danger">Closed</span>
+          {% else %}
+            <span class="badge badge--success">Active</span>
+          {% endif %}
+        </div>
+
+        <h1 class="heading-1" style="font-family: var(--font-serif); margin-bottom: var(--space-2); line-height: 1.2;">
+          {{ job.title }}
+        </h1>
+
+        <div style="display: flex; align-items: center; gap: var(--space-2); color: var(--color-text-secondary); font-size: var(--text-md);">
+          <span class="font-semibold text-primary-color">
+            {{ job.employer.employer_profile.company_name|default:job.employer.get_full_name }}
+          </span>
+          {% if job.employer.employer_profile.industry %}
+            &middot; <span>{{ job.employer.employer_profile.industry }}</span>
+          {% endif %}
+          &middot; <span>📍 {{ job.location }}</span>
+        </div>
+      </div>
+
+      <div class="divider" style="margin: var(--space-6) 0;"></div>
+
+      <!-- Overview / Description -->
+      <div style="margin-bottom: var(--space-8);">
+        <h2 class="heading-3" style="font-family: var(--font-serif); margin-bottom: var(--space-3);">About the Role</h2>
+        <div style="font-size: var(--text-base); line-height: 1.7; color: var(--color-text-secondary); white-space: pre-line;">
+          {{ job.description }}
+        </div>
+      </div>
+
+      <!-- Responsibilities -->
+      {% if job.responsibilities %}
+      <div style="margin-bottom: var(--space-8);">
+        <h2 class="heading-3" style="font-family: var(--font-serif); margin-bottom: var(--space-3);">Responsibilities</h2>
+        <div style="font-size: var(--text-base); line-height: 1.7; color: var(--color-text-secondary); white-space: pre-line;">
+          {{ job.responsibilities }}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Requirements -->
+      {% if job.requirements %}
+      <div style="margin-bottom: var(--space-8);">
+        <h2 class="heading-3" style="font-family: var(--font-serif); margin-bottom: var(--space-3);">Requirements & Qualifications</h2>
+        <div style="font-size: var(--text-base); line-height: 1.7; color: var(--color-text-secondary); white-space: pre-line;">
+          {{ job.requirements }}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Benefits -->
+      {% if job.benefits %}
+      <div style="margin-bottom: var(--space-8);">
+        <h2 class="heading-3" style="font-family: var(--font-serif); margin-bottom: var(--space-3);">Perks & Benefits</h2>
+        <div style="font-size: var(--text-base); line-height: 1.7; color: var(--color-text-secondary); white-space: pre-line;">
+          {{ job.benefits }}
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+
+    <!-- Right Column: Meta Card & Apply Box (Sticky) -->
+    <div style="position: sticky; top: var(--space-8);">
+      
+      <!-- Apply / Action Card -->
+      <div class="card" style="padding: var(--space-6); background: var(--color-surface-1); border: 2px solid var(--color-border); box-shadow: var(--shadow-md); margin-bottom: var(--space-6);">
+        
+        <h3 class="heading-4" style="margin-bottom: var(--space-4);">Role Overview</h3>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-3); margin-bottom: var(--space-6);">
+          {% if job.salary_min or job.salary_max %}
+          <div>
+            <span class="text-xs text-muted" style="text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Compensation</span>
+            <p style="font-size: var(--text-md); font-weight: 700; color: var(--color-primary-text); margin: var(--space-1) 0 0;">
+              {% if job.salary_min and job.salary_max %}
+                ${{ job.salary_min|floatformat:0 }} – ${{ job.salary_max|floatformat:0 }}
+              {% elif job.salary_min %}
+                From ${{ job.salary_min|floatformat:0 }}
+              {% elif job.salary_max %}
+                Up to ${{ job.salary_max|floatformat:0 }}
+              {% endif %}
+              <span class="text-xs text-muted" style="font-weight: normal;">/ {{ job.get_salary_period_display|lower }}</span>
+            </p>
+          </div>
+          {% endif %}
+
+          <div>
+            <span class="text-xs text-muted" style="text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Location</span>
+            <p style="font-size: var(--text-sm); font-weight: 600; margin: var(--space-1) 0 0;">
+              📍 {{ job.location }} {% if job.is_remote %}(Remote eligible){% endif %}
+            </p>
+          </div>
+
+          <div>
+            <span class="text-xs text-muted" style="text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Application Deadline</span>
+            <p style="font-size: var(--text-sm); font-weight: 600; margin: var(--space-1) 0 0;">
+              {% if job.deadline %}
+                📅 {{ job.deadline|date:"M j, Y" }}
+              {% else %}
+                Rolling review
+              {% endif %}
+            </p>
+          </div>
+
+          <div>
+            <span class="text-xs text-muted" style="text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Posted</span>
+            <p style="font-size: var(--text-sm); color: var(--color-text-secondary); margin: var(--space-1) 0 0;">
+              {{ job.created_at|date:"F j, Y" }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Application Action Button / State -->
+        <div style="border-top: 1px solid var(--color-border-subtle); padding-top: var(--space-4);">
+          {% if has_applied and existing_application %}
+            <!-- Friendly Already Applied State -->
+            <div style="background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-4); text-align: center; margin-bottom: var(--space-3);">
+              <div style="display: flex; justify-content: center; margin-bottom: var(--space-2);">
+                <span class="stamp-chip stamp-chip--{{ existing_application.status }}">
+                  {{ existing_application.get_status_display }}
+                </span>
+              </div>
+              <p class="text-xs font-semibold" style="margin: 0 0 var(--space-1);">Application on Record</p>
+              <p class="text-xs text-muted" style="margin: 0;">Submitted on {{ existing_application.applied_at|date:"M j, Y" }}</p>
+            </div>
+            <a href="{% url 'applications:detail' existing_application.pk %}"
+               class="btn btn--secondary btn--full btn--sm"
+               id="btn-view-application">
+              View Status Timeline &rarr;
+            </a>
+
+          {% elif not is_active %}
+            <!-- Closed / Inactive State -->
+            <button class="btn btn--secondary btn--full" disabled style="opacity: 0.6; cursor: not-allowed;">
+              Applications Closed
+            </button>
+            <p class="text-xs text-muted" style="text-align: center; margin-top: var(--space-2);">
+              This position is no longer accepting new candidates.
+            </p>
+
+          {% elif request.user.is_authenticated and request.user.is_applicant %}
+            <!-- Active Applicant State -->
+            <a href="{% url 'applications:apply' job.pk %}"
+               class="btn btn--primary btn--full btn--lg"
+               id="btn-apply-job"
+               style="text-decoration: none; text-align: center;">
+              Apply Now &rarr;
+            </a>
+
+          {% elif request.user.is_authenticated and request.user == job.employer %}
+            <!-- Employer Owner View -->
+            <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+              <a href="{% url 'jobs:pipeline' job.slug %}" class="btn btn--primary btn--full btn--sm">
+                Candidate Pipeline ({{ job.applications.count }}) &rarr;
+              </a>
+              <a href="{% url 'jobs:edit' job.slug %}" class="btn btn--ghost btn--full btn--sm">
+                Edit Listing
+              </a>
+            </div>
+
+          {% elif request.user.is_authenticated and request.user.is_employer %}
+            <!-- Other Employer -->
+            <p class="text-xs text-muted" style="text-align: center; margin: 0;">
+              You are signed in with an employer account.
+            </p>
+
+          {% else %}
+            <!-- Public / Guest Visitor -->
+            <a href="{% url 'accounts:login' %}?next={% url 'jobs:detail' job.slug %}"
+               class="btn btn--primary btn--full"
+               style="text-decoration: none; text-align: center;">
+              Sign in to Apply
+            </a>
+            <p class="text-xs text-muted" style="text-align: center; margin-top: var(--space-2);">
+              New here? <a href="{% url 'accounts:register' %}" class="text-accent">Create an account</a>
+            </p>
+          {% endif %}
+        </div>
+
+      </div>
+
+      <!-- About Company Mini Card -->
+      <div class="card" style="padding: var(--space-5); background: var(--color-surface-1);">
+        <h4 class="heading-4" style="margin-bottom: var(--space-2);">
+          {{ job.employer.employer_profile.company_name|default:job.employer.get_full_name }}
+        </h4>
+        {% if job.employer.employer_profile.company_description %}
+        <p class="text-xs text-muted" style="line-height: 1.6; margin-bottom: var(--space-3);">
+          {{ job.employer.employer_profile.company_description|truncatewords:30 }}
+        </p>
+        {% endif %}
+        {% if job.employer.employer_profile.linkedin_url %}
+        <a href="{{ job.employer.employer_profile.linkedin_url }}" target="_blank" rel="noopener noreferrer" class="text-xs text-accent font-semibold">
+          Company LinkedIn &rarr;
+        </a>
+        {% endif %}
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

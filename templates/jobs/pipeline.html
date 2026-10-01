@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Candidate Pipeline: {{ job.title }} — Inkboard{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: var(--space-8); padding-bottom: var(--space-16); max-width: 1600px;">
+
+  <!-- Breadcrumbs & Quick Nav -->
+  <div style="margin-bottom: var(--space-4); display: flex; align-items: center; justify-content: space-between;">
+    <a href="{% url 'jobs:manage_list' %}" class="btn btn--ghost btn--sm" style="display: inline-flex; align-items: center; gap: var(--space-1);">
+      &larr; Back to Manage Jobs
+    </a>
+    <div style="display: flex; gap: var(--space-2);">
+      <a href="{% url 'jobs:edit' job.slug %}" class="btn btn--ghost btn--sm">
+        Edit Job
+      </a>
+      <a href="{% url 'jobs:detail' job.slug %}" class="btn btn--secondary btn--sm" target="_blank" rel="noopener">
+        View Public Listing ↗
+      </a>
+    </div>
+  </div>
+
+  <!-- Job Header Card -->
+  <div class="card" style="background: var(--color-surface-1); border: 1px solid var(--color-border); padding: var(--space-5); margin-bottom: var(--space-6); box-shadow: var(--shadow-sm);">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4);">
+      <div>
+        <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: 2px;">
+          <span class="badge badge--primary">Candidate Pipeline</span>
+          <span class="badge {% if job.status == 'open' %}badge--success{% else %}badge--neutral{% endif %}">
+            {{ job.get_status_display }}
+          </span>
+          {% if job.category %}
+            <span class="tag">{{ job.category.icon }} {{ job.category.name }}</span>
+          {% endif %}
+        </div>
+        <h1 class="heading-2" style="font-family: var(--font-serif); margin: var(--space-1) 0 2px;">
+          {{ job.title }}
+        </h1>
+        <p class="text-muted" style="margin: 0; font-size: var(--text-xs);">
+          📍 {{ job.location }} {% if job.is_remote %}&middot; <span class="text-accent font-semibold">Remote</span>{% endif %}
+          &middot; {{ job.get_job_type_display }}
+          &middot; <strong class="text-primary-color">{{ total_applications }}</strong> total candidate{{ total_applications|pluralize }}
+        </p>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <button type="button"
+                hx-get="{% url 'jobs:pipeline' job.slug %}?board_only=1"
+                hx-target="#pipeline-board"
+                hx-swap="outerHTML"
+                class="btn btn--ghost btn--sm"
+                title="Refresh candidate board">
+          ↻ Refresh Board
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pipeline Kanban Board (Columns & Cards) -->
+  {% include "jobs/partials/pipeline_board.html" %}
+
+</div>
+
+<!-- Drawer Container for Candidate Detail Slide-Over -->
+<div id="application-drawer-container"></div>
+
+{% endblock %}

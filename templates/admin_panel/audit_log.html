@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Audit Log — Admin Panel — Inkboard{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-16);">
+
+  <!-- Header -->
+  <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); margin-bottom: var(--space-6);">
+    <div>
+      <h1 class="heading-1" style="margin: 0;">Audit Log</h1>
+      <p class="text-muted" style="margin: var(--space-1) 0 0;">
+        Immutable audit trail of administrator and moderator actions across the platform.
+      </p>
+    </div>
+    <span class="badge badge--neutral" style="font-size: var(--text-sm); font-weight: 700;">
+      {{ total_count }} Logged Event{{ total_count|pluralize }}
+    </span>
+  </div>
+
+  <!-- Admin Panel Secondary Tab Nav -->
+  {% include "admin_panel/nav.html" %}
+
+  {% if messages %}
+  <div style="margin-bottom: var(--space-6);">
+    {% for message in messages %}
+      <div class="alert alert--{{ message.tags|default:'info' }}" style="margin-bottom: var(--space-2);">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Filters Form (Admin, Target Type, Date) -->
+  <div class="card" style="padding: var(--space-5); margin-bottom: var(--space-6); background: var(--color-surface-1); border: 1px solid var(--color-border); box-shadow: var(--shadow-sm);">
+    <form method="get" action="{% url 'core:admin_audit_log' %}" style="display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: flex-end;">
+      
+      <!-- Filter by Admin -->
+      <div style="flex: 1; min-width: 180px;">
+        <label for="admin-filter" class="label" style="font-size: var(--text-xs); margin-bottom: 4px;">Administrator</label>
+        <select id="admin-filter" name="admin" class="form-control">
+          <option value="">All Administrators</option>
+          {% for adm in admin_users %}
+            <option value="{{ adm.pk }}" {% if admin_filter == adm.pk|stringformat:"i" or admin_filter == adm.username %}selected{% endif %}>
+              {{ adm.get_full_name|default:adm.username }} (@{{ adm.username }})
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Filter by Target Type -->
+      <div style="flex: 1; min-width: 150px;">
+        <label for="target-type-filter" class="label" style="font-size: var(--text-xs); margin-bottom: 4px;">Target Type</label>
+        <select id="target-type-filter" name="target_type" class="form-control">
+          <option value="">All Target Types</option>
+          {% for tt in target_types %}
+            <option value="{{ tt }}" {% if target_type_filter == tt %}selected{% endif %}>
+              {{ tt|title }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Filter by Date -->
+      <div style="flex: 1; min-width: 150px;">
+        <label for="date-filter" class="label" style="font-size: var(--text-xs); margin-bottom: 4px;">Date</label>
+        <input type="date"
+               id="date-filter"
+               name="date"
+               value="{{ date_filter }}"
+               class="form-control" />
+      </div>
+
+      <!-- Filter by Action -->
+      <div style="flex: 1; min-width: 140px;">
+        <label for="action-filter" class="label" style="font-size: var(--text-xs); margin-bottom: 4px;">Action</label>
+        <select id="action-filter" name="action" class="form-control">
+          <option value="">All Actions</option>
+          {% for a_val, a_label in action_choices %}
+            <option value="{{ a_val }}" {% if action_filter == a_val %}selected{% endif %}>
+              {{ a_label }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Submit & Reset -->
+      <div style="display: flex; gap: var(--space-2);">
+        <button type="submit" class="btn btn--primary">Filter</button>
+        {% if admin_filter or target_type_filter or date_filter or action_filter %}
+          <a href="{% url 'core:admin_audit_log' %}" class="btn btn--ghost">Reset</a>
+        {% endif %}
+      </div>
+
+    </form>
+  </div>
+
+  <!-- Audit Trail Table -->
+  <div class="card--hard-shadow" style="overflow: hidden;">
+    {% if logs %}
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>Administrator</th>
+            <th>Action</th>
+            <th>Target Type</th>
+            <th>Object Description</th>
+            <th>IP Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in logs %}
+          <tr>
+            <!-- Timestamp -->
+            <td style="font-size: var(--text-xs); color: var(--color-text-muted); white-space: nowrap;">
+              {{ item.timestamp|date:"M j, Y H:i:s" }}
+            </td>
+
+            <!-- Admin -->
+            <td>
+              <div style="display: flex; align-items: center; gap: var(--space-2);">
+                <div class="avatar-placeholder avatar--sm" style="font-size: 0.7rem; font-weight: 700;">
+                  {{ item.admin.username.0|default:item.actor.username.0|default:"A"|upper }}
+                </div>
+                <div>
+                  <div style="font-weight: 600; font-size: var(--text-sm); color: var(--color-text-primary);">
+                    {{ item.admin.get_full_name|default:item.admin.username|default:item.actor.username|default:"System" }}
+                  </div>
+                  <div style="font-size: 0.7rem; color: var(--color-text-muted);">
+                    {{ item.admin.get_access_level_display|default:item.admin.role|title }}
+                  </div>
+                </div>
+              </div>
+            </td>
+
+            <!-- Action -->
+            <td>
+              <span class="badge {% if item.action == 'approve' %}badge--success{% elif item.action == 'suspend' or item.action == 'reject' or item.action == 'remove' %}badge--danger{% elif item.action == 'reactivate' %}badge--primary{% else %}badge--neutral{% endif %}" style="font-size: 0.72rem;">
+                {{ item.get_action_display|default:item.action|upper }}
+              </span>
+            </td>
+
+            <!-- Target Type & ID -->
+            <td>
+              <span class="tag" style="font-size: 0.72rem;">
+                {{ item.target_type|default:item.content_type.model|default:"Object"|title }} #{{ item.target_id|default:item.object_id }}
+              </span>
+            </td>
+
+            <!-- Object Repr & Details -->
+            <td>
+              <div style="font-size: var(--text-sm); color: var(--color-text-secondary); max-width: 380px;">
+                {{ item.object_repr }}
+              </div>
+              {% if item.changes %}
+                <div style="font-size: 0.7rem; color: var(--color-text-muted); margin-top: 2px;">
+                  Changes: {{ item.changes }}
+                </div>
+              {% endif %}
+            </td>
+
+            <!-- IP -->
+            <td style="font-size: var(--text-xs); color: var(--color-text-muted); font-family: monospace;">
+              {{ item.ip_address|default:"—" }}
+            </td>
+
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+    <div style="padding: var(--space-4); border-top: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; background: var(--color-surface-2);">
+      <span class="text-xs text-muted">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+      </span>
+      <div style="display: flex; gap: var(--space-2);">
+        {% if page_obj.has_previous %}
+          <a href="?page={{ page_obj.previous_page_number }}{% if admin_filter %}&admin={{ admin_filter }}{% endif %}{% if target_type_filter %}&target_type={{ target_type_filter }}{% endif %}{% if date_filter %}&date={{ date_filter }}{% endif %}{% if action_filter %}&action={{ action_filter }}{% endif %}" class="btn btn--ghost btn--sm">&larr; Previous</a>
+        {% endif %}
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}{% if admin_filter %}&admin={{ admin_filter }}{% endif %}{% if target_type_filter %}&target_type={{ target_type_filter }}{% endif %}{% if date_filter %}&date={{ date_filter }}{% endif %}{% if action_filter %}&action={{ action_filter }}{% endif %}" class="btn btn--ghost btn--sm">Next &rarr;</a>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% else %}
+    <div style="padding: var(--space-12); text-align: center;">
+      <div style="font-size: 2.5rem; margin-bottom: var(--space-2);" aria-hidden="true">📜</div>
+      <h3 class="heading-3" style="margin-bottom: var(--space-1);">No audit logs match criteria</h3>
+      <p class="text-muted text-sm" style="margin-bottom: var(--space-4);">
+        Try adjusting your admin, target type, or date filters.
+      </p>
+      <a href="{% url 'core:admin_audit_log' %}" class="btn btn--secondary btn--sm">Clear Filters</a>
+    </div>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}

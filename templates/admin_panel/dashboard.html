@@ -1,0 +1,310 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Admin Panel — Inkboard{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-16);">
+
+  <!-- ── 1. Header ──────────────────────────────────────────────── -->
+  <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); margin-bottom: var(--space-8);">
+    <div style="display: flex; align-items: center; gap: var(--space-4);">
+      <div style="width: 48px; height: 48px; background: linear-gradient(135deg, hsl(270 60% 55%), hsl(270 65% 68%)); border-radius: var(--radius-lg); display: grid; place-items: center; font-size: 1.5rem; box-shadow: 2px 2px 0px hsl(270 60% 40%);" aria-hidden="true">
+        🛡️
+      </div>
+      <div>
+        <h1 class="heading-1" style="margin: 0;">Platform Administration</h1>
+        <p class="text-muted" style="margin: var(--space-1) 0 0;">
+          Control Centre &middot; Signed in as {{ user.get_full_name|default:user.username }} ({{ user.get_role_display }})
+        </p>
+      </div>
+    </div>
+    <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+      <a href="{% url 'core:admin_users' %}" class="btn btn--secondary btn--sm">
+        Manage Users &rarr;
+      </a>
+      <a href="{% url 'core:admin_verifications' %}" class="btn btn--primary btn--sm">
+        Verification Queue ({{ employers_awaiting_verification }})
+      </a>
+    </div>
+  </div>
+
+  <!-- Admin Panel Secondary Tab Nav -->
+  {% include "admin_panel/nav.html" %}
+
+  {% if messages %}
+  <div style="margin-bottom: var(--space-6);">
+    {% for message in messages %}
+      <div class="alert alert--{{ message.tags|default:'info' }}" style="margin-bottom: var(--space-2);">
+        {{ message }}
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- ── 2. Hard-Shadow Stat Tiles ──────────────────────────────── -->
+  <div class="grid-4" style="margin-bottom: var(--space-8);">
+    <!-- Users by Role Tile -->
+    <div class="stat-tile stat-tile--plum">
+      <div class="stat-tile__header">
+        <span class="stat-tile__label">Total Users</span>
+        <span class="stat-tile__icon" aria-hidden="true">👥</span>
+      </div>
+      <div class="stat-tile__value">{{ total_users }}</div>
+      <div style="font-size: var(--text-xs); color: hsl(270 65% 75%); display: flex; gap: var(--space-2); flex-wrap: wrap;">
+        <span>{{ applicants_count }} Seekers</span> &middot;
+        <span>{{ employers_count }} Employers</span> &middot;
+        <span>{{ admins_count }} Admins</span>
+      </div>
+    </div>
+
+    <!-- Employers Awaiting Verification -->
+    <div class="stat-tile stat-tile--amber">
+      <div class="stat-tile__header">
+        <span class="stat-tile__label">Awaiting Verification</span>
+        <span class="stat-tile__icon" aria-hidden="true">⏳</span>
+      </div>
+      <div class="stat-tile__value">{{ employers_awaiting_verification }}</div>
+      <div style="font-size: var(--text-xs); color: hsl(38 92% 70%);">
+        {% if employers_awaiting_verification > 0 %}
+          Requires administrator review
+        {% else %}
+          All employers verified
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Open Jobs -->
+    <div class="stat-tile stat-tile--teal">
+      <div class="stat-tile__header">
+        <span class="stat-tile__label">Open Jobs</span>
+        <span class="stat-tile__icon" aria-hidden="true">💼</span>
+      </div>
+      <div class="stat-tile__value">{{ open_jobs }}</div>
+      <div style="font-size: var(--text-xs); color: var(--color-accent-400);">
+        {{ total_jobs }} total listings recorded
+      </div>
+    </div>
+
+    <!-- Open Moderation Flags -->
+    <div class="stat-tile stat-tile--coral">
+      <div class="stat-tile__header">
+        <span class="stat-tile__label">Open Flags</span>
+        <span class="stat-tile__icon" aria-hidden="true">🚩</span>
+      </div>
+      <div class="stat-tile__value">{{ open_flags }}</div>
+      <div style="font-size: var(--text-xs); color: hsl(354 75% 70%);">
+        User reports pending resolution
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 3. Users By Role Breakdown Bar ─────────────────────────── -->
+  <div class="card--hard-shadow" style="padding: var(--space-6); margin-bottom: var(--space-8);">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-4);">
+      <h2 class="heading-3" style="margin: 0; font-size: var(--text-md);">Users Distribution by Role</h2>
+      <span class="text-xs text-muted">{{ total_users }} Total Registered Accounts</span>
+    </div>
+
+    <!-- Multi-segment visual bar -->
+    {% if total_users > 0 %}
+    <div class="distribution-bar">
+      <div class="distribution-bar__segment distribution-bar__segment--applicant" data-width="{% widthratio applicants_count total_users 100 %}" title="Applicants"></div>
+      <div class="distribution-bar__segment distribution-bar__segment--employer" data-width="{% widthratio employers_count total_users 100 %}" title="Employers"></div>
+      <div class="distribution-bar__segment distribution-bar__segment--admin" data-width="{% widthratio admins_count total_users 100 %}" title="Admins"></div>
+    </div>
+    {% endif %}
+
+    <div style="display: flex; align-items: center; gap: var(--space-6); flex-wrap: wrap;">
+      {% for r in users_by_role_list %}
+      <div style="display: flex; align-items: center; gap: var(--space-2);">
+        <div class="role-dot role-dot--{{ r.role }}"></div>
+        <span class="text-sm font-semibold" style="color: var(--color-text-primary);">{{ r.label }}:</span>
+        <span class="text-sm font-bold role-count--{{ r.role }}">{{ r.count }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- ── 4. Employers Awaiting Verification Table ───────────────── -->
+  {% if employers_awaiting_verification > 0 %}
+  <section style="margin-bottom: var(--space-10);">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-4);">
+      <div style="display: flex; align-items: center; gap: var(--space-2);">
+        <h2 class="heading-3" style="margin: 0;">Employers Awaiting Verification</h2>
+        <span class="badge badge--warning">{{ employers_awaiting_verification }} Pending</span>
+      </div>
+      <span class="text-sm text-muted">Review company documents &amp; verify</span>
+    </div>
+
+    <div class="card--hard-shadow" style="overflow: hidden;">
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Company Name</th>
+              <th>Primary Contact</th>
+              <th>Email</th>
+              <th>Registered Date</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for emp in pending_employers %}
+            <tr>
+              <td>
+                <span style="font-weight: 600; color: var(--color-text-primary);">
+                  {{ emp.employer_profile.company_name|default:"Not specified" }}
+                </span>
+              </td>
+              <td>{{ emp.get_full_name|default:emp.username }}</td>
+              <td style="color: var(--color-text-muted); font-size: var(--text-xs);">{{ emp.email }}</td>
+              <td style="font-size: var(--text-xs); color: var(--color-text-muted); white-space: nowrap;">
+                {{ emp.date_joined|date:"M j, Y H:i" }}
+              </td>
+              <td>
+                <span class="badge badge--warning">Pending Approval</span>
+              </td>
+              <td>
+                <div style="display: flex; gap: var(--space-2);">
+                  <form method="post" action="{% url 'core:admin_employer_approve' emp.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn--primary btn--sm" style="font-size: 0.72rem; padding: 2px 8px;">
+                      ✓ Approve
+                    </button>
+                  </form>
+                  <form method="post" action="{% url 'core:admin_employer_reject' emp.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn--danger btn--sm" style="font-size: 0.72rem; padding: 2px 8px;" onclick="return confirm('Reject this employer verification?');">
+                      ✕ Reject
+                    </button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- ── 5. Main Two-Column: Recent AdminActions & Recent Users ─── -->
+  <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: var(--space-8); align-items: start;">
+
+    <!-- Left: Recent AdminAction Rows -->
+    <section>
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-4);">
+        <h2 class="heading-3" style="margin: 0;">Recent Admin Actions</h2>
+        <a href="{% url 'core:admin_audit_log' %}" class="btn btn--ghost btn--sm">Full Audit Log &rarr;</a>
+      </div>
+
+      <div class="card--hard-shadow" style="overflow: hidden;">
+        {% if recent_admin_actions %}
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Administrator</th>
+                <th>Action</th>
+                <th>Target Object</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for act in recent_admin_actions %}
+              <tr>
+                <td style="font-size: var(--text-xs); color: var(--color-text-muted); white-space: nowrap;">
+                  {{ act.timestamp|date:"M j, H:i" }}
+                </td>
+                <td>
+                  <span style="font-weight: 600; color: var(--color-text-primary); font-size: var(--text-sm);">
+                    {{ act.actor.get_full_name|default:act.actor.username|default:"System" }}
+                  </span>
+                </td>
+                <td>
+                  <span class="badge {% if act.action == 'approve' %}badge--success{% elif act.action == 'reject' or act.action == 'ban' %}badge--danger{% else %}badge--neutral{% endif %}">
+                    {{ act.get_action_display|default:act.action|upper }}
+                  </span>
+                </td>
+                <td style="font-size: var(--text-sm); color: var(--color-text-secondary); max-width: 260px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                  {{ act.object_repr }}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div style="padding: var(--space-10); text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: var(--space-2);" aria-hidden="true">📋</div>
+          <p class="font-semibold" style="margin-bottom: var(--space-1);">No audit logs recorded yet</p>
+          <p class="text-sm text-muted">
+            Platform administrative actions and moderation events will be logged here.
+          </p>
+        </div>
+        {% endif %}
+      </div>
+    </section>
+
+    <!-- Right: Recently Joined Users -->
+    <section>
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-4);">
+        <h2 class="heading-3" style="margin: 0;">Recent Users</h2>
+        <a href="{% url 'core:admin_users' %}" class="btn btn--ghost btn--sm">View All Users &rarr;</a>
+      </div>
+
+      <div class="card--hard-shadow" style="overflow: hidden;">
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Role</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for u in recent_users %}
+              <tr>
+                <td>
+                  <div style="display: flex; align-items: center; gap: var(--space-2);">
+                    <div class="avatar-placeholder avatar--sm" style="font-size: 0.75rem;">
+                      {{ u.first_name.0|default:u.username.0|upper }}
+                    </div>
+                    <div>
+                      <p style="font-weight: 600; color: var(--color-text-primary); margin: 0; font-size: var(--text-sm);">
+                        {{ u.get_full_name|default:u.username }}
+                      </p>
+                      <p style="font-size: var(--text-xs); color: var(--color-text-muted); margin: 0;">
+                        {{ u.date_joined|date:"M j, Y" }}
+                      </p>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span class="tag">{{ u.get_role_display }}</span>
+                </td>
+                <td>
+                  <span class="badge badge--{{ u.status }}">{{ u.get_status_display }}</span>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('[data-width]').forEach(function(el) {
+    el.style.width = el.getAttribute('data-width') + '%';
+  });
+</script>
+{% endblock %}

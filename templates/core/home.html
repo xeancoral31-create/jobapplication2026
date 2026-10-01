@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block title %}Inkboard — Find Your Next Opportunity{% endblock %}
+{% block meta_description %}Browse thousands of curated jobs at top companies. Inkboard matches talent with opportunity.{% endblock %}
+
+{% block content %}
+
+<!-- ══ HERO ══════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="container">
+    <span class="hero__eyebrow">✦ 8,400+ active listings</span>
+    <h1 class="hero__title">
+      Find Work That<br>
+      <span class="gradient-text">Moves You Forward</span>
+    </h1>
+    <p class="hero__subtitle">
+      Inkboard connects ambitious professionals with companies building
+      the next generation of products — on their own terms.
+    </p>
+
+    <!-- Search bar -->
+    <div class="search-bar" role="search" style="margin-bottom: var(--space-10);">
+      <input
+        class="search-bar__input"
+        type="search"
+        placeholder="Job title, skill, or company…"
+        aria-label="Search jobs"
+      >
+      <div class="search-bar__divider" aria-hidden="true"></div>
+      <input
+        class="search-bar__input"
+        type="text"
+        placeholder="📍 Location or Remote"
+        aria-label="Location"
+        style="max-width: 220px;"
+      >
+      <button class="search-bar__btn" type="button" id="btn-search-hero">Search Jobs</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-item">
+        <span class="stat-item__value">8.4k+</span>
+        <span class="stat-item__label">Open Roles</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-item__value">1.2k</span>
+        <span class="stat-item__label">Companies</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-item__value">94%</span>
+        <span class="stat-item__label">Placement Rate</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-item__value">48h</span>
+        <span class="stat-item__label">Avg. First Response</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CATEGORIES ══════════════════════════════════════════ -->
+<section class="section" id="categories">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <p class="section-label">Explore</p>
+        <h2 class="heading-1">Browse by Category</h2>
+      </div>
+      <a href="{% url 'jobs:list' %}" class="btn btn--ghost btn--sm">View all jobs →</a>
+    </div>
+
+    <div class="category-grid">
+      {% for category in categories %}
+      <a href="{% url 'jobs:category' category.slug %}" class="category-chip animate-fade-in-up stagger-{{ forloop.counter }}">
+        <span class="category-chip__icon">{{ category.icon|default:"💼" }}</span>
+        <span class="category-chip__name">{{ category.name }}</span>
+        <span class="category-chip__count">{{ category.jobs.count }} job{{ category.jobs.count|pluralize }}</span>
+      </a>
+      {% empty %}
+      <p class="text-muted text-sm">No categories yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ══ FEATURED JOBS ════════════════════════════════════════ -->
+<section class="section" style="background: var(--color-surface-1); border-top: 1px solid var(--color-border-subtle); border-bottom: 1px solid var(--color-border-subtle);">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <p class="section-label">Handpicked</p>
+        <h2 class="heading-1">Featured Opportunities</h2>
+      </div>
+      <a href="{% url 'jobs:list' %}" class="btn btn--ghost btn--sm">See all →</a>
+    </div>
+
+    <div class="grid-3">
+      {% for job in featured_jobs %}
+      <a href="{% url 'jobs:detail' job.slug %}" class="job-card animate-fade-in-up stagger-{{ forloop.counter }}">
+        <div class="job-card__top">
+          <div class="job-card__logo">
+            {% if job.employer.employer_profile.company_logo %}
+              <img src="{{ job.employer.employer_profile.company_logo.url }}" alt="{{ job.employer.employer_profile.company_name }}">
+            {% else %}
+              🏢
+            {% endif %}
+          </div>
+          <span class="badge badge--success">Open</span>
+        </div>
+        <div class="job-card__body">
+          <p class="job-card__title">{{ job.title }}</p>
+          <p class="job-card__company">
+            {% if job.employer.employer_profile.company_name %}
+              {{ job.employer.employer_profile.company_name }}
+            {% else %}
+              {{ job.employer.get_full_name }}
+            {% endif %}
+          </p>
+          <div style="display:flex; gap:var(--space-2); flex-wrap:wrap;">
+            <span class="tag">{{ job.get_job_type_display }}</span>
+            {% if job.is_remote %}<span class="tag">🌍 Remote</span>{% endif %}
+            <span class="tag">{{ job.get_experience_level_display }}</span>
+          </div>
+        </div>
+        <div class="job-card__footer">
+          <span class="text-sm text-muted">📍 {{ job.location }}</span>
+          <span class="text-sm font-semibold" style="color: var(--color-accent-300);">{{ job.salary_display }}</span>
+        </div>
+      </a>
+      {% empty %}
+      <div style="grid-column: 1/-1; text-align:center; padding: var(--space-12);">
+        <p class="text-muted">No open jobs yet. Check back soon!</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA BANNER ═══════════════════════════════════════════ -->
+<section class="section">
+  <div class="container" style="text-align:center;">
+    <div style="
+      background: linear-gradient(135deg, var(--color-surface-1) 0%, var(--color-surface-2) 100%);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-16) var(--space-8);
+      position: relative; overflow: hidden;
+    ">
+      <div style="
+        position:absolute; inset:0; pointer-events:none;
+        background: radial-gradient(ellipse 60% 50% at 50% 0%, hsl(248 78% 52% / 0.12) 0%, transparent 70%);
+      "></div>
+      <span class="section-label">Hiring?</span>
+      <h2 class="heading-1" style="margin-top:var(--space-2); margin-bottom:var(--space-4);">
+        Post Your First Job for Free
+      </h2>
+      <p class="text-secondary" style="max-width:480px; margin-inline:auto; margin-bottom:var(--space-8);">
+        Reach thousands of qualified candidates actively looking for their next challenge.
+        Set up in minutes.
+      </p>
+      <div class="hero__actions">
+        <a href="{% url 'accounts:register' %}" class="btn btn--primary btn--lg" id="btn-cta-post">
+          Start Posting Jobs
+        </a>
+        <a href="{% url 'jobs:list' %}" class="btn btn--ghost btn--lg">
+          Browse Talent
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

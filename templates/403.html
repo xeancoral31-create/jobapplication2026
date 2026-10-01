@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>403 — Access Denied · Inkboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/inkboard.css' %}">
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body {
+      background: var(--color-bg);
+      font-family: var(--font-sans);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100dvh;
+    }
+    .err-shell {
+      text-align: center;
+      padding: 2rem;
+      max-width: 480px;
+    }
+    .err-code {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(5rem, 15vw, 8rem);
+      font-weight: 800;
+      letter-spacing: -0.06em;
+      line-height: 1;
+      background: linear-gradient(135deg, hsl(6 78% 58%), hsl(38 90% 58%));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 0 0 0.5rem;
+    }
+    .err-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin: 0 0 0.75rem;
+      letter-spacing: -0.03em;
+    }
+    .err-msg {
+      color: var(--color-text-muted);
+      line-height: 1.65;
+      font-size: 0.9375rem;
+      margin: 0 0 2rem;
+    }
+    .err-actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+    .err-bg {
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(hsl(6 78% 58% / 0.07) 1.5px, transparent 1.5px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+  <div class="err-bg" aria-hidden="true"></div>
+  <div class="err-shell">
+    <p class="err-code">403</p>
+    <h1 class="err-title">
+      {% if reason == "suspended" %}Account Suspended{% else %}Access Denied{% endif %}
+    </h1>
+    <p class="err-msg">
+      {% if message %}
+        {{ message }}
+      {% elif reason == "suspended" %}
+        Your account has been suspended. Please contact
+        <a href="mailto:support@inkboard.dev" style="color:hsl(6 78% 65%);">support@inkboard.dev</a>
+        to appeal.
+      {% else %}
+        You don't have permission to view this page.
+        This area is restricted to a specific role — please sign in with the correct account.
+      {% endif %}
+    </p>
+    <div class="err-actions">
+      <a href="/" class="btn btn--primary">Go Home</a>
+      {% if user.is_authenticated %}
+      <a href="{% url 'accounts:role_redirect' %}" class="btn btn--ghost">My Dashboard</a>
+      {% else %}
+      <a href="{% url 'accounts:login' %}" class="btn btn--ghost">Sign In</a>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>

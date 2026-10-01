@@ -1,0 +1,200 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Inkboard — Find Your Next Opportunity{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}Inkboard is the modern job board connecting talented professionals with great companies.{% endblock %}">
+  <meta name="robots" content="index, follow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="{% static 'css/inkboard.css' %}">
+  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+  {% block extra_head %}{% endblock %}
+</head>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+
+  <!-- ══ NAVBAR ══════════════════════════════════════════════════ -->
+  <header class="navbar">
+    <div class="container">
+      <nav class="navbar__inner">
+
+        <!-- Brand -->
+        <a href="{% url 'core:home' %}" class="navbar__brand">
+          <div class="navbar__brand-mark" aria-hidden="true">✦</div>
+          Inkboard
+        </a>
+
+        <!-- Main nav -->
+        <ul class="navbar__nav" role="list">
+          <li>
+            <a href="{% url 'jobs:list' %}" class="navbar__nav-link
+                {% if request.resolver_match.app_name == 'jobs' %}active{% endif %}">
+              Browse Jobs
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'core:home' %}#categories" class="navbar__nav-link">
+              Categories
+            </a>
+          </li>
+          {% if request.user.is_authenticated and request.user.is_employer %}
+          <li>
+            <a href="{% url 'jobs:manage_list' %}" class="navbar__nav-link">
+              My Jobs
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'jobs:create' %}" class="navbar__nav-link">
+              Post a Job
+            </a>
+          </li>
+          {% endif %}
+          {% if request.user.is_authenticated and request.user.is_applicant %}
+          <li>
+            <a href="{% url 'applications:list' %}" class="navbar__nav-link">
+              My Applications
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'accounts:profile' %}" class="navbar__nav-link">
+              Profile
+            </a>
+          </li>
+          {% endif %}
+          {% if request.user.is_staff %}
+          <li>
+            <a href="{% url 'moderation:flag_list' %}" class="navbar__nav-link">
+              Moderation
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+
+        <!-- Actions -->
+        <div class="navbar__actions">
+          {% if request.user.is_authenticated %}
+            <a href="{% url 'core:dashboard' %}" class="btn btn--ghost btn--sm">
+              Dashboard
+            </a>
+            <a href="{% url 'accounts:logout' %}" class="btn btn--ghost btn--sm">
+              Sign out
+            </a>
+          {% else %}
+            <a href="{% url 'accounts:login' %}" class="btn btn--ghost btn--sm">
+              Sign in
+            </a>
+            <a href="{% url 'accounts:register' %}" class="btn btn--primary btn--sm">
+              Get Started
+            </a>
+          {% endif %}
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ══ TOAST NOTIFICATIONS CONTAINER ════════════════════════════ -->
+  <div id="toast-container" class="toast-container" role="region" aria-label="Notifications" aria-live="polite">
+    {% if messages %}
+      {% for message in messages %}
+      <div class="toast toast--{{ message.tags|default:'info' }}" role="status">
+        <span class="toast__icon" aria-hidden="true">
+          {% if message.tags == 'success' %}✓{% elif message.tags == 'error' or message.tags == 'danger' %}✕{% elif message.tags == 'warning' %}⚠{% else %}ℹ{% endif %}
+        </span>
+        <div class="toast__content">
+          <p class="toast__message">{{ message }}</p>
+        </div>
+        <button type="button" class="toast__close" aria-label="Close notification" onclick="this.closest('.toast').classList.add('toast--closing'); setTimeout(() => this.closest('.toast').remove(), 200);">
+          &times;
+        </button>
+      </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <!-- ══ MAIN CONTENT ════════════════════════════════════════════ -->
+  <main id="main-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="navbar__brand" style="margin-bottom: 1rem; display: inline-flex;">
+            <div class="navbar__brand-mark" aria-hidden="true">✦</div>
+            Inkboard
+          </div>
+          <p class="text-sm" style="color: var(--color-text-muted); max-width: 260px; line-height: 1.7;">
+            The modern job board for teams that move fast and candidates who think deeper.
+          </p>
+        </div>
+        <div>
+          <p class="footer__heading">For Candidates</p>
+          <ul class="footer__links" role="list">
+            <li><a href="{% url 'jobs:list' %}" class="footer__link">Browse Jobs</a></li>
+            <li><a href="{% url 'accounts:register' %}" class="footer__link">Create Profile</a></li>
+            <li><a href="{% url 'applications:list' %}" class="footer__link">My Applications</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__heading">For Employers</p>
+          <ul class="footer__links" role="list">
+            <li><a href="{% url 'jobs:create' %}" class="footer__link">Post a Job</a></li>
+            <li><a href="{% url 'accounts:register' %}" class="footer__link">Employer Account</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__heading">Company</p>
+          <ul class="footer__links" role="list">
+            <li><a href="{% url 'core:styleguide' %}" class="footer__link">Styleguide</a></li>
+            <li><a href="{% url 'admin:index' %}" class="footer__link">Admin</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p>&copy; 2026 Inkboard. All rights reserved.</p>
+        <p class="text-sm text-muted">Built with Django &amp; ♥</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Auto-dismiss toast notifications after 5 seconds
+    document.addEventListener("DOMContentLoaded", function() {
+      const toasts = document.querySelectorAll(".toast");
+      toasts.forEach(toast => {
+        setTimeout(() => {
+          toast.classList.add("toast--closing");
+          setTimeout(() => toast.remove(), 250);
+        }, 5000);
+      });
+    });
+
+    // Global helper for HTMX / JS toasts
+    window.showToast = function(message, type = "info", icon = "") {
+      const container = document.getElementById("toast-container");
+      if (!container) return;
+      const icons = { success: "✓", error: "✕", danger: "✕", warning: "⚠", info: "ℹ" };
+      const toast = document.createElement("div");
+      toast.className = `toast toast--${type}`;
+      toast.setAttribute("role", "status");
+      toast.innerHTML = `
+        <span class="toast__icon" aria-hidden="true">${icon || icons[type] || "ℹ"}</span>
+        <div class="toast__content"><p class="toast__message">${message}</p></div>
+        <button type="button" class="toast__close" aria-label="Close" onclick="this.closest('.toast').classList.add('toast--closing'); setTimeout(() => this.closest('.toast').remove(), 200);">&times;</button>
+      `;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.classList.add("toast--closing");
+        setTimeout(() => toast.remove(), 250);
+      }, 5000);
+    };
+  </script>
+
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

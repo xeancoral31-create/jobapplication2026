@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Withdraw Application — Inkboard{% endblock %}
+
+{% block content %}
+<div class="container container--narrow" style="padding-top: var(--space-12); padding-bottom: var(--space-16);">
+
+  <div class="card" style="background: var(--color-surface-1); border: 2px solid var(--color-border); padding: var(--space-8); box-shadow: var(--shadow-md);">
+    
+    <div style="font-size: 2.5rem; margin-bottom: var(--space-3);">⚠️</div>
+
+    <h1 class="heading-2" style="font-family: var(--font-serif); margin-bottom: var(--space-2);">
+      Withdraw Application?
+    </h1>
+
+    <p style="font-size: var(--text-md); color: var(--color-text-secondary); margin-bottom: var(--space-6); line-height: 1.6;">
+      Are you sure you want to withdraw your application for <strong class="text-primary-color">{{ application.job.title }}</strong> at <strong class="text-primary-color">{{ application.job.employer.employer_profile.company_name|default:application.job.employer.get_full_name }}</strong>?
+      <br>
+      <span class="text-xs text-muted">This action will inform the hiring team and archive your candidacy.</span>
+    </p>
+
+    <form method="post" action="{% url 'applications:withdraw' application.pk %}">
+      {% csrf_token %}
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <button type="submit" class="btn btn--danger btn--md">
+          Yes, Withdraw Application
+        </button>
+        <a href="{% url 'applications:detail' application.pk %}" class="btn btn--ghost btn--md">
+          Cancel
+        </a>
+      </div>
+    </form>
+
+  </div>
+
+</div>
+{% endblock %}

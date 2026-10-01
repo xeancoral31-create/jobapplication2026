@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Moderation — Inkboard{% endblock %}
+{% block content %}
+<div class="container" style="padding-top:var(--space-10);">
+  <h1 class="heading-1">Flags Queue</h1>
+  <p class="text-muted" style="margin-top:var(--space-4);">{{ flags.count }} open flag{{ flags.count|pluralize }}</p>
+</div>
+{% endblock %}

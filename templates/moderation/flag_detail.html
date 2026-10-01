@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Flag #{{ flag.pk }} — Inkboard{% endblock %}
+{% block content %}
+<div class="container container--narrow" style="padding-top:var(--space-10);">
+  <h1 class="heading-1">Flag #{{ flag.pk }}</h1>
+  <p class="badge badge--{{ flag.status }}" style="margin-top:var(--space-3);">{{ flag.get_status_display }}</p>
+  <p class="text-secondary" style="margin-top:var(--space-4);">Reason: {{ flag.get_reason_display }}</p>
+</div>
+{% endblock %}

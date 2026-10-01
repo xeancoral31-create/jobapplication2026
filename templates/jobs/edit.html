@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Edit Job: {{ job.title }} — Inkboard{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-20);">
+
+  <!-- Breadcrumb -->
+  <div style="margin-bottom: var(--space-4);">
+    <a href="{% url 'jobs:manage_list' %}" class="text-xs text-muted" style="text-decoration: none;">
+      &larr; Back to Job Listings
+    </a>
+  </div>
+
+  <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); margin-bottom: var(--space-8);">
+    <div>
+      <span class="section-label">Employer Workspace</span>
+      <h1 class="heading-1" style="margin-top: var(--space-1);">Edit Job Listing</h1>
+      <p class="text-muted" style="margin-top: var(--space-1);">
+        Editing "{{ job.title }}" &middot; Posted {{ job.created_at|date:"M j, Y" }}
+      </p>
+    </div>
+    <div style="display: flex; gap: var(--space-2);">
+      <a href="{% url 'jobs:detail' job.slug %}" class="btn btn--ghost btn--sm" target="_blank" rel="noopener">
+        View Public Page ↗
+      </a>
+      <a href="{% url 'jobs:pipeline' job.slug %}" class="btn btn--primary btn--sm">
+        Candidate Pipeline &rarr;
+      </a>
+    </div>
+  </div>
+
+  {% if not is_verified %}
+  <div class="banner--verification animate-fade-in" style="margin-bottom: var(--space-8);">
+    <div class="banner--verification__icon">⏳</div>
+    <div style="flex: 1;">
+      <h3 class="banner--verification__title">Draft Mode Only — Verification Pending</h3>
+      <p class="banner--verification__desc">
+        Your employer account is currently pending approval. You can save edits as draft. Once verified, you will be able to publish this job listing.
+      </p>
+    </div>
+    <span class="badge badge--warning">Draft Mode</span>
+  </div>
+  {% endif %}
+
+  <!-- ── Split Layout: Form on Left, Live Preview on Right ─────── -->
+  <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: var(--space-10); align-items: start;">
+
+    <!-- Left: Job Form -->
+    <div class="card--hard-shadow" style="padding: var(--space-8);">
+      <form id="job-form"
+            method="POST"
+            action="{% url 'jobs:edit' job.slug %}"
+            hx-post="{% url 'jobs:preview_card' %}"
+            hx-trigger="input delay:200ms, change"
+            hx-target="#live-preview-container">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <div class="alert alert--danger" style="margin-bottom: var(--space-6);" role="alert">
+          {% for err in form.non_field_errors %}
+            <p style="margin: 0;">{{ err }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Job Title -->
+        <div class="form-group">
+          <label class="form-label" for="{{ form.title.id_for_label }}">
+            Job Title <span class="text-danger">*</span>
+          </label>
+          {{ form.title }}
+          {% if form.title.errors %}
+            <span class="form-error">{{ form.title.errors.0 }}</span>
+          {% endif %}
+        </div>
+
+        <!-- Category & Job Type -->
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="{{ form.category.id_for_label }}">
+              Department / Category
+            </label>
+            {{ form.category }}
+            {% if form.category.errors %}
+              <span class="form-error">{{ form.category.errors.0 }}</span>
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="{{ form.job_type.id_for_label }}">
+              Employment Type
+            </label>
+            {{ form.job_type }}
+            {% if form.job_type.errors %}
+              <span class="form-error">{{ form.job_type.errors.0 }}</span>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Experience Level & Location -->
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="{{ form.experience_level.id_for_label }}">
+              Experience Level
+            </label>
+            {{ form.experience_level }}
+            {% if form.experience_level.errors %}
+              <span class="form-error">{{ form.experience_level.errors.0 }}</span>
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="{{ form.location.id_for_label }}">
+              Location <span class="text-danger">*</span>
+            </label>
+            {{ form.location }}
+            {% if form.location.errors %}
+              <span class="form-error">{{ form.location.errors.0 }}</span>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Remote checkbox -->
+        <div class="form-group" style="margin-bottom: var(--space-6);">
+          <label style="display: flex; align-items: center; gap: var(--space-3); cursor: pointer;">
+            {{ form.is_remote }}
+            <span class="text-sm font-semibold" style="color: var(--color-text-primary);">
+              🌐 This position is open to Remote candidates
+            </span>
+          </label>
+        </div>
+
+        <!-- Salary Range -->
+        <div style="background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-5); margin-bottom: var(--space-6);">
+          <p class="font-semibold text-sm" style="margin-bottom: var(--space-3); color: var(--color-text-primary);">
+            Compensation &amp; Salary Range
+          </p>
+
+          <div class="grid-2">
+            <div class="form-group" style="margin-bottom: var(--space-3);">
+              <label class="form-label" for="{{ form.salary_min.id_for_label }}">Minimum Salary</label>
+              {{ form.salary_min }}
+              {% if form.salary_min.errors %}
+                <span class="form-error">{{ form.salary_min.errors.0 }}</span>
+              {% endif %}
+            </div>
+
+            <div class="form-group" style="margin-bottom: var(--space-3);">
+              <label class="form-label" for="{{ form.salary_max.id_for_label }}">Maximum Salary</label>
+              {{ form.salary_max }}
+              {% if form.salary_max.errors %}
+                <span class="form-error">{{ form.salary_max.errors.0 }}</span>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="grid-2" style="margin-top: var(--space-2);">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="{{ form.salary_period.id_for_label }}">Period</label>
+              {{ form.salary_period }}
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="{{ form.salary_currency.id_for_label }}">Currency</label>
+              {{ form.salary_currency }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Deadline -->
+        <div class="form-group">
+          <label class="form-label" for="{{ form.deadline.id_for_label }}">
+            Application Deadline (Optional)
+          </label>
+          {{ form.deadline }}
+          <span class="form-hint">Must not be in the past.</span>
+          {% if form.deadline.errors %}
+            <span class="form-error">{{ form.deadline.errors.0 }}</span>
+          {% endif %}
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+          <label class="form-label" for="{{ form.description.id_for_label }}">
+            Job Overview &amp; Description <span class="text-danger">*</span>
+          </label>
+          {{ form.description }}
+          {% if form.description.errors %}
+            <span class="form-error">{{ form.description.errors.0 }}</span>
+          {% endif %}
+        </div>
+
+        <!-- Requirements -->
+        <div class="form-group">
+          <label class="form-label" for="{{ form.requirements.id_for_label }}">
+            Qualifications &amp; Requirements
+          </label>
+          {{ form.requirements }}
+        </div>
+
+        <!-- Responsibilities -->
+        <div class="form-group">
+          <label class="form-label" for="{{ form.responsibilities.id_for_label }}">
+            Responsibilities
+          </label>
+          {{ form.responsibilities }}
+        </div>
+
+        <!-- Benefits -->
+        <div class="form-group">
+          <label class="form-label" for="{{ form.benefits.id_for_label }}">
+            Perks &amp; Benefits
+          </label>
+          {{ form.benefits }}
+        </div>
+
+        <!-- Publishing Status -->
+        <div class="form-group" style="margin-top: var(--space-6); padding-top: var(--space-6); border-top: 1px solid var(--color-border);">
+          <label class="form-label" for="{{ form.status.id_for_label }}">
+            Publishing Status
+          </label>
+          {{ form.status }}
+          {% if form.status.errors %}
+            <span class="form-error">{{ form.status.errors.0 }}</span>
+          {% endif %}
+        </div>
+
+        <!-- Submit actions -->
+        <div style="display: flex; align-items: center; justify-content: flex-end; gap: var(--space-3); margin-top: var(--space-8);">
+          <a href="{% url 'jobs:manage_list' %}" class="btn btn--ghost">Cancel</a>
+          <button type="submit" class="btn btn--primary btn--lg">
+            Update Job Listing
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Right: Sticky Live Applicant-View Preview Card -->
+    <div style="position: sticky; top: var(--space-8);">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-3);">
+        <div style="display: flex; align-items: center; gap: var(--space-2);">
+          <span style="font-size: 1.1rem;">👁️</span>
+          <span class="font-semibold text-sm" style="color: var(--color-text-primary);">Live Applicant View</span>
+        </div>
+        <span class="text-xs text-accent">Updates in Real-Time</span>
+      </div>
+
+      <p class="text-xs text-muted" style="margin-bottom: var(--space-4);">
+        This preview shows exactly how candidates see your listing on the public board.
+      </p>
+
+      <!-- Preview Card Target Container -->
+      <div id="live-preview-container">
+        {% include "jobs/partials/preview_card.html" with job=form.instance employer=request.user %}
+      </div>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

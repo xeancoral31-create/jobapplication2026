@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Manage Job Postings — Inkboard{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-16);">
+
+  <!-- ── 1. Unverified Notice ────────────────────────────────────── -->
+  {% if not is_verified %}
+  <div class="banner--verification animate-fade-in" style="margin-bottom: var(--space-8);">
+    <div class="banner--verification__icon">⏳</div>
+    <div style="flex: 1;">
+      <h3 class="banner--verification__title">Account Pending Verification</h3>
+      <p class="banner--verification__desc">
+        Unverified employers can create and edit draft jobs. You will be able to publish jobs once our admin team verifies your employer profile.
+      </p>
+    </div>
+    <span class="badge badge--warning">Drafts Only</span>
+  </div>
+  {% endif %}
+
+  <!-- ── 2. Header & Action ─────────────────────────────────────── -->
+  <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); margin-bottom: var(--space-8);">
+    <div>
+      <h1 class="heading-1" style="margin: 0;">Manage Job Listings</h1>
+      <p class="text-muted" style="margin-top: var(--space-1);">
+        Create, edit, close, or review candidates for your open positions.
+      </p>
+    </div>
+    <div style="display: flex; gap: var(--space-3);">
+      <a href="{% url 'jobs:create' %}" class="btn btn--primary">
+        + Post a New Job
+      </a>
+    </div>
+  </div>
+
+  <!-- ── 3. Status Tabs (Draft / Open / Closed / All) ───────────── -->
+  <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-6); border-bottom: 1.5px solid var(--color-border); padding-bottom: var(--space-2); flex-wrap: wrap;">
+    <a href="{% url 'jobs:manage_list' %}"
+       class="btn btn--sm {% if active_tab == 'all' %}btn--primary{% else %}btn--ghost{% endif %}">
+      All Listings ({{ counts.all_count|default:0 }})
+    </a>
+    <a href="{% url 'jobs:manage_list' %}?status=open"
+       class="btn btn--sm {% if active_tab == 'open' %}btn--primary{% else %}btn--ghost{% endif %}">
+      Open ({{ counts.open_count|default:0 }})
+    </a>
+    <a href="{% url 'jobs:manage_list' %}?status=draft"
+       class="btn btn--sm {% if active_tab == 'draft' %}btn--primary{% else %}btn--ghost{% endif %}">
+      Drafts ({{ counts.draft_count|default:0 }})
+    </a>
+    <a href="{% url 'jobs:manage_list' %}?status=closed"
+       class="btn btn--sm {% if active_tab == 'closed' %}btn--primary{% else %}btn--ghost{% endif %}">
+      Closed ({{ counts.closed_count|default:0 }})
+    </a>
+  </div>
+
+  <!-- ── 4. Jobs Table ─────────────────────────────────────────── -->
+  <div class="card--hard-shadow" style="overflow: hidden;">
+    {% if jobs %}
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Job Title &amp; Details</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Applications</th>
+            <th>Posted Date</th>
+            <th style="text-align: right;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for job in jobs %}
+          <tr>
+            <!-- Job title & location -->
+            <td style="max-width: 280px;">
+              <div>
+                <a href="{% url 'jobs:detail' job.slug %}" style="font-weight: 600; color: var(--color-text-primary); font-size: var(--text-base); text-decoration: none;">
+                  {{ job.title }}
+                </a>
+                <p style="font-size: var(--text-xs); color: var(--color-text-muted); margin: var(--space-1) 0 0;">
+                  📍 {{ job.location }}
+                  {% if job.is_remote %} &middot; <span class="text-accent font-semibold">Remote</span>{% endif %}
+                  &middot; {{ job.get_job_type_display }}
+                </p>
+                {% if job.salary_min or job.salary_max %}
+                <p style="font-size: var(--text-xs); color: var(--color-primary-400); margin: var(--space-1) 0 0; font-weight: 500;">
+                  {{ job.salary_display }}
+                </p>
+                {% endif %}
+              </div>
+            </td>
+
+            <!-- Category -->
+            <td>
+              {% if job.category %}
+                <span class="tag" style="background: hsl(248 78% 52% / 0.1); border-color: hsl(248 78% 52% / 0.25); color: var(--color-primary-300);">
+                  {{ job.category.icon }} {{ job.category.name }}
+                </span>
+              {% else %}
+                <span class="text-muted text-xs">—</span>
+              {% endif %}
+            </td>
+
+            <!-- Status -->
+            <td>
+              {% if job.status == 'open' %}
+                <span class="badge badge--success">● Open</span>
+              {% elif job.status == 'draft' %}
+                <span class="badge badge--neutral">Draft</span>
+              {% elif job.status == 'closed' %}
+                <span class="badge badge--danger">Closed</span>
+              {% else %}
+                <span class="badge badge--neutral">{{ job.get_status_display }}</span>
+              {% endif %}
+            </td>
+
+            <!-- Application Count Linking to Pipeline (Stage 5) -->
+            <td>
+              <a href="{% url 'jobs:pipeline' job.slug %}"
+                 class="badge {% if job.applicant_count > 0 %}badge--accent{% else %}badge--neutral{% endif %}"
+                 style="text-decoration: none; padding: var(--space-1) var(--space-3);"
+                 title="View candidate pipeline">
+                📑 {{ job.applicant_count }} applicant{{ job.applicant_count|pluralize }} &rarr;
+              </a>
+            </td>
+
+            <!-- Posted Date -->
+            <td style="font-size: var(--text-xs); color: var(--color-text-muted); white-space: nowrap;">
+              {{ job.created_at|date:"M j, Y" }}
+              {% if job.deadline %}
+              <div class="{% if job.deadline < today %}text-danger{% else %}text-muted{% endif %}" style="font-size: 0.7rem; margin-top: 2px;">
+                Due {{ job.deadline|date:"M j" }}
+              </div>
+              {% endif %}
+            </td>
+
+            <!-- Actions -->
+            <td style="text-align: right; white-space: nowrap;">
+              <div style="display: inline-flex; align-items: center; gap: var(--space-2);">
+                <!-- Edit -->
+                <a href="{% url 'jobs:edit' job.slug %}" class="btn btn--ghost btn--sm" title="Edit Job">
+                  Edit
+                </a>
+
+                <!-- Close / Reopen -->
+                {% if job.status == 'open' %}
+                  <a href="{% url 'jobs:close' job.slug %}" class="btn btn--ghost btn--sm text-warning" title="Close Listing">
+                    Close
+                  </a>
+                {% elif job.status == 'closed' %}
+                  {% if is_verified %}
+                    <a href="{% url 'jobs:reopen' job.slug %}" class="btn btn--ghost btn--sm text-success" title="Reopen Listing">
+                      Reopen
+                    </a>
+                  {% else %}
+                    <span class="btn btn--ghost btn--sm" style="opacity: 0.5; cursor: not-allowed;" title="Cannot reopen while unverified">
+                      Reopen
+                    </span>
+                  {% endif %}
+                {% endif %}
+
+                <!-- Soft Delete -->
+                <a href="{% url 'jobs:delete' job.slug %}"
+                   class="btn btn--ghost btn--sm text-danger"
+                   onclick="return confirm('Are you sure you want to remove this job? It will be archived.');"
+                   title="Remove Job">
+                  ✕
+                </a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div style="padding: var(--space-16); text-align: center;">
+      <div style="font-size: 2.5rem; margin-bottom: var(--space-3);" aria-hidden="true">💼</div>
+      <h3 class="heading-3" style="margin-bottom: var(--space-2);">No job postings found</h3>
+      <p class="text-sm text-muted" style="max-width: 440px; margin: 0 auto var(--space-5);">
+        {% if active_tab == 'open' %}
+          You have no currently active open listings.
+        {% elif active_tab == 'draft' %}
+          You have no draft job postings saved.
+        {% elif active_tab == 'closed' %}
+          You have no closed jobs.
+        {% else %}
+          You haven't created any job listings yet. Get started by posting your first role!
+        {% endif %}
+      </p>
+      <a href="{% url 'jobs:create' %}" class="btn btn--primary">
+        Create Your First Job
+      </a>
+    </div>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}

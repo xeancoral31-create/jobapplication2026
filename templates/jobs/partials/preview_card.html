@@ -1,0 +1,68 @@
+{% load static %}
+<div class="job-card card--hard-shadow animate-fade-in" style="margin: 0; background: var(--color-surface-1);">
+  <div class="job-card__top">
+    <div class="job-card__logo" style="background: var(--color-surface-2);">
+      {% if employer.employer_profile.company_logo %}
+        <img src="{{ employer.employer_profile.company_logo.url }}" alt="{{ employer.employer_profile.company_name }}" style="width: 100%; height: 100%; object-fit: cover;">
+      {% else %}
+        <span>🏢</span>
+      {% endif %}
+    </div>
+    <div style="display: flex; gap: var(--space-2); align-items: center;">
+      {% if job.status == 'open' %}
+        <span class="badge badge--success">● Open</span>
+      {% elif job.status == 'draft' %}
+        <span class="badge badge--neutral">Draft</span>
+      {% elif job.status == 'closed' %}
+        <span class="badge badge--danger">Closed</span>
+      {% else %}
+        <span class="badge badge--neutral">{{ job.get_status_display }}</span>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="job-card__body">
+    <h3 class="job-card__title" style="font-size: var(--text-lg); margin-bottom: var(--space-1);">
+      {{ job.title|default:"Job Title (Start typing above...)" }}
+    </h3>
+    <p class="job-card__company" style="margin-bottom: var(--space-3);">
+      {{ employer.employer_profile.company_name|default:employer.get_full_name|default:employer.username|default:"Your Company Name" }}
+    </p>
+
+    <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-3);">
+      {% if job.category %}
+        <span class="tag" style="background: hsl(248 78% 52% / 0.15); color: var(--color-primary-300); border-color: hsl(248 78% 52% / 0.3);">
+          {{ job.category.icon }} {{ job.category.name }}
+        </span>
+      {% else %}
+        <span class="tag text-muted">No category selected</span>
+      {% endif %}
+
+      <span class="tag">{{ job.get_job_type_display|default:"Full-time" }}</span>
+      <span class="tag">{{ job.get_experience_level_display|default:"Mid Level" }}</span>
+    </div>
+
+    {% if job.description %}
+    <p class="text-xs text-muted" style="line-height: 1.5; max-height: 60px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; line-clamp: 3; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">
+      {{ job.description|striptags }}
+    </p>
+    {% endif %}
+  </div>
+
+  <div class="job-card__footer">
+    <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+      <span class="text-xs text-muted">
+        📍 {{ job.location|default:"Location not set" }}
+        {% if job.is_remote %}
+          &middot; <span class="text-accent font-semibold">🌐 Remote Friendly</span>
+        {% endif %}
+      </span>
+      <span class="text-xs font-semibold text-primary-color">
+        {{ job.salary_display }}
+      </span>
+    </div>
+    <span class="btn btn--primary btn--sm" style="pointer-events: none; opacity: 0.85;">
+      Apply Now
+    </span>
+  </div>
+</div>

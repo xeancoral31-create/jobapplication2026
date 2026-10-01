@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% block title %}Apply for {{ job.title }} — Inkboard{% endblock %}
+
+{% block content %}
+<div class="container container--narrow" style="padding-top: var(--space-8); padding-bottom: var(--space-16);">
+
+  <!-- Breadcrumbs -->
+  <div style="margin-bottom: var(--space-6);">
+    <a href="{% url 'jobs:detail' job.slug %}" class="btn btn--ghost btn--sm" style="display: inline-flex; align-items: center; gap: var(--space-1);">
+      &larr; Back to Job Details
+    </a>
+  </div>
+
+  <!-- Job Target Header Card -->
+  <div class="card" style="background: var(--color-surface-1); border: 1px solid var(--color-border); padding: var(--space-6); margin-bottom: var(--space-8);">
+    <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap;">
+      <div>
+        <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-1);">
+          {% if job.category %}
+            <span class="tag">{{ job.category.icon }} {{ job.category.name }}</span>
+          {% endif %}
+          <span class="tag">{{ job.get_job_type_display }}</span>
+          {% if job.is_remote %}<span class="badge badge--accent">Remote</span>{% endif %}
+        </div>
+        <h1 class="heading-2" style="font-family: var(--font-serif); margin: 0 0 var(--space-1);">
+          {{ job.title }}
+        </h1>
+        <p style="font-size: var(--text-sm); color: var(--color-text-secondary); margin: 0;">
+          {{ job.employer.employer_profile.company_name|default:job.employer.get_full_name }} &middot; 📍 {{ job.location }}
+        </p>
+      </div>
+
+      {% if job.salary_min or job.salary_max %}
+      <div style="text-align: right;">
+        <span class="text-xs text-muted" style="text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Compensation</span>
+        <p style="font-size: var(--text-sm); font-weight: 700; color: var(--color-primary-text); margin: var(--space-1) 0 0;">
+          {% if job.salary_min and job.salary_max %}
+            ${{ job.salary_min|floatformat:0 }} – ${{ job.salary_max|floatformat:0 }}
+          {% elif job.salary_min %}
+            From ${{ job.salary_min|floatformat:0 }}
+          {% elif job.salary_max %}
+            Up to ${{ job.salary_max|floatformat:0 }}
+          {% endif %}
+          <span class="text-xs text-muted" style="font-weight: normal;">/ {{ job.get_salary_period_display|lower }}</span>
+        </p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Application Form Card -->
+  <div class="card" style="background: var(--color-surface-1); border: 2px solid var(--color-border); padding: var(--space-8); box-shadow: var(--shadow-sm);">
+    
+    <div style="margin-bottom: var(--space-6); border-bottom: 1px solid var(--color-border-subtle); padding-bottom: var(--space-4);">
+      <h2 class="heading-3" style="font-family: var(--font-serif); margin-bottom: var(--space-1);">
+        Submit Your Candidacy
+      </h2>
+      <p class="text-muted" style="font-size: var(--text-sm); margin: 0;">
+        Applying as <strong class="text-primary-color">{{ request.user.get_full_name|default:request.user.username }}</strong> ({{ request.user.email }}).
+      </p>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" action="{% url 'applications:apply' job.pk %}">
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+      <div class="alert alert--danger" style="margin-bottom: var(--space-6);">
+        {% for error in form.non_field_errors %}
+          <p style="margin: 0;">{{ error }}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- Resume Field with Profile Default Indicator -->
+      <div class="form-group" style="margin-bottom: var(--space-6);">
+        <label class="form-label" for="{{ form.resume.id_for_label }}" style="font-weight: 600;">
+          Resume / Curriculum Vitae
+          {% if form.resume.field.required %}<span class="text-danger">*</span>{% endif %}
+        </label>
+
+        {% if has_profile_resume %}
+        <div style="background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); margin-bottom: var(--space-3); display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: var(--space-2);">
+            <span style="font-size: 1.2rem;">📄</span>
+            <div>
+              <p style="font-size: var(--text-xs); font-weight: 600; margin: 0;">Profile Resume on File</p>
+              <p style="font-size: 0.72rem; color: var(--color-text-muted); margin: 0;">
+                {{ request.user.applicant_profile.resume.name|cut:"resumes/" }}
+              </p>
+            </div>
+          </div>
+          <span class="badge badge--success" style="font-size: 0.68rem;">Default Selected</span>
+        </div>
+        <p class="text-xs text-muted" style="margin-bottom: var(--space-2);">
+          Optional: Upload a different resume file below to customize it specifically for this application.
+        </p>
+        {% else %}
+        <p class="text-xs text-muted" style="margin-bottom: var(--space-2);">
+          No resume found on your profile. Please upload a PDF or DOCX file.
+        </p>
+        {% endif %}
+
+        {{ form.resume }}
+        {% if form.resume.errors %}
+          <div class="form-error" style="color: var(--color-danger); font-size: var(--text-xs); margin-top: var(--space-1);">
+            {{ form.resume.errors.0 }}
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Cover Letter -->
+      <div class="form-group" style="margin-bottom: var(--space-6);">
+        <label class="form-label" for="{{ form.cover_letter.id_for_label }}" style="font-weight: 600;">
+          Cover Note / Letter <span class="text-muted" style="font-weight: normal;">(Recommended)</span>
+        </label>
+        {{ form.cover_letter }}
+        <p class="text-xs text-muted" style="margin-top: var(--space-1);">
+          A brief personal introduction and what draws you to this role.
+        </p>
+        {% if form.cover_letter.errors %}
+          <div class="form-error" style="color: var(--color-danger); font-size: var(--text-xs); margin-top: var(--space-1);">
+            {{ form.cover_letter.errors.0 }}
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Portfolio / Website -->
+      <div class="form-group" style="margin-bottom: var(--space-8);">
+        <label class="form-label" for="{{ form.portfolio_url.id_for_label }}" style="font-weight: 600;">
+          Portfolio, GitHub, or Personal Site <span class="text-muted" style="font-weight: normal;">(Optional)</span>
+        </label>
+        {{ form.portfolio_url }}
+        {% if form.portfolio_url.errors %}
+          <div class="form-error" style="color: var(--color-danger); font-size: var(--text-xs); margin-top: var(--space-1);">
+            {{ form.portfolio_url.errors.0 }}
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Actions -->
+      <div style="display: flex; align-items: center; justify-content: flex-end; gap: var(--space-3); border-top: 1px solid var(--color-border-subtle); padding-top: var(--space-6);">
+        <a href="{% url 'jobs:detail' job.slug %}" class="btn btn--ghost">
+          Cancel
+        </a>
+        <button type="submit" class="btn btn--primary btn--lg" id="btn-submit-application">
+          Submit Application &rarr;
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+</div>
+{% endblock %}

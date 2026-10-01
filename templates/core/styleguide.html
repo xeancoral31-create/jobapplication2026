@@ -1,0 +1,457 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Styleguide — Inkboard Design System{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: var(--space-12); padding-bottom: var(--space-12);">
+
+  <div style="margin-bottom: var(--space-10);">
+    <span class="section-label">Internal Reference</span>
+    <h1 class="display-2" style="margin-top: var(--space-2);">Design System Styleguide</h1>
+    <p class="text-secondary" style="font-size: var(--text-lg); margin-top: var(--space-3);">
+      All design tokens, typography scales, and UI components in one living reference.
+    </p>
+  </div>
+
+  <!-- ══ 1. COLOR TOKENS ══ -->
+  <section class="sg-section" id="colors">
+    <h2 class="sg-section-title">Color Tokens</h2>
+
+    <h3 class="heading-4 text-muted" style="margin-bottom: var(--space-4);">Primary Palette</h3>
+    <div class="sg-token-grid" style="margin-bottom: var(--space-8);">
+      <div class="sg-color-swatch">
+        <div class="sg-color-swatch__preview" style="background: hsl(248,100%,97%);"></div>
+        <div class="sg-color-swatch__info"><p class="sg-color-swatch__name">primary-50</p><p class="sg-color-swatch__value">--color-primary-50</p></div>
+      </div>
+      <div class="sg-color-swatch">
+        <div class="sg-color-swatch__preview" style="background: hsl(248,96%,93%);"></div>
+        <div class="sg-color-swatch__info"><p class="sg-color-swatch__name">primary-100</p><p class="sg-color-swatch__value">--color-primary-100</p></div>
+      </div>
+      <div class="sg-color-swatch">
+        <div class="sg-color-swatch__preview" style="background: hsl(248,90%,85%);"></div>
+        <div class="sg-color-swatch__info"><p class="sg-color-swatch__name">primary-200</p><p class="sg-color-swatch__value">--color-primary-200</p></div>
+      </div>
+      <div class="sg-color-swatch">
+        <div class="sg-color-swatch__preview" style="background: hsl(248,85%,73%);"></div>
+        <div class="sg-color-swatch__info"><p class="sg-color-swatch__name">primary-300</p><p class="sg-color-swatch__value">--color-primary-300</p></div>
+      </div>
+      <div class="sg-color-swatch">
+        <div class="sg-color-swatch__preview" style="background: hsl(248,80%,62%);"></div>
+        <div class="sg-color-swatch__info"><p class="sg-color-swatch__name">primary-400</p><p class="sg-color-swatch__value">--color-primary-400</p></div>
+      </div>
+      <div class="sg-color-swatch">
+        <div class="sg-color-swatch__preview" style="background: hsl(248,78%,52%);"></div>
+        <div class="sg-color-swatch__info"><p class="sg-color-swatch__name">primary-500</p><p class="sg-color-swatch__value">--color-primary-500</p></div>
+      </div>
+      <div class="sg-color-swatch">
+        <div class="sg-color-swatch__preview" style="background: hsl(248,76%,44%);"></div>
+        <div class="sg-color-swatch__info"><p class="sg-color-swatch__name">primary-600</p><p class="sg-color-swatch__value">--color-primary-600</p></div>
+      </div>
+      <div class="sg-color-swatch">
+        <div class="sg-color-swatch__preview" style="background: hsl(248,73%,36%);"></div>
+        <div class="sg-color-swatch__info"><p class="sg-color-swatch__name">primary-700</p><p class="sg-color-swatch__value">--color-primary-700</p></div>
+      </div>
+      <div class="sg-color-swatch">
+        <div class="sg-color-swatch__preview" style="background: hsl(248,68%,28%);"></div>
+        <div class="sg-color-swatch__info"><p class="sg-color-swatch__name">primary-800</p><p class="sg-color-swatch__value">--color-primary-800</p></div>
+      </div>
+      <div class="sg-color-swatch">
+        <div class="sg-color-swatch__preview" style="background: hsl(248,60%,20%);"></div>
+        <div class="sg-color-swatch__info"><p class="sg-color-swatch__name">primary-900</p><p class="sg-color-swatch__value">--color-primary-900</p></div>
+      </div>
+    </div>
+
+    <h3 class="heading-4 text-muted" style="margin-bottom: var(--space-4);">Accent &amp; Semantic</h3>
+    <div class="sg-component-row">
+      <div class="sg-color-swatch" style="width:160px;">
+        <div class="sg-color-swatch__preview" style="background: var(--color-accent-400);"></div>
+        <div class="sg-color-swatch__info">
+          <p class="sg-color-swatch__name">accent-400</p>
+          <p class="sg-color-swatch__value">--color-accent-400</p>
+        </div>
+      </div>
+      <div class="sg-color-swatch" style="width:160px;">
+        <div class="sg-color-swatch__preview" style="background: var(--color-success);"></div>
+        <div class="sg-color-swatch__info">
+          <p class="sg-color-swatch__name">success</p>
+          <p class="sg-color-swatch__value">--color-success</p>
+        </div>
+      </div>
+      <div class="sg-color-swatch" style="width:160px;">
+        <div class="sg-color-swatch__preview" style="background: var(--color-warning);"></div>
+        <div class="sg-color-swatch__info">
+          <p class="sg-color-swatch__name">warning</p>
+          <p class="sg-color-swatch__value">--color-warning</p>
+        </div>
+      </div>
+      <div class="sg-color-swatch" style="width:160px;">
+        <div class="sg-color-swatch__preview" style="background: var(--color-danger);"></div>
+        <div class="sg-color-swatch__info">
+          <p class="sg-color-swatch__name">danger</p>
+          <p class="sg-color-swatch__value">--color-danger</p>
+        </div>
+      </div>
+      <div class="sg-color-swatch" style="width:160px;">
+        <div class="sg-color-swatch__preview" style="background: var(--color-info);"></div>
+        <div class="sg-color-swatch__info">
+          <p class="sg-color-swatch__name">info</p>
+          <p class="sg-color-swatch__value">--color-info</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="heading-4 text-muted" style="margin-bottom: var(--space-4); margin-top: var(--space-6);">Surface &amp; Text</h3>
+    <div class="sg-component-row">
+      <div class="sg-color-swatch" style="width:160px;">
+        <div class="sg-color-swatch__preview" style="background: var(--color-surface);"></div>
+        <div class="sg-color-swatch__info"><p class="sg-color-swatch__name">surface</p></div>
+      </div>
+      <div class="sg-color-swatch" style="width:160px;">
+        <div class="sg-color-swatch__preview" style="background: var(--color-surface-1);"></div>
+        <div class="sg-color-swatch__info"><p class="sg-color-swatch__name">surface-1</p></div>
+      </div>
+      <div class="sg-color-swatch" style="width:160px;">
+        <div class="sg-color-swatch__preview" style="background: var(--color-surface-2);"></div>
+        <div class="sg-color-swatch__info"><p class="sg-color-swatch__name">surface-2</p></div>
+      </div>
+      <div class="sg-color-swatch" style="width:160px;">
+        <div class="sg-color-swatch__preview" style="background: var(--color-surface-3);"></div>
+        <div class="sg-color-swatch__info"><p class="sg-color-swatch__name">surface-3</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 2. TYPOGRAPHY ══ -->
+  <section class="sg-section" id="typography">
+    <h2 class="sg-section-title">Typography</h2>
+
+    <div style="margin-bottom: var(--space-8);">
+      <p class="display-1" style="margin-bottom: var(--space-3);">Display 1 — Sora ExtraBold</p>
+      <p class="display-2" style="margin-bottom: var(--space-3);">Display 2 — Sora Bold</p>
+      <p class="heading-1" style="margin-bottom: var(--space-3);">Heading 1 — Inter Bold</p>
+      <p class="heading-2" style="margin-bottom: var(--space-3);">Heading 2 — Inter Semibold</p>
+      <p class="heading-3" style="margin-bottom: var(--space-3);">Heading 3 — Inter Semibold</p>
+      <p class="heading-4" style="margin-bottom: var(--space-3);">Heading 4 — Inter Medium</p>
+      <p style="margin-bottom: var(--space-3);">Body — Inter Regular 15px leading 1.55</p>
+      <p class="text-sm" style="margin-bottom: var(--space-3);">Small — 13px</p>
+      <p class="text-xs" style="margin-bottom: var(--space-3);">XSmall — 11px</p>
+    </div>
+
+    <div class="sg-component-row">
+      <p class="gradient-text display-2">Gradient Text</p>
+      <p class="text-primary-color heading-3">Primary Color</p>
+      <p class="text-accent heading-3">Accent Color</p>
+      <p class="text-muted heading-3">Muted</p>
+      <p class="text-secondary heading-3">Secondary</p>
+    </div>
+  </section>
+
+  <!-- ══ 3. BUTTONS ══ -->
+  <section class="sg-section" id="buttons">
+    <h2 class="sg-section-title">Buttons</h2>
+    <div class="sg-component-row" style="margin-bottom: var(--space-4);">
+      <button class="btn btn--primary">Primary</button>
+      <button class="btn btn--accent">Accent</button>
+      <button class="btn btn--ghost">Ghost</button>
+      <button class="btn btn--danger">Danger</button>
+      <button class="btn btn--primary" disabled>Disabled</button>
+    </div>
+    <div class="sg-component-row">
+      <button class="btn btn--primary btn--sm">Small Primary</button>
+      <button class="btn btn--ghost btn--sm">Small Ghost</button>
+      <button class="btn btn--primary btn--lg">Large Primary</button>
+    </div>
+  </section>
+
+  <!-- ══ 4. BADGES ══ -->
+  <section class="sg-section" id="badges">
+    <h2 class="sg-section-title">Badges &amp; Tags</h2>
+    <div class="sg-component-row">
+      <span class="badge badge--primary">Primary</span>
+      <span class="badge badge--accent">Accent</span>
+      <span class="badge badge--success">Success</span>
+      <span class="badge badge--warning">Warning</span>
+      <span class="badge badge--danger">Danger</span>
+      <span class="badge badge--neutral">Neutral</span>
+    </div>
+    <div class="sg-component-row" style="margin-top: var(--space-4);">
+      <span class="badge badge--submitted">Submitted</span>
+      <span class="badge badge--under_review">Under Review</span>
+      <span class="badge badge--shortlisted">Shortlisted</span>
+      <span class="badge badge--hired">Hired</span>
+      <span class="badge badge--rejected">Rejected</span>
+      <span class="badge badge--withdrawn">Withdrawn</span>
+    </div>
+    <div class="sg-component-row" style="margin-top: var(--space-4);">
+      <span class="tag">Full-time</span>
+      <span class="tag">Remote</span>
+      <span class="tag">Python</span>
+      <span class="tag">Django</span>
+      <span class="tag">Senior Level</span>
+    </div>
+  </section>
+
+  <!-- ══ 5. CARDS ══ -->
+  <section class="sg-section" id="cards">
+    <h2 class="sg-section-title">Cards</h2>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card__header">Card Header</div>
+        <div class="card__body">
+          <p class="text-secondary">Card body content goes here. Cards have hover lift animations.</p>
+        </div>
+        <div class="card__footer">
+          <span class="text-muted text-sm">Meta info</span>
+          <button class="btn btn--primary btn--sm">Action</button>
+        </div>
+      </div>
+
+      <a href="#" class="job-card" style="text-decoration:none;">
+        <div class="job-card__top">
+          <div class="job-card__logo">🏢</div>
+          <span class="badge badge--success">Open</span>
+        </div>
+        <div class="job-card__body">
+          <p class="job-card__title">Senior Django Engineer</p>
+          <p class="job-card__company">Acme Corp</p>
+          <div class="sg-component-row" style="margin: 0;">
+            <span class="tag">Full-time</span>
+            <span class="tag">Remote</span>
+          </div>
+        </div>
+        <div class="job-card__footer">
+          <span class="text-sm text-muted">📍 Remote</span>
+          <span class="text-sm text-primary-color font-semibold">$120k–$160k</span>
+        </div>
+      </a>
+
+      <div class="card">
+        <div class="card__body">
+          <div style="display:flex; gap:var(--space-3); align-items:center; margin-bottom:var(--space-4);">
+            <div class="avatar-placeholder avatar--lg" style="font-size:1.2rem;">JD</div>
+            <div>
+              <p class="font-semibold">Jane Doe</p>
+              <p class="text-sm text-muted">Full-stack Developer</p>
+            </div>
+          </div>
+          <p class="text-sm text-secondary">Profile card with avatar placeholder component.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 6. FORMS ══ -->
+  <section class="sg-section" id="forms">
+    <h2 class="sg-section-title">Form Controls</h2>
+    <div style="max-width: 520px;">
+      <div class="form-group">
+        <label class="form-label" for="sg-input-1">Text Input</label>
+        <input id="sg-input-1" class="form-control" type="text" placeholder="Enter a value…">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="sg-input-err">Error State</label>
+        <input id="sg-input-err" class="form-control form-control--error" type="text" value="invalid@">
+        <span class="form-error">Please enter a valid email address.</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="sg-select">Select</label>
+        <select id="sg-select" class="form-control">
+          <option>Full-time</option>
+          <option>Part-time</option>
+          <option>Contract</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="sg-textarea">Textarea</label>
+        <textarea id="sg-textarea" class="form-control" rows="3" placeholder="Tell us more…"></textarea>
+        <span class="form-hint">Max 500 characters.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 7. ALERTS ══ -->
+  <section class="sg-section" id="alerts">
+    <h2 class="sg-section-title">Alerts</h2>
+    <div style="display:flex; flex-direction:column; gap:var(--space-3); max-width:640px;">
+      <div class="alert alert--success" role="alert">✅ Your application was submitted successfully.</div>
+      <div class="alert alert--warning" role="alert">⚠️ This job is closing in 2 days.</div>
+      <div class="alert alert--danger"  role="alert">❌ There was an error processing your request.</div>
+      <div class="alert alert--info"    role="alert">ℹ️ Your profile is 60% complete. Add skills to get noticed.</div>
+    </div>
+  </section>
+
+  <!-- ══ 8. CATEGORY CHIPS ══ -->
+  <section class="sg-section" id="categories">
+    <h2 class="sg-section-title">Category Chips</h2>
+    <div class="category-grid" style="max-width: 700px;">
+      {% for chip in "💻 Engineering,🎨 Design,📊 Data,☁️ Cloud,📱 Mobile,🔒 Security,🤖 AI / ML,✍️ Content"|split:"," %}
+      <a href="#" class="category-chip">
+        <span class="category-chip__icon">{{ chip|slice:":2" }}</span>
+        <span class="category-chip__name">{{ chip|slice:"3:" }}</span>
+        <span class="category-chip__count">12 jobs</span>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ══ 9. SKELETONS ══ -->
+  <section class="sg-section" id="skeletons">
+    <h2 class="sg-section-title">Skeleton Loaders</h2>
+    <div style="max-width: 420px; display:flex; flex-direction:column; gap:var(--space-3);">
+      <div class="skeleton" style="height:20px; width:60%;"></div>
+      <div class="skeleton" style="height:14px; width:90%;"></div>
+      <div class="skeleton" style="height:14px; width:75%;"></div>
+      <div class="skeleton" style="height:120px; border-radius:var(--radius-xl);"></div>
+    </div>
+  </section>
+
+  <!-- ══ 10. SPACING TOKENS ══ -->
+  <section class="sg-section" id="spacing">
+    <h2 class="sg-section-title">Spacing Scale</h2>
+    <div style="display:flex; flex-direction:column; gap:var(--space-3);">
+      {% for row in spacing_rows %}<div style="display:flex; align-items:center; gap:var(--space-4);">{{ row }}</div>
+      {% empty %}
+      <div style="display:flex; align-items:center; gap:var(--space-4);">
+        <span class="text-xs text-muted" style="width:120px; font-family:var(--font-mono);">--space-1</span>
+        <div class="sg-space-bar" style="height:16px; width:4px; background:var(--color-primary-500); border-radius:2px;"></div>
+        <span class="text-xs text-muted">1</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:var(--space-4);">
+        <span class="text-xs text-muted" style="width:120px; font-family:var(--font-mono);">--space-2</span>
+        <div class="sg-space-bar" style="height:16px; width:8px; background:var(--color-primary-500); border-radius:2px;"></div>
+        <span class="text-xs text-muted">2</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:var(--space-4);">
+        <span class="text-xs text-muted" style="width:120px; font-family:var(--font-mono);">--space-3</span>
+        <div class="sg-space-bar" style="height:16px; width:12px; background:var(--color-primary-500); border-radius:2px;"></div>
+        <span class="text-xs text-muted">3</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:var(--space-4);">
+        <span class="text-xs text-muted" style="width:120px; font-family:var(--font-mono);">--space-4</span>
+        <div class="sg-space-bar" style="height:16px; width:16px; background:var(--color-primary-500); border-radius:2px;"></div>
+        <span class="text-xs text-muted">4</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:var(--space-4);">
+        <span class="text-xs text-muted" style="width:120px; font-family:var(--font-mono);">--space-5</span>
+        <div class="sg-space-bar" style="height:16px; width:20px; background:var(--color-primary-500); border-radius:2px;"></div>
+        <span class="text-xs text-muted">5</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:var(--space-4);">
+        <span class="text-xs text-muted" style="width:120px; font-family:var(--font-mono);">--space-6</span>
+        <div class="sg-space-bar" style="height:16px; width:24px; background:var(--color-primary-500); border-radius:2px;"></div>
+        <span class="text-xs text-muted">6</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:var(--space-4);">
+        <span class="text-xs text-muted" style="width:120px; font-family:var(--font-mono);">--space-8</span>
+        <div class="sg-space-bar" style="height:16px; width:32px; background:var(--color-primary-500); border-radius:2px;"></div>
+        <span class="text-xs text-muted">8</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:var(--space-4);">
+        <span class="text-xs text-muted" style="width:120px; font-family:var(--font-mono);">--space-10</span>
+        <div class="sg-space-bar" style="height:16px; width:40px; background:var(--color-primary-500); border-radius:2px;"></div>
+        <span class="text-xs text-muted">10</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:var(--space-4);">
+        <span class="text-xs text-muted" style="width:120px; font-family:var(--font-mono);">--space-12</span>
+        <div class="sg-space-bar" style="height:16px; width:48px; background:var(--color-primary-500); border-radius:2px;"></div>
+        <span class="text-xs text-muted">12</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:var(--space-4);">
+        <span class="text-xs text-muted" style="width:120px; font-family:var(--font-mono);">--space-16</span>
+        <div class="sg-space-bar" style="height:16px; width:64px; background:var(--color-primary-500); border-radius:2px;"></div>
+        <span class="text-xs text-muted">16</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:var(--space-4);">
+        <span class="text-xs text-muted" style="width:120px; font-family:var(--font-mono);">--space-20</span>
+        <div class="sg-space-bar" style="height:16px; width:80px; background:var(--color-primary-500); border-radius:2px;"></div>
+        <span class="text-xs text-muted">20</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:var(--space-4);">
+        <span class="text-xs text-muted" style="width:120px; font-family:var(--font-mono);">--space-24</span>
+        <div class="sg-space-bar" style="height:16px; width:96px; background:var(--color-primary-500); border-radius:2px;"></div>
+        <span class="text-xs text-muted">24</span>
+      </div>
+      {% endfor %}
+  <!-- ══ 11. DASHBOARD COMPONENTS ══ -->
+  <section class="sg-section" id="dashboards">
+    <h2 class="sg-section-title">Dashboard Components</h2>
+
+    <h3 class="heading-4 text-muted" style="margin-bottom: var(--space-4);">Hard-Shadow Stat Tiles</h3>
+    <div class="grid-4" style="margin-bottom: var(--space-8);">
+      <div class="stat-tile stat-tile--primary">
+        <div class="stat-tile__header">
+          <span class="stat-tile__label">Open Jobs</span>
+          <span class="stat-tile__icon"><i class="fa-solid fa-briefcase"></i></span>
+        </div>
+        <div class="stat-tile__value">14</div>
+        <span class="text-xs text-muted">Primary Indigo</span>
+      </div>
+
+      <div class="stat-tile stat-tile--teal">
+        <div class="stat-tile__header">
+          <span class="stat-tile__label">Applications</span>
+          <span class="stat-tile__icon"><i class="fa-solid fa-file"></i> </span>
+        </div>
+        <div class="stat-tile__value">128</div>
+        <span class="text-xs text-accent">Teal Accent</span>
+      </div>
+
+      <div class="stat-tile stat-tile--amber">
+        <div class="stat-tile__header">
+          <span class="stat-tile__label">Pending</span>
+          <span class="stat-tile__icon"><i class="fa-solid fa-clock"></i></span>
+        </div>
+        <div class="stat-tile__value">5</div>
+        <span class="text-xs text-warning">Amber Warning</span>
+      </div>
+
+      <div class="stat-tile stat-tile--coral">
+        <div class="stat-tile__header">
+          <span class="stat-tile__label">Interviews</span>
+          <span class="stat-tile__icon"><i class="fa-solid fa-calendar"></i></span>
+        </div>
+        <div class="stat-tile__value">8</div>
+        <span class="text-xs text-danger">Coral Danger</span>
+      </div>
+    </div>
+
+    <h3 class="heading-4 text-muted" style="margin-bottom: var(--space-4);">Stamp Chips</h3>
+    <div class="sg-component-row" style="margin-bottom: var(--space-8);">
+      <span class="stamp-chip stamp-chip--submitted">Submitted</span>
+      <span class="stamp-chip stamp-chip--under_review">Under Review</span>
+      <span class="stamp-chip stamp-chip--shortlisted">Shortlisted</span>
+      <span class="stamp-chip stamp-chip--interview_scheduled">Interview</span>
+      <span class="stamp-chip stamp-chip--offer_extended">Offer Extended</span>
+      <span class="stamp-chip stamp-chip--hired">Hired</span>
+      <span class="stamp-chip stamp-chip--rejected">Rejected</span>
+      <span class="stamp-chip stamp-chip--withdrawn">Withdrawn</span>
+    </div>
+
+    <h3 class="heading-4 text-muted" style="margin-bottom: var(--space-4);">Ticket Card (Interview Pass)</h3>
+    <div style="max-width: 560px;">
+      <div class="ticket-card">
+        <div class="ticket-card__stub">
+          <span class="ticket-card__month">OCT</span>
+          <span class="ticket-card__day">14</span>
+          <span class="ticket-card__time">14:00</span>
+        </div>
+        <div class="ticket-card__main">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); margin-bottom: var(--space-1);">
+              <p class="ticket-card__title">Senior Django Engineer</p>
+              <span class="badge badge--accent">Video Call</span>
+            </div>
+            <p style="font-size: var(--text-sm); color: var(--color-text-secondary); margin: 0;">Synapse Labs</p>
+          </div>
+          <div class="ticket-card__footer">
+            <span class="ticket-card__meta"><i class="fa-solid fa-clock"></i> 45 mins &middot; Google Meet</span>
+            <button class="btn btn--ghost btn--sm">Details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

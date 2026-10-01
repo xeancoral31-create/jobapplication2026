@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Application Already Submitted — Inkboard{% endblock %}
+
+{% block content %}
+<div class="container container--narrow" style="padding-top: var(--space-12); padding-bottom: var(--space-16);">
+
+  <div class="card" style="background: var(--color-surface-1); border: 2px solid var(--color-border); padding: var(--space-10); text-align: center; box-shadow: var(--shadow-md);">
+    
+    <div style="font-size: 3rem; margin-bottom: var(--space-4);">📬</div>
+
+    <div style="display: flex; justify-content: center; margin-bottom: var(--space-4);">
+      <span class="stamp-chip stamp-chip--{{ application.status|default:'submitted' }}">
+        {{ application.get_status_display|default:"Submitted" }}
+      </span>
+    </div>
+
+    <h1 class="heading-2" style="font-family: var(--font-serif); margin-bottom: var(--space-2);">
+      You Have Already Applied
+    </h1>
+
+    <p style="font-size: var(--text-md); color: var(--color-text-secondary); max-width: 480px; margin: 0 auto var(--space-6); line-height: 1.6;">
+      Your application for <strong class="text-primary-color">{{ job.title }}</strong> at <strong class="text-primary-color">{{ job.employer.employer_profile.company_name|default:job.employer.get_full_name }}</strong> is already on record.
+      {% if application.applied_at %}
+        <br><span class="text-xs text-muted">Submitted on {{ application.applied_at|date:"F j, Y, g:i a" }}</span>
+      {% endif %}
+    </p>
+
+    <div style="display: inline-flex; align-items: center; justify-content: center; gap: var(--space-3); flex-wrap: wrap;">
+      {% if application %}
+      <a href="{% url 'applications:detail' application.pk %}" class="btn btn--primary btn--md" id="btn-view-application-timeline">
+        View Status Timeline &rarr;
+      </a>
+      {% endif %}
+      <a href="{% url 'applications:list' %}" class="btn btn--secondary btn--md">
+        My Applications
+      </a>
+      <a href="{% url 'jobs:list' %}" class="btn btn--ghost btn--md">
+        Browse More Jobs
+      </a>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

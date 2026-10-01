@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Employer Dashboard — Inkboard{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-16);">
+
+  <!-- ── 1. Unverified Employer Notice Banner ───────────────────── -->
+  {% if not is_verified %}
+  <div class="banner--verification animate-fade-in" role="alert">
+    <div class="banner--verification__icon" aria-hidden="true">⏳</div>
+    <div style="flex: 1;">
+      <h3 class="banner--verification__title">Employer Account Awaiting Verification</h3>
+      <p class="banner--verification__desc">
+        Your employer credentials are currently under review by our administration team.
+        You can draft job listings and configure your company profile while verification is pending.
+      </p>
+    </div>
+    <div>
+      <span class="badge badge--warning">Verification Pending</span>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- ── 2. Dashboard Header ────────────────────────────────────── -->
+  <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); margin-bottom: var(--space-8);">
+    <div>
+      <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-1);">
+        <h1 class="heading-1" style="margin: 0;">
+          {{ user.employer_profile.company_name|default:user.get_full_name|default:user.username }}
+        </h1>
+        {% if is_verified %}
+          <span class="badge badge--success" title="Verified Employer Account">✓ Verified</span>
+        {% else %}
+          <span class="badge badge--warning">Pending</span>
+        {% endif %}
+      </div>
+      <p class="text-muted" style="margin: 0;">
+        Employer Workspace &middot; Logged in as {{ user.email }}
+      </p>
+    </div>
+    <div style="display: flex; gap: var(--space-3);">
+      <a href="{% url 'jobs:create' %}" class="btn btn--primary">
+        + Post a Job
+      </a>
+    </div>
+  </div>
+
+  <!-- ── 3. Hard-Shadow Stat Tiles ──────────────────────────────── -->
+  <div class="grid-4" style="margin-bottom: var(--space-10);">
+    <!-- Open Jobs -->
+    <div class="stat-tile stat-tile--primary">
+      <div class="stat-tile__header">
+        <span class="stat-tile__label">Open Jobs</span>
+        <span class="stat-tile__icon" aria-hidden="true">💼</span>
+      </div>
+      <div class="stat-tile__value">{{ open_jobs }}</div>
+      <div style="font-size: var(--text-xs); color: var(--color-text-muted);">
+        {{ total_jobs }} total posting{{ total_jobs|pluralize }}
+      </div>
+    </div>
+
+    <!-- Total Applications -->
+    <div class="stat-tile stat-tile--teal">
+      <div class="stat-tile__header">
+        <span class="stat-tile__label">Total Applications</span>
+        <span class="stat-tile__icon" aria-hidden="true">📄</span>
+      </div>
+      <div class="stat-tile__value">{{ total_applications }}</div>
+      <div style="font-size: var(--text-xs); color: var(--color-accent-400);">
+        Across all listings
+      </div>
+    </div>
+
+    <!-- Shortlisted -->
+    <div class="stat-tile stat-tile--amber">
+      <div class="stat-tile__header">
+        <span class="stat-tile__label">Shortlisted</span>
+        <span class="stat-tile__icon" aria-hidden="true">⭐</span>
+      </div>
+      <div class="stat-tile__value">{{ shortlisted }}</div>
+      <div style="font-size: var(--text-xs); color: hsl(38 92% 70%);">
+        High-priority candidates
+      </div>
+    </div>
+
+    <!-- Interviews Next 7 Days -->
+    <div class="stat-tile stat-tile--coral">
+      <div class="stat-tile__header">
+        <span class="stat-tile__label">Interviews in Next 7 Days</span>
+        <span class="stat-tile__icon" aria-hidden="true">📅</span>
+      </div>
+      <div class="stat-tile__value">{{ interviews_next_7_days }}</div>
+      <div style="font-size: var(--text-xs); color: hsl(354 75% 70%);">
+        Upcoming sessions
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 4. Main Two-Column Layout ──────────────────────────────── -->
+  <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: var(--space-8); align-items: start;">
+
+    <!-- Left: Recent Applications Table -->
+    <section>
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-4);">
+        <h2 class="heading-3" style="margin: 0;">Recent Applications</h2>
+        <span class="text-sm text-muted">{{ recent_applications|length }} latest</span>
+      </div>
+
+      <div class="card--hard-shadow" style="overflow: hidden;">
+        {% if recent_applications %}
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Candidate</th>
+                <th>Job Position</th>
+                <th>Applied</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for app in recent_applications %}
+              <tr>
+                <td>
+                  <div style="display: flex; align-items: center; gap: var(--space-3);">
+                    <div class="avatar-placeholder avatar--sm" style="font-size: 0.75rem;">
+                      {{ app.applicant.first_name.0|default:app.applicant.username.0|upper }}
+                    </div>
+                    <div>
+                      <p style="font-weight: 600; color: var(--color-text-primary); margin: 0; font-size: var(--text-sm);">
+                        {{ app.applicant.get_full_name|default:app.applicant.username }}
+                      </p>
+                      <p style="font-size: var(--text-xs); color: var(--color-text-muted); margin: 0;">
+                        {{ app.applicant.email }}
+                      </p>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span style="font-weight: 500; color: var(--color-text-primary); font-size: var(--text-sm);">
+                    {{ app.job.title }}
+                  </span>
+                </td>
+                <td style="font-size: var(--text-xs); color: var(--color-text-muted); white-space: nowrap;">
+                  {{ app.applied_at|date:"M j, Y" }}
+                </td>
+                <td>
+                  <span class="stamp-chip stamp-chip--{{ app.status }}">
+                    {{ app.get_status_display }}
+                  </span>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div style="padding: var(--space-12); text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: var(--space-3);" aria-hidden="true">📥</div>
+          <p class="font-semibold" style="margin-bottom: var(--space-1);">No applications received yet</p>
+          <p class="text-sm text-muted" style="margin-bottom: var(--space-4);">
+            When candidates apply to your posted jobs, they will appear here.
+          </p>
+          <a href="{% url 'jobs:create' %}" class="btn btn--primary btn--sm">Post a Job to Get Applications</a>
+        </div>
+        {% endif %}
+      </div>
+    </section>
+
+    <!-- Right: Job Postings -->
+    <section>
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-4);">
+        <h2 class="heading-3" style="margin: 0;">Your Job Postings</h2>
+        <a href="{% url 'jobs:create' %}" class="btn btn--ghost btn--sm">+ New Job</a>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+        {% for job in my_jobs %}
+        <div class="card--hard-shadow" style="padding: var(--space-4) var(--space-5); display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);">
+          <div style="min-width: 0;">
+            <p style="font-weight: 600; color: var(--color-text-primary); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+              {{ job.title }}
+            </p>
+            <div style="display: flex; align-items: center; gap: var(--space-2); margin-top: var(--space-1);">
+              <span class="badge {% if job.status == 'open' %}badge--success{% else %}badge--neutral{% endif %}">
+                {{ job.get_status_display }}
+              </span>
+              <span class="text-xs text-muted">
+                {{ job.applicant_count }} candidate{{ job.applicant_count|pluralize }}
+              </span>
+            </div>
+          </div>
+          <a href="{% url 'jobs:detail' job.slug %}" class="btn btn--ghost btn--sm" style="flex-shrink: 0;">
+            View
+          </a>
+        </div>
+        {% empty %}
+        <div class="card--hard-shadow" style="padding: var(--space-10); text-align: center;">
+          <p class="text-muted" style="margin-bottom: var(--space-3);">You have not published any jobs yet.</p>
+          <a href="{% url 'jobs:create' %}" class="btn btn--primary btn--sm">Create First Job Posting</a>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+  </div>
+
+</div>
+{% endblock %}

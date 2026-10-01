@@ -1,0 +1,540 @@
+{% extends "base_auth.html" %}
+{% block title %}Create your account — Inkboard{% endblock %}
+
+{% block body %}
+<style>
+  /* ── Canvas & Centered Card Layout ─────────────────────── */
+  body {
+    background: #f4f6f8;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2.5rem 1rem;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #1e293b;
+    margin: 0;
+  }
+
+  .auth-page-container {
+    width: 100%;
+    max-width: 490px;
+    margin: 0 auto;
+  }
+
+  .auth-signup-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 2.75rem 2.5rem;
+    box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.06), 0 20px 40px -15px rgba(15, 23, 42, 0.04);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    box-sizing: border-box;
+  }
+
+  /* ── Brand Logo with Teal Dot ──────────────────────────── */
+  .auth-brand-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.25rem;
+  }
+  .brand-logo-link {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: baseline;
+  }
+  .brand-text {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.04em;
+    display: inline-flex;
+    align-items: baseline;
+  }
+  .brand-i-container {
+    position: relative;
+    display: inline-block;
+  }
+  .brand-teal-dot {
+    position: absolute;
+    top: 0.18em;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0.28em;
+    height: 0.28em;
+    background: #00a884;
+    border-radius: 50%;
+  }
+
+  /* ── Card Header ────────────────────────────────────────── */
+  .auth-card-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: #0f172a;
+    text-align: center;
+    margin: 0 0 0.4rem;
+    letter-spacing: -0.035em;
+  }
+  .auth-card-sub {
+    font-size: 0.95rem;
+    color: #64748b;
+    text-align: center;
+    margin: 0 0 1.75rem;
+  }
+
+  /* ── Form Labels & Controls ────────────────────────────── */
+  .auth-field-group {
+    margin-bottom: 1.15rem;
+  }
+  .auth-label-main {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 0.15rem;
+  }
+  .auth-label-sub {
+    display: block;
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 0.45rem;
+  }
+
+  /* ── Custom Dark Select Dropdown ───────────────────────── */
+  .custom-select-wrapper {
+    position: relative;
+  }
+  .custom-select-trigger {
+    width: 100%;
+    background: #232936;
+    color: #ffffff;
+    border: 1px solid #232936;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.9375rem;
+    font-family: inherit;
+    cursor: pointer;
+    box-sizing: border-box;
+    user-select: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .custom-select-trigger:focus,
+  .custom-select-trigger:focus-visible {
+    outline: none;
+    border-color: #00a884;
+    box-shadow: 0 0 0 3px rgba(0, 168, 132, 0.2);
+  }
+  .custom-select-trigger .chevron-icon {
+    transition: transform 0.2s ease;
+    color: #94a3b8;
+  }
+  .custom-select-wrapper.is-open .chevron-icon {
+    transform: rotate(180deg);
+  }
+
+  .custom-select-menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+    z-index: 50;
+    padding: 5px;
+    display: none;
+  }
+  .custom-select-wrapper.is-open .custom-select-menu {
+    display: block;
+  }
+  .custom-select-option {
+    padding: 0.65rem 0.95rem;
+    font-size: 0.9375rem;
+    color: #1e293b;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .custom-select-option:hover,
+  .custom-select-option.is-active {
+    background: #f1f5f9;
+    color: #0f172a;
+  }
+
+  /* ── 2-Column Grid Rows ────────────────────────────────── */
+  .auth-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.85rem;
+  }
+  @media (max-width: 440px) {
+    .auth-grid-2 {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ── Dark Input Fields ─────────────────────────────────── */
+  .auth-input-dark {
+    width: 100%;
+    background: #232936;
+    color: #ffffff;
+    border: 1px solid #232936;
+    border-radius: 8px;
+    padding: 0.75rem 0.95rem;
+    font-size: 0.9375rem;
+    font-family: inherit;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .auth-input-dark::placeholder {
+    color: #94a3b8;
+    opacity: 0.85;
+  }
+  .auth-input-dark:focus {
+    border-color: #00a884;
+    box-shadow: 0 0 0 3px rgba(0, 168, 132, 0.2);
+  }
+  .auth-input-dark.is-invalid {
+    border-color: #ef4444;
+  }
+
+  .auth-hint-text {
+    font-size: 0.78rem;
+    color: #64748b;
+    margin-top: 0.35rem;
+  }
+  .auth-error-text {
+    font-size: 0.78rem;
+    color: #ef4444;
+    margin-top: 0.3rem;
+    display: block;
+  }
+
+  /* ── Employer Pending Notice & Company Field ───────────── */
+  .employer-expandable {
+    display: none;
+    margin-top: 0.75rem;
+  }
+  .employer-notice {
+    padding: 0.65rem 0.85rem;
+    background: #fffbeb;
+    border: 1px solid #fef3c7;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: #92400e;
+    margin-bottom: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  /* ── Checkbox Row ──────────────────────────────────────── */
+  .auth-terms-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.85rem;
+    color: #475569;
+    margin-top: 1.15rem;
+    margin-bottom: 1.4rem;
+    cursor: pointer;
+  }
+  .auth-terms-checkbox {
+    width: 17px;
+    height: 17px;
+    margin-top: 2px;
+    accent-color: #00a884;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .auth-teal-link {
+    color: #00a884;
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.15s;
+  }
+  .auth-teal-link:hover {
+    color: #008f70;
+  }
+
+  /* ── Submit Button ─────────────────────────────────────── */
+  .auth-btn-primary {
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+    background: #00a884;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+    box-shadow: 0 4px 12px rgba(0, 168, 132, 0.25);
+  }
+  .auth-btn-primary:hover {
+    background: #008f70;
+    box-shadow: 0 6px 16px rgba(0, 168, 132, 0.35);
+  }
+  .auth-btn-primary:active {
+    transform: scale(0.99);
+  }
+
+  /* ── Footer ────────────────────────────────────────────── */
+  .auth-card-footer {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #475569;
+    margin-top: 1.5rem;
+  }
+  .auth-card-footer .auth-teal-link {
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .auth-card-footer .auth-teal-link:hover {
+    text-decoration: underline;
+  }
+
+  /* ── Flash / Form Alert ────────────────────────────────── */
+  .auth-form-alert {
+    padding: 0.75rem 1rem;
+    background: #fef2f2;
+    border: 1px solid #fee2e2;
+    border-radius: 8px;
+    color: #dc2626;
+    font-size: 0.875rem;
+    margin-bottom: 1.25rem;
+  }
+</style>
+
+<div class="auth-page-container">
+  <div class="auth-signup-card" id="signup-card">
+
+    <!-- Brand Logo with Teal Dot -->
+    <div class="auth-brand-logo">
+      <a href="/" class="brand-logo-link" title="Inkboard Home">
+        <span class="brand-text">
+          <span class="brand-i-container"><span class="brand-teal-dot"></span>ı</span>nkboard
+        </span>
+      </a>
+    </div>
+
+    <!-- Title and Subtitle -->
+    <h1 class="auth-card-title">Create your account</h1>
+    <p class="auth-card-sub" id="signup-subtitle">Choose your account type to get started.</p>
+
+    <!-- Form Level Errors -->
+    {% if form.non_field_errors %}
+    <div class="auth-form-alert" role="alert">
+      {% for err in form.non_field_errors %}{{ err }}{% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" novalidate id="signup-form">
+      {% csrf_token %}
+      <input type="hidden" name="role" id="role-input" value="{{ form.role.value|default:'applicant' }}">
+
+      <!-- Account Type Field -->
+      <div class="auth-field-group">
+        <label class="auth-label-main" for="select-trigger">Account Type</label>
+        <span class="auth-label-sub">Select the role that best describes you.</span>
+        
+        <div class="custom-select-wrapper" id="role-select-wrapper">
+          <div class="custom-select-trigger" id="select-trigger" role="combobox" aria-expanded="false" aria-controls="select-menu" tabindex="0">
+            <span id="selected-role-text">
+              {% if form.role.value == 'employer' %}Employer{% else %}Job Seeker{% endif %}
+            </span>
+            <svg class="chevron-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+
+          <div class="custom-select-menu" id="select-menu" role="listbox">
+            <div class="custom-select-option{% if form.role.value != 'employer' %} is-active{% endif %}"
+                 data-value="applicant"
+                 data-label="Job Seeker"
+                 role="option">
+              Job Seeker
+            </div>
+            <div class="custom-select-option{% if form.role.value == 'employer' %} is-active{% endif %}"
+                 data-value="employer"
+                 data-label="Employer"
+                 role="option">
+              Employer
+            </div>
+          </div>
+        </div>
+
+        <!-- Optional Employer Additional Fields (Shown only when Employer is selected) -->
+        <div class="employer-expandable" id="employer-expandable">
+          <div class="employer-notice">
+            <span>⏳</span> Employer accounts are reviewed before activation — usually within 24 hours.
+          </div>
+          <div class="auth-field-group" style="margin-bottom:0.5rem;">
+            <label class="auth-label-main" for="id_company_name">Company name</label>
+            <input class="auth-input-dark{% if form.company_name.errors %} is-invalid{% endif %}"
+                   type="text" name="company_name" id="id_company_name"
+                   placeholder="Your company name"
+                   value="{{ form.company_name.value|default:'' }}"
+                   autocomplete="organization">
+            {% for err in form.company_name.errors %}<span class="auth-error-text">{{ err }}</span>{% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- First name & Last name (2 columns) -->
+      <div class="auth-field-group">
+        <div class="auth-grid-2">
+          <div>
+            <label class="auth-label-main" for="id_first_name">First name</label>
+            <input class="auth-input-dark{% if form.first_name.errors %} is-invalid{% endif %}"
+                   type="text" name="first_name" id="id_first_name"
+                   placeholder="First name"
+                   value="{{ form.first_name.value|default:'' }}"
+                   autocomplete="given-name" required>
+            {% for err in form.first_name.errors %}<span class="auth-error-text">{{ err }}</span>{% endfor %}
+          </div>
+          <div>
+            <label class="auth-label-main" for="id_last_name">Last name</label>
+            <input class="auth-input-dark{% if form.last_name.errors %} is-invalid{% endif %}"
+                   type="text" name="last_name" id="id_last_name"
+                   placeholder="Last name"
+                   value="{{ form.last_name.value|default:'' }}"
+                   autocomplete="family-name" required>
+            {% for err in form.last_name.errors %}<span class="auth-error-text">{{ err }}</span>{% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Email address (Full width) -->
+      <div class="auth-field-group">
+        <label class="auth-label-main" for="id_email">Email address</label>
+        <input class="auth-input-dark{% if form.email.errors %} is-invalid{% endif %}"
+               type="email" name="email" id="id_email"
+               placeholder="you@domain.com"
+               value="{{ form.email.value|default:'' }}"
+               autocomplete="email" required>
+        {% for err in form.email.errors %}<span class="auth-error-text">{{ err }}</span>{% endfor %}
+      </div>
+
+      <!-- Password & Confirm password (2 columns) -->
+      <div class="auth-field-group" style="margin-bottom:0.35rem;">
+        <div class="auth-grid-2">
+          <div>
+            <label class="auth-label-main" for="id_password1">Password</label>
+            <input class="auth-input-dark{% if form.password1.errors %} is-invalid{% endif %}"
+                   type="password" name="password1" id="id_password1"
+                   placeholder="Create a password"
+                   autocomplete="new-password" required>
+            {% for err in form.password1.errors %}<span class="auth-error-text">{{ err }}</span>{% endfor %}
+          </div>
+          <div>
+            <label class="auth-label-main" for="id_password2">Confirm password</label>
+            <input class="auth-input-dark{% if form.password2.errors %} is-invalid{% endif %}"
+                   type="password" name="password2" id="id_password2"
+                   placeholder="Confirm your password"
+                   autocomplete="new-password" required>
+            {% for err in form.password2.errors %}<span class="auth-error-text">{{ err }}</span>{% endfor %}
+          </div>
+        </div>
+        <div class="auth-hint-text">Use at least 8 characters.</div>
+      </div>
+
+      <!-- Terms & Privacy Policy Checkbox -->
+      <label class="auth-terms-row" for="id_terms">
+        <input type="checkbox" name="terms" id="id_terms" class="auth-terms-checkbox" required>
+        <span>I agree to the <a href="#terms" class="auth-teal-link" onclick="event.preventDefault();">Terms of Service</a> and <a href="#privacy" class="auth-teal-link" onclick="event.preventDefault();">Privacy Policy</a>.</span>
+      </label>
+
+      <!-- Submit Button -->
+      <button type="submit" class="auth-btn-primary" id="signup-btn">Create Account</button>
+    </form>
+
+    <!-- Footer -->
+    <div class="auth-card-footer">
+      Already have an account? <a href="{% url 'accounts:login' %}" class="auth-teal-link">Sign in</a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  (function () {
+    const wrapper = document.getElementById('role-select-wrapper');
+    const trigger = document.getElementById('select-trigger');
+    const roleInput = document.getElementById('role-input');
+    const roleText = document.getElementById('selected-role-text');
+    const options = document.querySelectorAll('.custom-select-option');
+    const employerExpandable = document.getElementById('employer-expandable');
+
+    function toggleMenu() {
+      const isOpen = wrapper.classList.toggle('is-open');
+      trigger.setAttribute('aria-expanded', isOpen);
+    }
+
+    function closeMenu() {
+      wrapper.classList.remove('is-open');
+      trigger.setAttribute('aria-expanded', 'false');
+    }
+
+    function selectRole(val, label) {
+      roleInput.value = val;
+      roleText.textContent = label;
+      options.forEach(opt => {
+        opt.classList.toggle('is-active', opt.dataset.value === val);
+      });
+      if (val === 'employer') {
+        employerExpandable.style.display = 'block';
+      } else {
+        employerExpandable.style.display = 'none';
+      }
+      closeMenu();
+    }
+
+    trigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      toggleMenu();
+    });
+
+    trigger.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleMenu();
+      } else if (e.key === 'Escape') {
+        closeMenu();
+      }
+    });
+
+    options.forEach(opt => {
+      opt.addEventListener('click', function (e) {
+        e.stopPropagation();
+        selectRole(opt.dataset.value, opt.dataset.label);
+      });
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!wrapper.contains(e.target)) {
+        closeMenu();
+      }
+    });
+
+    // Initialize state
+    const initialRole = roleInput.value || 'applicant';
+    if (initialRole === 'employer') {
+      selectRole('employer', 'Employer');
+    } else {
+      selectRole('applicant', 'Job Seeker');
+    }
+  })();
+</script>
+{% endblock %}

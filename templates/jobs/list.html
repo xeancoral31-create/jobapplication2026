@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block title %}Explore Open Jobs — Inkboard{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: var(--space-8); padding-bottom: var(--space-12);">
+
+  <!-- Hero Header -->
+  <div style="margin-bottom: var(--space-8); text-align: left;">
+    <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-2);">
+      <span class="badge badge--primary">Job Board</span>
+      <span class="text-xs text-muted">Curated opportunities for craftspeople & engineers</span>
+    </div>
+    <h1 class="heading-1" style="font-family: var(--font-serif); margin-bottom: var(--space-2);">
+      Open Roles at Top Companies
+    </h1>
+    <p class="text-muted" style="max-width: 650px; font-size: var(--text-md); margin: 0;">
+      Find your next career move. Filter by role, location, category, and minimum compensation.
+    </p>
+  </div>
+
+  <!-- Filter & Search Controls Form -->
+  <div class="card" style="background: var(--color-surface-1); border: 1px solid var(--color-border); padding: var(--space-5); margin-bottom: var(--space-8); box-shadow: var(--shadow-sm);">
+    <form id="filter-form"
+          method="get"
+          action="{% url 'jobs:list' %}"
+          hx-get="{% url 'jobs:list' %}"
+          hx-target="#jobs-results-container"
+          hx-push-url="true">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); align-items: flex-end;">
+        
+        <!-- Keyword Search -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label text-xs font-semibold" for="filter-q">Keyword / Title / Company</label>
+          <input type="text"
+                 name="q"
+                 id="filter-q"
+                 class="form-control"
+                 placeholder="Search roles or skills..."
+                 value="{{ search_query }}"
+                 hx-get="{% url 'jobs:list' %}"
+                 hx-trigger="input changed delay:350ms, search"
+                 hx-include="#filter-form"
+                 hx-target="#jobs-results-container"
+                 hx-push-url="true">
+        </div>
+
+        <!-- Category Dropdown -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label text-xs font-semibold" for="filter-category">Category</label>
+          <select name="category"
+                  id="filter-category"
+                  class="form-control"
+                  hx-get="{% url 'jobs:list' %}"
+                  hx-trigger="change"
+                  hx-include="#filter-form"
+                  hx-target="#jobs-results-container"
+                  hx-push-url="true">
+            <option value="">All Categories</option>
+            {% for cat in categories %}
+              <option value="{{ cat.slug }}" {% if selected_category == cat.slug %}selected{% endif %}>
+                {{ cat.icon }} {{ cat.name }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Location Filter -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label text-xs font-semibold" for="filter-location">Location</label>
+          <input type="text"
+                 name="location"
+                 id="filter-location"
+                 class="form-control"
+                 placeholder="e.g. San Francisco or Remote"
+                 value="{{ selected_location }}"
+                 hx-get="{% url 'jobs:list' %}"
+                 hx-trigger="input changed delay:350ms"
+                 hx-include="#filter-form"
+                 hx-target="#jobs-results-container"
+                 hx-push-url="true">
+        </div>
+
+        <!-- Min Salary Filter -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label text-xs font-semibold" for="filter-salary">Minimum Salary</label>
+          <select name="min_salary"
+                  id="filter-salary"
+                  class="form-control"
+                  hx-get="{% url 'jobs:list' %}"
+                  hx-trigger="change"
+                  hx-include="#filter-form"
+                  hx-target="#jobs-results-container"
+                  hx-push-url="true">
+            <option value="">Any Salary</option>
+            <option value="50000" {% if min_salary == "50000" %}selected{% endif %}>$50,000+ / yr</option>
+            <option value="80000" {% if min_salary == "80000" %}selected{% endif %}>$80,000+ / yr</option>
+            <option value="100000" {% if min_salary == "100000" %}selected{% endif %}>$100,000+ / yr</option>
+            <option value="120000" {% if min_salary == "120000" %}selected{% endif %}>$120,000+ / yr</option>
+            <option value="150000" {% if min_salary == "150000" %}selected{% endif %}>$150,000+ / yr</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- Secondary Filters & Remote Toggle -->
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--color-border-subtle); flex-wrap: wrap; gap: var(--space-3);">
+        <label style="display: inline-flex; align-items: center; gap: var(--space-2); cursor: pointer; user-select: none;">
+          <input type="checkbox"
+                 name="is_remote"
+                 value="1"
+                 {% if is_remote %}checked{% endif %}
+                 hx-get="{% url 'jobs:list' %}"
+                 hx-trigger="change"
+                 hx-include="#filter-form"
+                 hx-target="#jobs-results-container"
+                 hx-push-url="true"
+                 class="checkbox-input">
+          <span class="text-sm font-semibold">🌐 Remote friendly roles only</span>
+        </label>
+
+        <noscript>
+          <button type="submit" class="btn btn--primary btn--sm">Apply Filters</button>
+        </noscript>
+      </div>
+    </form>
+  </div>
+
+  <!-- HTMX Results Container -->
+  {% include "jobs/partials/job_list_results.html" %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,282 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Applicant Dashboard — Inkboard{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: var(--space-10); padding-bottom: var(--space-16);">
+
+  <!-- ── 1. Header ──────────────────────────────────────────────── -->
+  <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); margin-bottom: var(--space-8);">
+    <div>
+      <h1 class="heading-1" style="margin: 0;">
+        Welcome back, {{ user.first_name|default:user.username }}
+        <span style="font-size: 1.5rem;" aria-hidden="true">👋</span>
+      </h1>
+      <p class="text-muted" style="margin-top: var(--space-1);">
+        {% with p=user.applicant_profile %}
+          {{ p.headline|default:"Candidate Dashboard &middot; Track applications & interviews" }}
+        {% endwith %}
+      </p>
+    </div>
+    <div style="display: flex; gap: var(--space-3);">
+      <a href="{% url 'jobs:list' %}" class="btn btn--primary">
+        Explore Jobs &rarr;
+      </a>
+    </div>
+  </div>
+
+  <!-- ── 2. Profile Completeness Bar ────────────────────────────── -->
+  <div class="completeness-card card--hard-shadow">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-2);">
+      <div style="display: flex; align-items: center; gap: var(--space-3);">
+        <span style="font-size: 1.25rem;" aria-hidden="true">🎯</span>
+        <div>
+          <span style="font-weight: 700; color: var(--color-text-primary); font-size: var(--text-base);">
+            Profile Completeness
+          </span>
+          <span class="text-sm text-muted" style="margin-left: var(--space-2);">
+            A complete profile gets 3x more employer views
+          </span>
+        </div>
+      </div>
+      <div>
+        <span class="badge {% if profile_completeness >= 80 %}badge--success{% elif profile_completeness >= 50 %}badge--warning{% else %}badge--neutral{% endif %}" style="font-size: var(--text-sm);">
+          {{ profile_completeness }}% Complete
+        </span>
+      </div>
+    </div>
+
+    <!-- Visual Progress Bar -->
+    <div class="completeness-bar">
+      <div class="completeness-fill" data-width="{{ profile_completeness }}"></div>
+    </div>
+
+    {% if missing_profile_steps %}
+    <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-3);">
+      <span class="text-xs text-muted" style="font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Next Steps:</span>
+      {% for tip in missing_profile_steps|slice:":3" %}
+      <span class="tag" style="background: hsl(248 78% 52% / 0.1); border-color: hsl(248 78% 52% / 0.25); color: var(--color-primary-300);">
+        + {{ tip }}
+      </span>
+      {% endfor %}
+      <span class="text-xs text-accent" style="font-weight: 600; margin-left: auto;">
+        Keep updating to 100% &rarr;
+      </span>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- ── 3. Hard-Shadow Stat Tiles (Applications by Status) ─────── -->
+  <div class="grid-4" style="margin-bottom: var(--space-10);">
+    <!-- Total Applications -->
+    <div class="stat-tile stat-tile--primary">
+      <div class="stat-tile__header">
+        <span class="stat-tile__label">Total Applications</span>
+        <span class="stat-tile__icon" aria-hidden="true">📑</span>
+      </div>
+      <div class="stat-tile__value">{{ total_applications }}</div>
+      <div class="stat-tile__label" style="font-size: var(--text-xs);">
+        {{ active_applications }} active in pipeline
+      </div>
+    </div>
+
+    <!-- Under Review -->
+    <div class="stat-tile stat-tile--amber">
+      <div class="stat-tile__header">
+        <span class="stat-tile__label">Under Review</span>
+        <span class="stat-tile__icon" aria-hidden="true">👀</span>
+      </div>
+      <div class="stat-tile__value">{{ status_stats.under_review|default:0 }}</div>
+      <div class="stat-tile__label" style="font-size: var(--text-xs); color: hsl(38 92% 70%);">
+        Being evaluated by employers
+      </div>
+    </div>
+
+    <!-- Shortlisted -->
+    <div class="stat-tile stat-tile--teal">
+      <div class="stat-tile__header">
+        <span class="stat-tile__label">Shortlisted</span>
+        <span class="stat-tile__icon" aria-hidden="true">⭐</span>
+      </div>
+      <div class="stat-tile__value">{{ status_stats.shortlisted|default:0 }}</div>
+      <div class="stat-tile__label" style="font-size: var(--text-xs); color: var(--color-accent-400);">
+        Advanced to candidate shortlist
+      </div>
+    </div>
+
+    <!-- Interviews & Offers -->
+    <div class="stat-tile stat-tile--coral">
+      <div class="stat-tile__header">
+        <span class="stat-tile__label">Interviews / Offers</span>
+        <span class="stat-tile__icon" aria-hidden="true">🎉</span>
+      </div>
+      <div class="stat-tile__value">
+        {{ upcoming_interviews|length }}
+      </div>
+      <div class="stat-tile__label" style="font-size: var(--text-xs); color: hsl(354 75% 70%);">
+        Scheduled sessions
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 4. Main Two-Column Layout ──────────────────────────────── -->
+  <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: var(--space-8); align-items: start;">
+
+    <!-- Left: Upcoming Interviews (Ticket Cards) -->
+    <section>
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-4);">
+        <h2 class="heading-3" style="margin: 0;">Upcoming Interviews</h2>
+        <span class="text-sm text-muted">{{ upcoming_interviews|length }} scheduled</span>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+        {% for iv in upcoming_interviews %}
+        <div class="ticket-card animate-fade-in">
+          <!-- Ticket Stub (Date badge) -->
+          <div class="ticket-card__stub">
+            <span class="ticket-card__month">{{ iv.scheduled_at|date:"M" }}</span>
+            <span class="ticket-card__day">{{ iv.scheduled_at|date:"d" }}</span>
+            <span class="ticket-card__time">{{ iv.scheduled_at|date:"H:i" }}</span>
+          </div>
+
+          <!-- Main Ticket Content -->
+          <div class="ticket-card__main">
+            <div>
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); margin-bottom: var(--space-1);">
+                <p class="ticket-card__title">{{ iv.application.job.title }}</p>
+                <span class="badge badge--accent" style="font-size: var(--text-xs);">
+                  {{ iv.get_format_display }}
+                </span>
+              </div>
+              <p style="font-size: var(--text-sm); color: var(--color-text-secondary); margin: 0;">
+                {{ iv.application.job.employer.employer_profile.company_name|default:iv.application.job.employer.get_full_name }}
+              </p>
+            </div>
+
+            <div class="ticket-card__footer">
+              <span class="ticket-card__meta">
+                ⏱️ {{ iv.duration_minutes }} mins &middot;
+                {% if iv.meeting_link %}
+                  <a href="{{ iv.meeting_link }}" target="_blank" rel="noopener" style="color: var(--color-accent-400); text-decoration: underline;">
+                    Join Video Call
+                  </a>
+                {% else %}
+                  📍 {{ iv.location|default:"Online" }}
+                {% endif %}
+              </span>
+              <a href="{% url 'applications:detail' iv.application.pk %}" class="btn btn--ghost btn--sm">
+                Details &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="card--hard-shadow" style="padding: var(--space-10); text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: var(--space-2);" aria-hidden="true">🎟️</div>
+          <p class="font-semibold" style="margin-bottom: var(--space-1);">No upcoming interviews scheduled</p>
+          <p class="text-sm text-muted">
+            When an employer schedules an interview with you, your ticket passes will appear right here.
+          </p>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Recommended Jobs Section -->
+      <div style="margin-top: var(--space-10);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-4);">
+          <h2 class="heading-3" style="margin: 0;">Recommended Opportunities</h2>
+          <a href="{% url 'jobs:list' %}" class="btn btn--ghost btn--sm">View All &rarr;</a>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+          {% for job in recommended %}
+          <div class="card--hard-shadow" style="padding: var(--space-4) var(--space-5); display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);">
+            <div style="min-width: 0;">
+              <p style="font-weight: 600; color: var(--color-text-primary); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                {{ job.title }}
+              </p>
+              <p style="font-size: var(--text-xs); color: var(--color-text-muted); margin: var(--space-1) 0 0;">
+                {{ job.employer.employer_profile.company_name|default:job.employer.get_full_name }}
+                &middot; {{ job.location }}
+                {% if job.salary_min %}
+                  &middot; <span class="text-primary-color font-semibold">{{ job.salary_currency }} {{ job.salary_min|floatformat:0 }}</span>
+                {% endif %}
+              </p>
+            </div>
+            <a href="{% url 'jobs:detail' job.slug %}" class="btn btn--primary btn--sm" style="flex-shrink: 0;">
+              View Job
+            </a>
+          </div>
+          {% empty %}
+          <div class="card--hard-shadow" style="padding: var(--space-8); text-align: center;">
+            <p class="text-muted">No open recommendations at the moment.</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <!-- Right: Recent Applications with Stamp Chips -->
+    <section>
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-4);">
+        <h2 class="heading-3" style="margin: 0;">Recent Applications</h2>
+        <a href="{% url 'applications:list' %}" class="btn btn--ghost btn--sm">All Applications</a>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+        {% for app in recent_applications %}
+        <div class="card--hard-shadow" style="padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-3);">
+          <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-3);">
+            <div style="flex: 1; min-width: 0;">
+              <a href="{% url 'applications:detail' app.pk %}" style="font-weight: 600; color: var(--color-text-primary); font-size: var(--text-base); text-decoration: none;">
+                {{ app.job.title }}
+              </a>
+              <p style="font-size: var(--text-xs); color: var(--color-text-muted); margin: var(--space-1) 0 0;">
+                {{ app.job.employer.employer_profile.company_name|default:app.job.employer.get_full_name }}
+                &middot; Applied {{ app.applied_at|date:"M j, Y" }}
+              </p>
+            </div>
+
+            <!-- Stamp Chip Component -->
+            <span class="stamp-chip stamp-chip--{{ app.status }}">
+              {{ app.get_status_display }}
+            </span>
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--color-border-subtle); padding-top: var(--space-2); margin-top: var(--space-1);">
+            <span class="text-xs text-muted">
+              {% if app.interviews.exists %}
+                Interview active
+              {% else %}
+                Applied {{ app.applied_at|timesince }} ago
+              {% endif %}
+            </span>
+            <a href="{% url 'applications:detail' app.pk %}" class="text-xs text-accent" style="font-weight: 600;">
+              View status &rarr;
+            </a>
+          </div>
+        </div>
+        {% empty %}
+        <div class="card--hard-shadow" style="padding: var(--space-10); text-align: center;">
+          <div style="font-size: 2rem; margin-bottom: var(--space-2);" aria-hidden="true">📬</div>
+          <p class="font-semibold" style="margin-bottom: var(--space-1);">No applications sent yet</p>
+          <p class="text-sm text-muted" style="margin-bottom: var(--space-4);">
+            Browse our open positions and start applying today.
+          </p>
+          <a href="{% url 'jobs:list' %}" class="btn btn--primary btn--sm">Browse Open Jobs</a>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('[data-width]').forEach(function(el) {
+    el.style.width = el.getAttribute('data-width') + '%';
+  });
+</script>
+{% endblock %}

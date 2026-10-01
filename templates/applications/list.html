@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block title %}My Applications — Inkboard{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: var(--space-8); padding-bottom: var(--space-16);">
+
+  <!-- Page Header -->
+  <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: var(--space-8); flex-wrap: wrap; gap: var(--space-4);">
+    <div>
+      <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-1);">
+        <span class="badge badge--primary">Candidate Desk</span>
+        <span class="text-xs text-muted">Track your job applications and interview updates</span>
+      </div>
+      <h1 class="heading-1" style="font-family: var(--font-serif); margin: 0 0 var(--space-1);">
+        My Applications
+      </h1>
+      <p class="text-muted" style="margin: 0; font-size: var(--text-sm);">
+        All your active submissions, stage movements, and interview progress.
+      </p>
+    </div>
+
+    <div>
+      <a href="{% url 'jobs:list' %}" class="btn btn--primary btn--sm">
+        Explore More Jobs &rarr;
+      </a>
+    </div>
+  </div>
+
+  <!-- Status Tabs Filter -->
+  <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-6); border-bottom: 1.5px solid var(--color-border); padding-bottom: var(--space-2); flex-wrap: wrap;">
+    <a href="{% url 'applications:list' %}?status=all"
+       class="btn btn--sm {% if current_status == 'all' %}btn--primary{% else %}btn--ghost{% endif %}">
+      All Applications ({{ counts.all }})
+    </a>
+    <a href="{% url 'applications:list' %}?status=active"
+       class="btn btn--sm {% if current_status == 'active' %}btn--primary{% else %}btn--ghost{% endif %}">
+      In Progress ({{ counts.active }})
+    </a>
+    <a href="{% url 'applications:list' %}?status=decided"
+       class="btn btn--sm {% if current_status == 'decided' %}btn--primary{% else %}btn--ghost{% endif %}">
+      Decided / Closed ({{ counts.decided }})
+    </a>
+  </div>
+
+  <!-- Applications List / Table -->
+  {% if applications %}
+  <div class="card" style="background: var(--color-surface-1); border: 1px solid var(--color-border); overflow: hidden; box-shadow: var(--shadow-sm);">
+    <div class="table-wrap">
+      <table class="table" style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr style="border-bottom: 2px solid var(--color-border); background: var(--color-surface-2);">
+            <th style="padding: var(--space-3) var(--space-4); text-align: left; font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary);">Role & Company</th>
+            <th style="padding: var(--space-3) var(--space-4); text-align: left; font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary);">Current Status</th>
+            <th style="padding: var(--space-3) var(--space-4); text-align: left; font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary);">Applied On</th>
+            <th style="padding: var(--space-3) var(--space-4); text-align: right; font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary);">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for app in applications %}
+          <tr style="border-bottom: 1px solid var(--color-border-subtle); transition: background var(--duration-fast);">
+            
+            <!-- Job & Employer Info -->
+            <td style="padding: var(--space-4);">
+              <div style="display: flex; align-items: center; gap: var(--space-3);">
+                <div style="width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--color-surface-2); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">
+                  {% if app.job.category and app.job.category.icon %}
+                    {{ app.job.category.icon }}
+                  {% else %}
+                    💼
+                  {% endif %}
+                </div>
+                <div>
+                  <a href="{% url 'jobs:detail' app.job.slug %}" class="text-primary-color" style="font-weight: 600; font-size: var(--text-md); text-decoration: none;">
+                    {{ app.job.title }}
+                  </a>
+                  <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin: 2px 0 0;">
+                    {{ app.job.employer.employer_profile.company_name|default:app.job.employer.get_full_name }}
+                    &middot; 📍 {{ app.job.location }}
+                    {% if app.job.is_remote %}&middot; <span class="text-accent">Remote</span>{% endif %}
+                  </p>
+                </div>
+              </div>
+            </td>
+
+            <!-- Stamp Status Chip -->
+            <td style="padding: var(--space-4); white-space: nowrap;">
+              <span class="stamp-chip stamp-chip--{{ app.status }}">
+                {{ app.get_status_display }}
+              </span>
+            </td>
+
+            <!-- Applied Date -->
+            <td style="padding: var(--space-4); font-size: var(--text-xs); color: var(--color-text-muted); white-space: nowrap;">
+              {{ app.applied_at|date:"M j, Y" }}
+              <div style="font-size: 0.72rem; color: var(--color-text-muted);">
+                {{ app.applied_at|timesince }} ago
+              </div>
+            </td>
+
+            <!-- Action Link to Detail & Timeline -->
+            <td style="padding: var(--space-4); text-align: right; white-space: nowrap;">
+              <a href="{% url 'applications:detail' app.pk %}" class="btn btn--secondary btn--sm" style="text-decoration: none;">
+                View Timeline &rarr;
+              </a>
+            </td>
+
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  {% else %}
+  <!-- Empty State -->
+  <div class="card" style="padding: var(--space-12) var(--space-6); text-align: center; background: var(--color-surface-1); border: 1px solid var(--color-border);">
+    <div style="font-size: 3rem; margin-bottom: var(--space-3);">📋</div>
+    <h3 class="heading-3" style="font-family: var(--font-serif); margin-bottom: var(--space-2);">
+      No applications found
+    </h3>
+    <p class="text-muted" style="max-width: 440px; margin: 0 auto var(--space-6); font-size: var(--text-sm);">
+      {% if current_status != 'all' %}
+        You don't have any applications matching this filter.
+      {% else %}
+        You haven't submitted any job applications yet. Discover open positions on the job board.
+      {% endif %}
+    </p>
+    <a href="{% url 'jobs:list' %}" class="btn btn--primary btn--md">
+      Browse Open Positions &rarr;
+    </a>
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}
