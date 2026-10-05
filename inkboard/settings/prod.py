@@ -1,5 +1,5 @@
 """
-inkboard/settings/prod.py — Production configuration for Inkboard.
+inkboard/settings/prod.py — Production configuration for WorkWise.
 Includes WhiteNoise static compression, secure cookies, and hardened headers.
 """
 from .base import *

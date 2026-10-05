@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}{{ user_obj.get_full_name }} — Inkboard{% endblock %}
+{% block title %}{{ user_obj.get_full_name }} — WorkWise{% endblock %}
 {% block content %}
 <div class="container" style="padding-top:var(--space-10);">
   <h1 class="heading-1">{{ user_obj.get_full_name|default:user_obj.username }}</h1>

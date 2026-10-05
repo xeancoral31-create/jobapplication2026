@@ -83,7 +83,7 @@ class Command(BaseCommand):
         admin, created = User.objects.get_or_create(
             username="admin",
             defaults={
-                "email": "admin@inkboard.dev",
+                "email": "admin@workwise.dev",
                 "first_name": "Site",
                 "last_name": "Admin",
                 "role": User.Role.ADMIN,
@@ -103,7 +103,7 @@ class Command(BaseCommand):
         employer_data = [
             {
                 "username": "demo_employer1",
-                "email": "employer1@inkboard.dev",
+                "email": "employer1@workwise.dev",
                 "first_name": "Priya",
                 "last_name": "Sharma",
                 "company_name": "Synapse Labs",
@@ -112,7 +112,7 @@ class Command(BaseCommand):
             },
             {
                 "username": "demo_employer2",
-                "email": "employer2@inkboard.dev",
+                "email": "employer2@workwise.dev",
                 "first_name": "Marcus",
                 "last_name": "Webb",
                 "company_name": "Orbit Systems",
@@ -151,9 +151,9 @@ class Command(BaseCommand):
         # ── Applicants ─────────────────────────────────────────────
         applicants = []
         applicant_data = [
-            {"username": "demo_applicant1", "email": "applicant1@inkboard.dev", "first_name": "Alex",    "last_name": "Chen",   "headline": "Full-stack Engineer | Django & React"},
-            {"username": "demo_applicant2", "email": "applicant2@inkboard.dev", "first_name": "Fatima",  "last_name": "Nkosi",  "headline": "Data Scientist | Python, SQL, ML"},
-            {"username": "demo_applicant3", "email": "applicant3@inkboard.dev", "first_name": "Jamie",   "last_name": "Rivera", "headline": "Senior Product Designer | Figma, Design Systems"},
+            {"username": "demo_applicant1", "email": "applicant1@workwise.dev", "first_name": "Alex",    "last_name": "Chen",   "headline": "Full-stack Engineer | Django & React"},
+            {"username": "demo_applicant2", "email": "applicant2@workwise.dev", "first_name": "Fatima",  "last_name": "Nkosi",  "headline": "Data Scientist | Python, SQL, ML"},
+            {"username": "demo_applicant3", "email": "applicant3@workwise.dev", "first_name": "Jamie",   "last_name": "Rivera", "headline": "Senior Product Designer | Figma, Design Systems"},
         ]
         for ad in applicant_data:
             u, created = User.objects.get_or_create(

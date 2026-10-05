@@ -1,6 +1,6 @@
-# Inkboard — Editorial Job Board Platform
+# WorkWise — Editorial Job Board Platform
 
-**Inkboard** is a modern, editorial job-board web application built with Django 5, Vanilla CSS, HTMX, and SQLite/PostgreSQL. It connects high-growth companies with talented job seekers through an intuitive, aesthetic interface featuring live previews, Kanban review pipelines, candidate drawers, and role-based permissions.
+**WorkWise** is a modern, editorial job-board web application built with Django 5, Vanilla CSS, HTMX, and SQLite/PostgreSQL. It connects high-growth companies with talented job seekers through an intuitive, aesthetic interface featuring live previews, Kanban review pipelines, candidate drawers, and role-based permissions.
 
 ---
 
@@ -80,11 +80,11 @@ When seeded via `python manage.py seed_demo`, the following accounts are ready t
 
 | Role | Username / Email | Password | Description |
 |---|---|---|---|
-| **Admin** | `admin` (`admin@inkboard.dev`) | `admin1234` | Full superadmin platform control at `/admin-panel/` |
-| **Employer** | `employer1@inkboard.dev` | `employer1234` | Synapse Labs (Verified employer with open jobs & pipeline) |
-| **Employer** | `employer2@inkboard.dev` | `employer1234` | Orbit Systems (Employer with candidate applications) |
-| **Applicant** | `applicant1@inkboard.dev` | `applicant1234` | Alex Rivera (Applied to multiple positions) |
-| **Applicant** | `applicant2@inkboard.dev` | `applicant1234` | Sam Chen (Candidate with scheduled interviews) |
+| **Admin** | `admin` (`admin@workwise.dev`) | `admin1234` | Full superadmin platform control at `/admin-panel/` |
+| **Employer** | `employer1@workwise.dev` | `employer1234` | Synapse Labs (Verified employer with open jobs & pipeline) |
+| **Employer** | `employer2@workwise.dev` | `employer1234` | Orbit Systems (Employer with candidate applications) |
+| **Applicant** | `applicant1@workwise.dev` | `applicant1234` | Alex Rivera (Applied to multiple positions) |
+| **Applicant** | `applicant2@workwise.dev` | `applicant1234` | Sam Chen (Candidate with scheduled interviews) |
 
 ---
 

@@ -135,7 +135,7 @@ class AdminPanelAndModerationTest(TestCase):
         # 1. Superadmin user
         self.superadmin = User.objects.create_user(
             username="super_alice",
-            email="alice@inkboard.dev",
+            email="alice@workwise.dev",
             password="password123",
             role=User.Role.ADMIN,
             access_level=User.AccessLevel.SUPERADMIN,
@@ -146,7 +146,7 @@ class AdminPanelAndModerationTest(TestCase):
         # 2. Moderator user
         self.moderator = User.objects.create_user(
             username="mod_bob",
-            email="bob@inkboard.dev",
+            email="bob@workwise.dev",
             password="password123",
             role=User.Role.ADMIN,
             access_level=User.AccessLevel.MODERATOR,

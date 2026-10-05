@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}{{ job.title }} at {{ job.employer.employer_profile.company_name|default:job.employer.get_full_name }} — Inkboard{% endblock %}
+{% block title %}{{ job.title }} at {{ job.employer.employer_profile.company_name|default:job.employer.get_full_name }} — WorkWise{% endblock %}
 
 {% block content %}
 <div class="container" style="padding-top: var(--space-8); padding-bottom: var(--space-16);">

@@ -35,7 +35,7 @@ class UserAdmin(BaseUserAdmin):
 
     fieldsets = BaseUserAdmin.fieldsets + (
         (
-            _("Inkboard Profile"),
+            _("WorkWise Profile"),
             {
                 "fields": (
                     "role",
@@ -50,7 +50,7 @@ class UserAdmin(BaseUserAdmin):
     )
     add_fieldsets = BaseUserAdmin.add_fieldsets + (
         (
-            _("Inkboard Profile"),
+            _("WorkWise Profile"),
             {
                 "fields": ("role", "email", "first_name", "last_name"),
             },

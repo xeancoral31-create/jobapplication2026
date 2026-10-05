@@ -1,5 +1,5 @@
 """
-inkboard/settings/dev.py — Development configuration for Inkboard.
+inkboard/settings/dev.py — Development configuration for WorkWise.
 """
 from .base import *
 

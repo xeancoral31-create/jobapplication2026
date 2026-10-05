@@ -1,5 +1,5 @@
 """
-inkboard/settings/base.py — Shared base configuration for Inkboard.
+inkboard/settings/base.py — Shared base configuration for WorkWise.
 """
 from pathlib import Path
 import os
@@ -112,7 +112,7 @@ AUTHENTICATION_BACKENDS = [
 
 # Email Defaults
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-DEFAULT_FROM_EMAIL = "Inkboard <noreply@inkboard.dev>"
+DEFAULT_FROM_EMAIL = "WorkWise <noreply@workwise.dev>"
 
 # Crispy Forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

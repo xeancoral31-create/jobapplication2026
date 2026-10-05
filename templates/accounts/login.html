@@ -1,5 +1,6 @@
 {% extends "base_auth.html" %}
-{% block title %}Sign In — Inkboard{% endblock %}
+{% load static %}
+{% block title %}Sign In — WorkWise{% endblock %}
 
 {% block body %}
 <div class="auth-shell">
@@ -8,26 +9,12 @@
   <div class="auth-left">
     <div class="auth-left__content">
       <a href="/" class="auth-brand">
-        <div class="auth-brand__mark">✦</div>
-        Inkboard
+        <img src="{% static 'img/logo-128.png' %}" alt="WorkWise" class="auth-brand__mark" width="38" height="38">
+        WorkWise
       </a>
       <div class="auth-headline">
         <h1>Find Work<br>That Moves<br><em>You Forward.</em></h1>
-        <p class="auth-sub">Join 1,200+ companies and 40,000 candidates building careers on Inkboard.</p>
-      </div>
-    </div>
-    <div class="auth-stats">
-      <div>
-        <span class="auth-stat__num">8,400+</span>
-        <span class="auth-stat__label">Open roles</span>
-      </div>
-      <div>
-        <span class="auth-stat__num">1,200+</span>
-        <span class="auth-stat__label">Companies hiring</span>
-      </div>
-      <div>
-        <span class="auth-stat__num">94%</span>
-        <span class="auth-stat__label">Placement rate</span>
+        <p class="auth-sub">Join 1,200+ companies and 40,000 candidates building careers on WorkWise.</p>
       </div>
     </div>
   </div>
@@ -85,7 +72,7 @@
       <div class="auth-footer">
         <a href="{% url 'accounts:password_reset' %}">Forgot your password?</a>
         <p class="auth-footer__main">
-          New to Inkboard? <a href="{% url 'accounts:register' %}">Create an account</a>
+          New to WorkWise? <a href="{% url 'accounts:register' %}">Create an account</a>
         </p>
         <a href="{% url 'admin_login' %}" style="opacity:0.45;font-size:0.78rem;">Admin login</a>
       </div>

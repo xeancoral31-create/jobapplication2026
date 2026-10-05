@@ -1,171 +1,699 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}Inkboard — Find Your Next Opportunity{% endblock %}
-{% block meta_description %}Browse thousands of curated jobs at top companies. Inkboard matches talent with opportunity.{% endblock %}
+{% block title %}WorkWise — Find Work That Moves You Forward{% endblock %}
+{% block meta_description %}WorkWise connects ambitious professionals with companies building the next generation of products — one hire at a time.{% endblock %}
 
 {% block content %}
 
-<!-- ══ HERO ══════════════════════════════════════════════════ -->
-<section class="hero">
+<!-- ══ HERO SECTION (IMAGE 1 SPECIFICATION) ═════════════════════ -->
+<section class="hero-v2">
   <div class="container">
-    <span class="hero__eyebrow">✦ 8,400+ active listings</span>
-    <h1 class="hero__title">
-      Find Work That<br>
-      <span class="gradient-text">Moves You Forward</span>
-    </h1>
-    <p class="hero__subtitle">
-      Inkboard connects ambitious professionals with companies building
-      the next generation of products — on their own terms.
-    </p>
-
-    <!-- Search bar -->
-    <div class="search-bar" role="search" style="margin-bottom: var(--space-10);">
-      <input
-        class="search-bar__input"
-        type="search"
-        placeholder="Job title, skill, or company…"
-        aria-label="Search jobs"
-      >
-      <div class="search-bar__divider" aria-hidden="true"></div>
-      <input
-        class="search-bar__input"
-        type="text"
-        placeholder="📍 Location or Remote"
-        aria-label="Location"
-        style="max-width: 220px;"
-      >
-      <button class="search-bar__btn" type="button" id="btn-search-hero">Search Jobs</button>
-    </div>
-
-    <!-- Stats -->
-    <div class="stats-row">
-      <div class="stat-item">
-        <span class="stat-item__value">8.4k+</span>
-        <span class="stat-item__label">Open Roles</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-item__value">1.2k</span>
-        <span class="stat-item__label">Companies</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-item__value">94%</span>
-        <span class="stat-item__label">Placement Rate</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-item__value">48h</span>
-        <span class="stat-item__label">Avg. First Response</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ CATEGORIES ══════════════════════════════════════════ -->
-<section class="section" id="categories">
-  <div class="container">
-    <div class="section-header">
+    <div class="hero-v2__grid">
+      <!-- Left Column: Content, Search, Feature Badges -->
       <div>
-        <p class="section-label">Explore</p>
-        <h2 class="heading-1">Browse by Category</h2>
-      </div>
-      <a href="{% url 'jobs:list' %}" class="btn btn--ghost btn--sm">View all jobs →</a>
-    </div>
+        <span class="hero__badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+          Your Next Career Move Starts Here
+        </span>
 
-    <div class="category-grid">
-      {% for category in categories %}
-      <a href="{% url 'jobs:category' category.slug %}" class="category-chip animate-fade-in-up stagger-{{ forloop.counter }}">
-        <span class="category-chip__icon">{{ category.icon|default:"💼" }}</span>
-        <span class="category-chip__name">{{ category.name }}</span>
-        <span class="category-chip__count">{{ category.jobs.count }} job{{ category.jobs.count|pluralize }}</span>
-      </a>
-      {% empty %}
-      <p class="text-muted text-sm">No categories yet.</p>
-      {% endfor %}
+        <h1 class="hero__headline">
+          Find Work That<br>
+          <span class="hero__gradient-text">Moves You Forward</span>
+        </h1>
+
+        <p class="hero__lead">
+          WorkWise connects ambitious professionals with companies building the next generation of products — one hire at a time.
+        </p>
+
+        <!-- Floating Search Bar Card -->
+        <form action="{% url 'jobs:list' %}" method="get" class="hero-search-card" role="search">
+          <!-- Job title, skills, or company -->
+          <div class="hero-search-field hero-search-field--query">
+            <svg class="hero-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input
+              class="hero-search-input"
+              type="search"
+              name="q"
+              placeholder="Job title, skills, or company..."
+              aria-label="Job title, skills, or company"
+              id="hero-query-input"
+            >
+          </div>
+
+          <!-- Divider -->
+          <div class="hero-search-divider" aria-hidden="true"></div>
+
+          <!-- Location Selector -->
+          <div class="hero-search-field hero-search-field--location">
+            <svg class="hero-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <input
+              class="hero-search-input"
+              type="text"
+              name="location"
+              list="hero-location-options"
+              placeholder="Location (e.g., Remote, Manila)"
+              aria-label="Location"
+              id="hero-location-input"
+            >
+            <datalist id="hero-location-options">
+              <option value="Remote">
+              <option value="Manila, Philippines">
+              <option value="Makati, Philippines">
+              <option value="Taguig, Philippines">
+              <option value="Worldwide">
+            </datalist>
+            <svg class="hero-search-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+
+          <!-- Search Button -->
+          <button class="hero-search-submit" type="submit" id="btn-search-hero">
+            Search Jobs
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </form>
+
+        <!-- Feature Pills Row -->
+        <div class="hero-features-row">
+          <a href="{% url 'jobs:list' %}" class="hero-feature-pill" title="Filter by Verified Companies">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <polyline points="9 12 11 14 15 10"></polyline>
+            </svg>
+            Verified Companies
+          </a>
+          <a href="{% url 'jobs:list' %}" class="hero-feature-pill" title="View Active Opportunities">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
+            Real Opportunities
+          </a>
+          <a href="{% url 'jobs:list' %}" class="hero-feature-pill" title="Career Growth Track">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="m4.93 4.93 4.24 4.24"></path>
+              <path d="m14.83 9.17 4.24-4.24"></path>
+              <path d="m14.83 14.83 4.24 4.24"></path>
+              <path d="m9.17 14.83-4.24 4.24"></path>
+              <circle cx="12" cy="12" r="4"></circle>
+            </svg>
+            Career Growth
+          </a>
+          <a href="{% url 'jobs:list' %}?is_remote=true" class="hero-feature-pill" title="Remote & Flexible Work">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+            Flexible Work
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Column: 3D WorkWise Glowing App Cube -->
+      <div class="hero__visual">
+        <div class="hero__w-cube-container">
+          <img
+            src="{% static 'img/hero-w-hd.png' %}"
+            alt="WorkWise Futuristic Neon App Cube"
+            class="hero__w-cube"
+            width="420"
+            height="420"
+          >
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ══ FEATURED JOBS ════════════════════════════════════════ -->
-<section class="section" style="background: var(--color-surface-1); border-top: 1px solid var(--color-border-subtle); border-bottom: 1px solid var(--color-border-subtle);">
+<!-- ══ BROWSE BY CATEGORY SECTION (8 CARDS) ═════════════════════ -->
+<section class="section-v2" id="categories">
   <div class="container">
-    <div class="section-header">
+    <div class="section-heading-row">
       <div>
-        <p class="section-label">Handpicked</p>
-        <h2 class="heading-1">Featured Opportunities</h2>
+        <p class="section-eyebrow">EXPLORE</p>
+        <h2 class="section-title">Browse by Category</h2>
+        <p class="section-subtitle">Find opportunities that match your skills and interests.</p>
       </div>
-      <a href="{% url 'jobs:list' %}" class="btn btn--ghost btn--sm">See all →</a>
+      <a href="{% url 'jobs:list' %}" class="section-action-link">
+        View all categories
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
     </div>
 
-    <div class="grid-3">
-      {% for job in featured_jobs %}
-      <a href="{% url 'jobs:detail' job.slug %}" class="job-card animate-fade-in-up stagger-{{ forloop.counter }}">
-        <div class="job-card__top">
-          <div class="job-card__logo">
-            {% if job.employer.employer_profile.company_logo %}
-              <img src="{{ job.employer.employer_profile.company_logo.url }}" alt="{{ job.employer.employer_profile.company_name }}">
-            {% else %}
-              🏢
-            {% endif %}
-          </div>
-          <span class="badge badge--success">Open</span>
+    <!-- 8 Categories Grid matching Image 1 -->
+    <div class="category-v2-grid">
+      <!-- 1. Development -->
+      <a href="{% url 'jobs:category' 'development' %}" class="category-v2-card">
+        <div class="cat-icon-tile cat-tile--development">
+          <span style="font-family: var(--font-mono); font-weight: 700; font-size: 1.1rem;">&lt;/&gt;</span>
         </div>
-        <div class="job-card__body">
-          <p class="job-card__title">{{ job.title }}</p>
-          <p class="job-card__company">
-            {% if job.employer.employer_profile.company_name %}
-              {{ job.employer.employer_profile.company_name }}
-            {% else %}
-              {{ job.employer.get_full_name }}
-            {% endif %}
-          </p>
-          <div style="display:flex; gap:var(--space-2); flex-wrap:wrap;">
-            <span class="tag">{{ job.get_job_type_display }}</span>
-            {% if job.is_remote %}<span class="tag">🌍 Remote</span>{% endif %}
-            <span class="tag">{{ job.get_experience_level_display }}</span>
-          </div>
-        </div>
-        <div class="job-card__footer">
-          <span class="text-sm text-muted">📍 {{ job.location }}</span>
-          <span class="text-sm font-semibold" style="color: var(--color-accent-300);">{{ job.salary_display }}</span>
-        </div>
+        <p class="cat-title">Development</p>
+        <span class="cat-count">2,340+ jobs</span>
       </a>
-      {% empty %}
-      <div style="grid-column: 1/-1; text-align:center; padding: var(--space-12);">
-        <p class="text-muted">No open jobs yet. Check back soon!</p>
-      </div>
-      {% endfor %}
+
+      <!-- 2. Design -->
+      <a href="{% url 'jobs:category' 'design' %}" class="category-v2-card">
+        <div class="cat-icon-tile cat-tile--design">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle>
+            <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle>
+            <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle>
+            <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle>
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path>
+          </svg>
+        </div>
+        <p class="cat-title">Design</p>
+        <span class="cat-count">1,120+ jobs</span>
+      </a>
+
+      <!-- 3. Marketing -->
+      <a href="{% url 'jobs:category' 'marketing' %}" class="category-v2-card">
+        <div class="cat-icon-tile cat-tile--marketing">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+        </div>
+        <p class="cat-title">Marketing</p>
+        <span class="cat-count">980+ jobs</span>
+      </a>
+
+      <!-- 4. Sales -->
+      <a href="{% url 'jobs:category' 'sales' %}" class="category-v2-card">
+        <div class="cat-icon-tile cat-tile--sales">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
+        </div>
+        <p class="cat-title">Sales</p>
+        <span class="cat-count">760+ jobs</span>
+      </a>
+
+      <!-- 5. Finance -->
+      <a href="{% url 'jobs:category' 'finance' %}" class="category-v2-card">
+        <div class="cat-icon-tile cat-tile--finance">
+          <span style="font-family: var(--font-display); font-weight: 800; font-size: 1.3rem;">$</span>
+        </div>
+        <p class="cat-title">Finance</p>
+        <span class="cat-count">640+ jobs</span>
+      </a>
+
+      <!-- 6. Operations -->
+      <a href="{% url 'jobs:category' 'operations' %}" class="category-v2-card">
+        <div class="cat-icon-tile cat-tile--operations">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </div>
+        <p class="cat-title">Operations</p>
+        <span class="cat-count">520+ jobs</span>
+      </a>
+
+      <!-- 7. Customer Support -->
+      <a href="{% url 'jobs:category' 'customer-support' %}" class="category-v2-card">
+        <div class="cat-icon-tile cat-tile--support">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+            <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+          </svg>
+        </div>
+        <p class="cat-title">Customer Support</p>
+        <span class="cat-count">430+ jobs</span>
+      </a>
+
+      <!-- 8. HR -->
+      <a href="{% url 'jobs:category' 'hr' %}" class="category-v2-card">
+        <div class="cat-icon-tile cat-tile--hr">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <p class="cat-title">HR</p>
+        <span class="cat-count">320+ jobs</span>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- ══ CTA BANNER ═══════════════════════════════════════════ -->
-<section class="section">
-  <div class="container" style="text-align:center;">
-    <div style="
-      background: linear-gradient(135deg, var(--color-surface-1) 0%, var(--color-surface-2) 100%);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-2xl);
-      padding: var(--space-16) var(--space-8);
-      position: relative; overflow: hidden;
-    ">
-      <div style="
-        position:absolute; inset:0; pointer-events:none;
-        background: radial-gradient(ellipse 60% 50% at 50% 0%, hsl(248 78% 52% / 0.12) 0%, transparent 70%);
-      "></div>
-      <span class="section-label">Hiring?</span>
-      <h2 class="heading-1" style="margin-top:var(--space-2); margin-bottom:var(--space-4);">
-        Post Your First Job for Free
-      </h2>
-      <p class="text-secondary" style="max-width:480px; margin-inline:auto; margin-bottom:var(--space-8);">
-        Reach thousands of qualified candidates actively looking for their next challenge.
-        Set up in minutes.
-      </p>
-      <div class="hero__actions">
-        <a href="{% url 'accounts:register' %}" class="btn btn--primary btn--lg" id="btn-cta-post">
-          Start Posting Jobs
+<!-- ══ FEATURED OPPORTUNITIES SECTION (6 CARDS) ═════════════════ -->
+<section class="section-v2" style="background: rgba(8, 12, 28, 0.6); border-top: 1px solid rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+  <div class="container">
+    <div class="section-heading-row">
+      <div>
+        <p class="section-eyebrow">FEATURED JOBS</p>
+        <h2 class="section-title">Featured Opportunities</h2>
+        <p class="section-subtitle">Handpicked roles from top companies, just for you.</p>
+      </div>
+      <a href="{% url 'jobs:list' %}" class="btn-pill-outline">
+        View all jobs
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+
+    <!-- 3x2 Grid with exact 6 roles from Image 1 -->
+    <div class="featured-jobs-grid">
+
+      <!-- Card 1: Frontend Developer (NovaTech Solutions) -->
+      <article class="job-card-v2">
+        <a href="{% url 'jobs:detail' 'frontend-developer' %}" style="text-decoration: none; color: inherit; display: block;">
+          <div class="job-card-v2__top">
+            <div class="job-card-v2__company-info">
+              <div class="company-logo-tile logo--novatech">N</div>
+              <div class="job-card-v2__heading">
+                <h3 class="job-card-v2__title">Frontend Developer</h3>
+                <p class="job-card-v2__company">NovaTech Solutions</p>
+              </div>
+            </div>
+            <div class="job-card-v2__badges-right">
+              <span class="badge-hot">HOT</span>
+              <button
+                type="button"
+                class="btn-bookmark"
+                data-slug="frontend-developer"
+                onclick="toggleBookmark(event, 'frontend-developer', 'Frontend Developer')"
+                aria-label="Save Job"
+                title="Save job"
+              >
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="job-card-v2__meta">
+            <span class="job-card-v2__meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              Remote
+            </span>
+            <span style="color: rgba(255,255,255,0.2);">&bull;</span>
+            <span class="job-card-v2__meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+              Full-time
+            </span>
+          </div>
         </a>
-        <a href="{% url 'jobs:list' %}" class="btn btn--ghost btn--lg">
-          Browse Talent
+
+        <!-- Tags -->
+        <div class="job-card-v2__tags">
+          <a href="{% url 'jobs:list' %}?q=React" class="job-tag-pill">React</a>
+          <a href="{% url 'jobs:list' %}?q=TypeScript" class="job-tag-pill">TypeScript</a>
+          <a href="{% url 'jobs:list' %}?q=Tailwind" class="job-tag-pill">Tailwind CSS</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="job-card-v2__footer">
+          <span class="job-card-v2__salary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+            $50,000 &ndash; $70,000 / year
+          </span>
+          <span class="job-card-v2__date">2 days ago</span>
+        </div>
+      </article>
+
+      <!-- Card 2: UI/UX Designer (Apex Creative Co.) -->
+      <article class="job-card-v2">
+        <a href="{% url 'jobs:detail' 'ui-ux-designer' %}" style="text-decoration: none; color: inherit; display: block;">
+          <div class="job-card-v2__top">
+            <div class="job-card-v2__company-info">
+              <div class="company-logo-tile logo--apex">A</div>
+              <div class="job-card-v2__heading">
+                <h3 class="job-card-v2__title">UI/UX Designer</h3>
+                <p class="job-card-v2__company">Apex Creative Co.</p>
+              </div>
+            </div>
+            <div class="job-card-v2__badges-right">
+              <span class="badge-hot">HOT</span>
+              <button
+                type="button"
+                class="btn-bookmark"
+                data-slug="ui-ux-designer"
+                onclick="toggleBookmark(event, 'ui-ux-designer', 'UI/UX Designer')"
+                aria-label="Save Job"
+                title="Save job"
+              >
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="job-card-v2__meta">
+            <span class="job-card-v2__meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              Makati, Philippines
+            </span>
+            <span style="color: rgba(255,255,255,0.2);">&bull;</span>
+            <span class="job-card-v2__meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+              Full-time
+            </span>
+          </div>
         </a>
+
+        <!-- Tags -->
+        <div class="job-card-v2__tags">
+          <a href="{% url 'jobs:list' %}?q=Figma" class="job-tag-pill">Figma</a>
+          <a href="{% url 'jobs:list' %}?q=Adobe" class="job-tag-pill">Adobe XD</a>
+          <a href="{% url 'jobs:list' %}?q=UI" class="job-tag-pill">UI Design</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="job-card-v2__footer">
+          <span class="job-card-v2__salary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+            $40,000 &ndash; $60,000 / year
+          </span>
+          <span class="job-card-v2__date">3 days ago</span>
+        </div>
+      </article>
+
+      <!-- Card 3: Backend Developer (GreenStack Systems) -->
+      <article class="job-card-v2">
+        <a href="{% url 'jobs:detail' 'backend-developer' %}" style="text-decoration: none; color: inherit; display: block;">
+          <div class="job-card-v2__top">
+            <div class="job-card-v2__company-info">
+              <div class="company-logo-tile logo--greenstack">🍃</div>
+              <div class="job-card-v2__heading">
+                <h3 class="job-card-v2__title">Backend Developer</h3>
+                <p class="job-card-v2__company">GreenStack Systems</p>
+              </div>
+            </div>
+            <div class="job-card-v2__badges-right">
+              <span class="badge-hot">HOT</span>
+              <button
+                type="button"
+                class="btn-bookmark"
+                data-slug="backend-developer"
+                onclick="toggleBookmark(event, 'backend-developer', 'Backend Developer')"
+                aria-label="Save Job"
+                title="Save job"
+              >
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="job-card-v2__meta">
+            <span class="job-card-v2__meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              Remote
+            </span>
+            <span style="color: rgba(255,255,255,0.2);">&bull;</span>
+            <span class="job-card-v2__meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+              Full-time
+            </span>
+          </div>
+        </a>
+
+        <!-- Tags -->
+        <div class="job-card-v2__tags">
+          <a href="{% url 'jobs:list' %}?q=Node" class="job-tag-pill">Node.js</a>
+          <a href="{% url 'jobs:list' %}?q=Express" class="job-tag-pill">Express</a>
+          <a href="{% url 'jobs:list' %}?q=PostgreSQL" class="job-tag-pill">PostgreSQL</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="job-card-v2__footer">
+          <span class="job-card-v2__salary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+            $48,000 &ndash; $75,000 / year
+          </span>
+          <span class="job-card-v2__date">1 day ago</span>
+        </div>
+      </article>
+
+      <!-- Card 4: Marketing Manager (BrightWave Media) -->
+      <article class="job-card-v2">
+        <a href="{% url 'jobs:detail' 'marketing-manager' %}" style="text-decoration: none; color: inherit; display: block;">
+          <div class="job-card-v2__top">
+            <div class="job-card-v2__company-info">
+              <div class="company-logo-tile logo--brightwave">📊</div>
+              <div class="job-card-v2__heading">
+                <h3 class="job-card-v2__title">Marketing Manager</h3>
+                <p class="job-card-v2__company">BrightWave Media</p>
+              </div>
+            </div>
+            <div class="job-card-v2__badges-right">
+              <span class="badge-featured">FEATURED</span>
+              <button
+                type="button"
+                class="btn-bookmark"
+                data-slug="marketing-manager"
+                onclick="toggleBookmark(event, 'marketing-manager', 'Marketing Manager')"
+                aria-label="Save Job"
+                title="Save job"
+              >
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="job-card-v2__meta">
+            <span class="job-card-v2__meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              Manila, Philippines
+            </span>
+            <span style="color: rgba(255,255,255,0.2);">&bull;</span>
+            <span class="job-card-v2__meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+              Full-time
+            </span>
+          </div>
+        </a>
+
+        <!-- Tags -->
+        <div class="job-card-v2__tags">
+          <a href="{% url 'jobs:list' %}?q=SEO" class="job-tag-pill">SEO</a>
+          <a href="{% url 'jobs:list' %}?q=Content" class="job-tag-pill">Content Strategy</a>
+          <a href="{% url 'jobs:list' %}?q=Social" class="job-tag-pill">Social Media</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="job-card-v2__footer">
+          <span class="job-card-v2__salary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+            $35,000 &ndash; $55,000 / year
+          </span>
+          <span class="job-card-v2__date">4 days ago</span>
+        </div>
+      </article>
+
+      <!-- Card 5: Product Designer (Lumenn Tech) -->
+      <article class="job-card-v2">
+        <a href="{% url 'jobs:detail' 'product-designer' %}" style="text-decoration: none; color: inherit; display: block;">
+          <div class="job-card-v2__top">
+            <div class="job-card-v2__company-info">
+              <div class="company-logo-tile logo--lumenn">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <div class="job-card-v2__heading">
+                <h3 class="job-card-v2__title">Product Designer</h3>
+                <p class="job-card-v2__company">Lumenn Tech</p>
+              </div>
+            </div>
+            <div class="job-card-v2__badges-right">
+              <span class="badge-featured">FEATURED</span>
+              <button
+                type="button"
+                class="btn-bookmark"
+                data-slug="product-designer"
+                onclick="toggleBookmark(event, 'product-designer', 'Product Designer')"
+                aria-label="Save Job"
+                title="Save job"
+              >
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="job-card-v2__meta">
+            <span class="job-card-v2__meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              Remote
+            </span>
+            <span style="color: rgba(255,255,255,0.2);">&bull;</span>
+            <span class="job-card-v2__meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+              Contract
+            </span>
+          </div>
+        </a>
+
+        <!-- Tags -->
+        <div class="job-card-v2__tags">
+          <a href="{% url 'jobs:list' %}?q=Figma" class="job-tag-pill">Figma</a>
+          <a href="{% url 'jobs:list' %}?q=Prototyping" class="job-tag-pill">Prototyping</a>
+          <a href="{% url 'jobs:list' %}?q=Research" class="job-tag-pill">User Research</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="job-card-v2__footer">
+          <span class="job-card-v2__salary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+            $45,000 &ndash; $65,000 / year
+          </span>
+          <span class="job-card-v2__date">2 days ago</span>
+        </div>
+      </article>
+
+      <!-- Card 6: Data Scientist – NLP (DataMind Analytics) -->
+      <article class="job-card-v2">
+        <a href="{% url 'jobs:detail' 'data-scientist-nlp' %}" style="text-decoration: none; color: inherit; display: block;">
+          <div class="job-card-v2__top">
+            <div class="job-card-v2__company-info">
+              <div class="company-logo-tile logo--datamind">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
+                </svg>
+              </div>
+              <div class="job-card-v2__heading">
+                <h3 class="job-card-v2__title">Data Scientist &ndash; NLP</h3>
+                <p class="job-card-v2__company">DataMind Analytics</p>
+              </div>
+            </div>
+            <div class="job-card-v2__badges-right">
+              <span class="badge-featured">FEATURED</span>
+              <button
+                type="button"
+                class="btn-bookmark"
+                data-slug="data-scientist-nlp"
+                onclick="toggleBookmark(event, 'data-scientist-nlp', 'Data Scientist – NLP')"
+                aria-label="Save Job"
+                title="Save job"
+              >
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="job-card-v2__meta">
+            <span class="job-card-v2__meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              Remote
+            </span>
+            <span style="color: rgba(255,255,255,0.2);">&bull;</span>
+            <span class="job-card-v2__meta-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+              Full-time
+            </span>
+          </div>
+        </a>
+
+        <!-- Tags -->
+        <div class="job-card-v2__tags">
+          <a href="{% url 'jobs:list' %}?q=Python" class="job-tag-pill">Python</a>
+          <a href="{% url 'jobs:list' %}?q=TensorFlow" class="job-tag-pill">TensorFlow</a>
+          <a href="{% url 'jobs:list' %}?q=Machine+Learning" class="job-tag-pill">Machine Learning</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="job-card-v2__footer">
+          <span class="job-card-v2__salary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+            $70,000 &ndash; $100,000 / year
+          </span>
+          <span class="job-card-v2__date">5 days ago</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA BANNER SECTION (IMAGE 1 SPECIFICATION) ═══════════════ -->
+<section class="section-v2" style="padding-top: 1rem;">
+  <div class="container">
+    <div class="cta-banner-card">
+      <!-- Left: 3D Laptop with dashboard -->
+      <div class="cta-banner__visual">
+        <img
+          src="{% static 'img/cta-laptop.png' %}"
+          alt="WorkWise Employer Dashboard Analytics"
+          class="cta-laptop-img"
+          width="320"
+          height="140"
+        >
+      </div>
+
+      <!-- Center: Text & Action Buttons -->
+      <div class="cta-banner__content">
+        <span class="cta-banner__tag">READY TO GET HIRED?</span>
+        <h2 class="cta-banner__title">Post Your First Job for Free</h2>
+        <p class="cta-banner__text">
+          Reach thousands of qualified candidates quickly and easily.
+        </p>
+        <div class="cta-banner__actions">
+          <a href="{% url 'jobs:create' %}" class="btn-cta-gradient" id="btn-cta-post">
+            Post a Job
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+          <button type="button" onclick="openEmployerModal()" class="btn-cta-ghost" id="btn-cta-learn">
+            Learn More
+          </button>
+        </div>
+      </div>
+
+      <!-- Right: Checklist points -->
+      <div class="cta-banner__features">
+        <div class="cta-feature-item">
+          <span class="cta-check-icon">&#10003;</span>
+          Free for 30 days
+        </div>
+        <div class="cta-feature-item">
+          <span class="cta-check-icon">&#10003;</span>
+          Reach top talent
+        </div>
+        <div class="cta-feature-item">
+          <span class="cta-check-icon">&#10003;</span>
+          Easy job management
+        </div>
+        <div class="cta-feature-item">
+          <span class="cta-check-icon">&#10003;</span>
+          No credit card required
+        </div>
       </div>
     </div>
   </div>

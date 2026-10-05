@@ -42,7 +42,7 @@ class EmailAuthenticationForm(AuthenticationForm):
     error_messages = {
         **AuthenticationForm.error_messages,
         "suspended": _(
-            "Your account has been suspended. Contact support@inkboard.dev."
+            "Your account has been suspended. Contact support@workwise.dev."
         ),
     }
 
@@ -171,7 +171,7 @@ class SignupForm(forms.Form):
 # ── Styled password reset form ─────────────────────────────────────────────
 
 
-class InkboardPasswordResetForm(PasswordResetForm):
+class WorkWisePasswordResetForm(PasswordResetForm):
     email = forms.EmailField(
         label=_("Email"),
         max_length=254,

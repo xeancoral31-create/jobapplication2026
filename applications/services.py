@@ -139,20 +139,20 @@ def send_status_change_email(application, old_status_display):
         else job.employer.get_full_name()
     )
 
-    subject = f"[Inkboard] Application Status Update: {job.title}"
+    subject = f"[WorkWise] Application Status Update: {job.title}"
     message = (
         f"Hello {applicant.first_name or applicant.username},\n\n"
         f"Your application for '{job.title}' at {company_name} has moved to: {application.get_status_display()}.\n\n"
-        f"Log in to your Inkboard candidate dashboard to track your application timeline:\n"
+        f"Log in to your WorkWise candidate dashboard to track your application timeline:\n"
         f"/applications/{application.pk}/\n\n"
-        f"Best regards,\nThe Inkboard Team"
+        f"Best regards,\nThe WorkWise Team"
     )
 
     try:
         send_mail(
             subject=subject,
             message=message,
-            from_email=getattr(settings, "DEFAULT_FROM_EMAIL", "noreply@inkboard.dev"),
+            from_email=getattr(settings, "DEFAULT_FROM_EMAIL", "noreply@workwise.dev"),
             recipient_list=[applicant.email],
             fail_silently=True,
         )
@@ -174,7 +174,7 @@ def send_interview_scheduled_email(interview):
     date_str = interview.scheduled_at.strftime("%A, %B %d, %Y at %I:%M %p UTC")
     mode_display = interview.get_format_display()
 
-    subject = f"[Inkboard] Interview Scheduled: {job.title}"
+    subject = f"[WorkWise] Interview Scheduled: {job.title}"
     message = (
         f"Hello {applicant.first_name or applicant.username},\n\n"
         f"Great news! {company_name} has scheduled an interview for the '{job.title}' position.\n\n"
@@ -193,14 +193,14 @@ def send_interview_scheduled_email(interview):
 
     message += (
         f"\nYou can see your upcoming interview pass directly on your applicant dashboard.\n\n"
-        f"Best regards,\nThe Inkboard Team"
+        f"Best regards,\nThe WorkWise Team"
     )
 
     try:
         send_mail(
             subject=subject,
             message=message,
-            from_email=getattr(settings, "DEFAULT_FROM_EMAIL", "noreply@inkboard.dev"),
+            from_email=getattr(settings, "DEFAULT_FROM_EMAIL", "noreply@workwise.dev"),
             recipient_list=[applicant.email],
             fail_silently=True,
         )

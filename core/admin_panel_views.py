@@ -1,5 +1,5 @@
 """
-core/admin_panel_views.py — Dedicated views for the Inkboard Admin Panel.
+core/admin_panel_views.py — Dedicated views for the WorkWise Admin Panel.
 Handles:
   1. Main Dashboard (/admin-panel/)
   2. User Management: search by role/status, suspend/reactivate

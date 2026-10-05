@@ -1,5 +1,6 @@
 {% extends "base_auth.html" %}
-{% block title %}Admin Sign In — Inkboard{% endblock %}
+{% load static %}
+{% block title %}Admin Sign In — WorkWise{% endblock %}
 
 {% block body %}
 <div class="auth-shell">
@@ -8,8 +9,8 @@
   <div class="auth-left auth-left--plum">
     <div class="auth-left__content">
       <a href="/" class="auth-brand">
-        <div class="auth-brand__mark">✦</div>
-        Inkboard
+        <img src="{% static 'img/logo-128.png' %}" alt="WorkWise" class="auth-brand__mark" width="36" height="36">
+        WorkWise
       </a>
       <div class="auth-headline">
         <h1>Platform<br><em>Administration.</em></h1>
@@ -54,7 +55,7 @@
           <input class="auth-input{% if form.username.errors %} is-invalid{% endif %}"
                  type="email" name="{{ form.username.html_name }}"
                  id="{{ form.username.id_for_label }}"
-                 placeholder="admin@inkboard.dev"
+                 placeholder="admin@workwise.dev"
                  autocomplete="email"
                  value="{{ form.username.value|default:'' }}"
                  required>

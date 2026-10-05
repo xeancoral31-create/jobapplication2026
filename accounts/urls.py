@@ -14,15 +14,15 @@ urlpatterns = [
 
     # ── Password reset chain ────────────────────────────────────────────────
     path("password-reset/",
-         views.InkboardPasswordResetView.as_view(),
+         views.WorkWisePasswordResetView.as_view(),
          name="password_reset"),
     path("password-reset/done/",
-         views.InkboardPasswordResetDoneView.as_view(),
+         views.WorkWisePasswordResetDoneView.as_view(),
          name="password_reset_done"),
     path("password-reset/<uidb64>/<token>/",
-         views.InkboardPasswordResetConfirmView.as_view(),
+         views.WorkWisePasswordResetConfirmView.as_view(),
          name="password_reset_confirm"),
     path("password-reset/complete/",
-         views.InkboardPasswordResetCompleteView.as_view(),
+         views.WorkWisePasswordResetCompleteView.as_view(),
          name="password_reset_complete"),
 ]

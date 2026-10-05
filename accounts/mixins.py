@@ -43,7 +43,7 @@ class SuspensionMixin:
                     "title": "Account Suspended",
                     "message": (
                         "Your account has been suspended. "
-                        "Please contact support at support@inkboard.dev."
+                        "Please contact support at support@workwise.dev."
                     ),
                 },
                 status=403,

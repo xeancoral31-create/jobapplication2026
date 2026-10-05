@@ -14,7 +14,7 @@ from django.views import View
 from .forms import (
     EmailAuthenticationForm,
     SignupForm,
-    InkboardPasswordResetForm,
+    WorkWisePasswordResetForm,
     ApplicantProfileForm,
 )
 
@@ -104,7 +104,7 @@ class LoginView(View):
         if form.errors.get("__all__") and "suspended" in str(form.errors):
             messages.error(
                 request,
-                "Your account has been suspended. Contact support@inkboard.dev.",
+                "Your account has been suspended. Contact support@workwise.dev.",
             )
         return render(request, self.template_name, {"form": form})
 
@@ -186,7 +186,7 @@ class SignupView(View):
                     "you'll be notified once activated.",
                 )
                 return redirect("/employer/pending/")
-            messages.success(request, "Welcome to Inkboard! Start exploring jobs below.")
+            messages.success(request, "Welcome to WorkWise! Start exploring jobs below.")
             return redirect("/applicant/")
         role = request.POST.get("role", "applicant")
         return render(request, self.template_name, {"form": form, "initial_role": role})
@@ -194,24 +194,24 @@ class SignupView(View):
 
 # ── Password reset (use Django built-ins with custom templates/form) ────────
 
-class InkboardPasswordResetView(PasswordResetView):
-    form_class = InkboardPasswordResetForm
+class WorkWisePasswordResetView(PasswordResetView):
+    form_class = WorkWisePasswordResetForm
     template_name = "registration/password_reset.html"
     email_template_name = "registration/password_reset_email.txt"
     subject_template_name = "registration/password_reset_subject.txt"
     success_url = "/accounts/password-reset/done/"
 
 
-class InkboardPasswordResetDoneView(PasswordResetDoneView):
+class WorkWisePasswordResetDoneView(PasswordResetDoneView):
     template_name = "registration/password_reset_done.html"
 
 
-class InkboardPasswordResetConfirmView(PasswordResetConfirmView):
+class WorkWisePasswordResetConfirmView(PasswordResetConfirmView):
     template_name = "registration/password_reset_confirm.html"
     success_url = "/accounts/password-reset/complete/"
 
 
-class InkboardPasswordResetCompleteView(PasswordResetCompleteView):
+class WorkWisePasswordResetCompleteView(PasswordResetCompleteView):
     template_name = "registration/password_reset_complete.html"
 
 

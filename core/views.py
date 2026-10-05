@@ -22,10 +22,46 @@ def custom_404(request, exception=None):
 # ── Public ─────────────────────────────────────────────────────────────────
 
 def home(request):
-    featured_jobs = Job.objects.filter(status=Job.Status.OPEN).select_related(
-        "employer", "category"
-    )[:6]
-    categories = Category.objects.all()[:8]
+    featured_slugs = [
+        "frontend-developer",
+        "ui-ux-designer",
+        "backend-developer",
+        "marketing-manager",
+        "product-designer",
+        "data-scientist-nlp",
+    ]
+    jobs_by_slug = {
+        j.slug: j
+        for j in Job.objects.filter(slug__in=featured_slugs).select_related(
+            "employer", "employer__employer_profile", "category"
+        ).prefetch_related("tags")
+    }
+    featured_jobs = [jobs_by_slug[slug] for slug in featured_slugs if slug in jobs_by_slug]
+    if len(featured_jobs) < 6:
+        extra_jobs = list(
+            Job.objects.filter(status=Job.Status.OPEN)
+            .exclude(slug__in=[j.slug for j in featured_jobs])
+            .select_related("employer", "employer__employer_profile", "category")
+            .prefetch_related("tags")[: 6 - len(featured_jobs)]
+        )
+        featured_jobs.extend(extra_jobs)
+
+    category_slugs = [
+        "development",
+        "design",
+        "marketing",
+        "sales",
+        "finance",
+        "operations",
+        "customer-support",
+        "hr",
+    ]
+    cats_by_slug = {c.slug: c for c in Category.objects.filter(slug__in=category_slugs)}
+    categories = [cats_by_slug[slug] for slug in category_slugs if slug in cats_by_slug]
+    if len(categories) < 8:
+        extra_cats = list(Category.objects.exclude(slug__in=[c.slug for c in categories])[: 8 - len(categories)])
+        categories.extend(extra_cats)
+
     return render(
         request,
         "core/home.html",

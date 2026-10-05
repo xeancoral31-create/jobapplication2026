@@ -1,5 +1,6 @@
 {% extends "base_auth.html" %}
-{% block title %}Create your account — Inkboard{% endblock %}
+{% load static %}
+{% block title %}Create your account — WorkWise{% endblock %}
 
 {% block body %}
 <style>
@@ -320,12 +321,11 @@
 <div class="auth-page-container">
   <div class="auth-signup-card" id="signup-card">
 
-    <!-- Brand Logo with Teal Dot -->
+    <!-- Brand Logo -->
     <div class="auth-brand-logo">
-      <a href="/" class="brand-logo-link" title="Inkboard Home">
-        <span class="brand-text">
-          <span class="brand-i-container"><span class="brand-teal-dot"></span>ı</span>nkboard
-        </span>
+      <a href="/" class="brand-logo-link" title="WorkWise Home" style="display:inline-flex; align-items:center; gap:0.65rem;">
+        <img src="{% static 'img/logo-128.png' %}" alt="WorkWise" style="width:38px; height:38px; border-radius:9px; box-shadow: 0 0 16px rgba(139, 92, 246, 0.45), 0 0 8px rgba(6, 182, 212, 0.35);">
+        <span class="brand-text">WorkWise</span>
       </a>
     </div>
 
