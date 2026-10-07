@@ -7,6 +7,7 @@ app_name = "jobs"
 urlpatterns = [
     # ── Public Job Browsing ────────────────────────────────────────────────
     path("", views.job_list, name="list"),
+    path("positions/", views.positions_by_field, name="positions_by_field"),
     path("category/<slug:slug>/", views.category_detail, name="category"),
 
     # ── Employer Management (Specific routes before <slug:slug>/) ──────────

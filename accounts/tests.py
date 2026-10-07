@@ -165,3 +165,121 @@ class UserSignalTest(TestCase):
         )
         self.assertFalse(EmployerProfile.objects.filter(user=u).exists())
         self.assertFalse(ApplicantProfile.objects.filter(user=u).exists())
+
+
+class PasswordResetVerificationFlowTest(TestCase):
+    """Integration test suite for verification code password reset flow."""
+
+    def setUp(self):
+        self.applicant = User.objects.create_user(
+            username="testuser",
+            email="resetuser@example.com",
+            password="OriginalPassword123!",
+            role=User.Role.APPLICANT,
+            first_name="Jane",
+            last_name="Doe",
+        )
+        self.employer = User.objects.create_user(
+            username="employeruser",
+            email="employer@example.com",
+            password="EmployerPassword123!",
+            role=User.Role.EMPLOYER,
+            first_name="Acme",
+            last_name="Corp",
+        )
+
+    def test_password_reset_request_valid_email(self):
+        response = self.client.post("/accounts/password-reset/", {"email": "resetuser@example.com"})
+        self.assertRedirects(response, "/accounts/password-reset/verify/")
+        session = self.client.session
+        self.assertEqual(session.get("reset_email"), "resetuser@example.com")
+        self.assertEqual(session.get("reset_user_id"), self.applicant.id)
+        self.assertTrue(len(str(session.get("reset_code"))) == 6)
+
+    def test_password_reset_request_invalid_email(self):
+        response = self.client.post("/accounts/password-reset/", {"email": "notfound@example.com"})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "No registered account was found")
+
+    def test_password_reset_resend_code(self):
+        # Initial request
+        self.client.post("/accounts/password-reset/", {"email": "resetuser@example.com"})
+        code1 = self.client.session.get("reset_code")
+
+        # Resend code
+        response = self.client.post("/accounts/password-reset/resend/")
+        self.assertEqual(response.status_code, 200)
+        code2 = self.client.session.get("reset_code")
+        self.assertTrue(len(str(code2)) == 6)
+
+    def test_verify_invalid_code_fails(self):
+        self.client.post("/accounts/password-reset/", {"email": "resetuser@example.com"})
+        response = self.client.post("/accounts/password-reset/verify/", {"code": "000000"})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Invalid verification code")
+        self.assertFalse(self.client.session.get("reset_verified"))
+
+    def test_verify_correct_code_success(self):
+        self.client.post("/accounts/password-reset/", {"email": "resetuser@example.com"})
+        correct_code = self.client.session.get("reset_code")
+        response = self.client.post("/accounts/password-reset/verify/", {"code": correct_code})
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(self.client.session.get("reset_verified"))
+
+    def test_decision_no_keeps_password_and_redirects_to_dashboard(self):
+        # Setup verified session
+        self.client.post("/accounts/password-reset/", {"email": "resetuser@example.com"})
+        correct_code = self.client.session.get("reset_code")
+        self.client.post("/accounts/password-reset/verify/", {"code": correct_code})
+
+        # User chooses 'No' (Keep existing password)
+        response = self.client.post("/accounts/password-reset/decision/", {"decision": "no"})
+        self.assertRedirects(response, "/applicant/")
+
+        # Verify password is unchanged
+        self.applicant.refresh_from_db()
+        self.assertTrue(self.applicant.check_password("OriginalPassword123!"))
+
+    def test_decision_no_for_employer_redirects_to_employer_dashboard(self):
+        # Setup verified session for employer
+        self.client.post("/accounts/password-reset/", {"email": "employer@example.com"})
+        correct_code = self.client.session.get("reset_code")
+        self.client.post("/accounts/password-reset/verify/", {"code": correct_code})
+
+        # Employer chooses 'No'
+        response = self.client.post("/accounts/password-reset/decision/", {"decision": "no"})
+        self.assertRedirects(response, "/employer/")
+
+    def test_decision_yes_navigates_to_change_password(self):
+        self.client.post("/accounts/password-reset/", {"email": "resetuser@example.com"})
+        correct_code = self.client.session.get("reset_code")
+        self.client.post("/accounts/password-reset/verify/", {"code": correct_code})
+
+        response = self.client.post("/accounts/password-reset/decision/", {"decision": "yes"})
+        self.assertRedirects(response, "/accounts/password-reset/change/")
+
+    def test_change_password_success_sets_permanent_password(self):
+        # Setup verified session
+        self.client.post("/accounts/password-reset/", {"email": "resetuser@example.com"})
+        correct_code = self.client.session.get("reset_code")
+        self.client.post("/accounts/password-reset/verify/", {"code": correct_code})
+
+        # Submit new password
+        response = self.client.post("/accounts/password-reset/change/", {
+            "new_password1": "BrandNewSecurePassword2026!",
+            "new_password2": "BrandNewSecurePassword2026!",
+        })
+        self.assertRedirects(response, "/applicant/")
+
+        # Verify new password is set permanently
+        self.applicant.refresh_from_db()
+        self.assertTrue(self.applicant.check_password("BrandNewSecurePassword2026!"))
+        self.assertFalse(self.applicant.check_password("OriginalPassword123!"))
+
+        # Check that user can log in with new password
+        login_res = self.client.post("/accounts/login/", {
+            "username": "resetuser@example.com",
+            "password": "BrandNewSecurePassword2026!",
+        })
+        self.assertRedirects(login_res, "/applicant/")
+

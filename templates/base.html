@@ -8,10 +8,19 @@
   <meta name="description" content="{% block meta_description %}WorkWise is the modern job board connecting talented professionals with great companies.{% endblock %}">
   <meta name="robots" content="index, follow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="{% static 'css/inkboard.css' %}">
   <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
   <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+  <script>
+    (function() {
+      try {
+        const saved = localStorage.getItem('workwise_theme');
+        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        const theme = saved ? saved : (prefersLight ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {}
+    })();
+  </script>
   {% block extra_head %}{% endblock %}
 </head>
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
@@ -21,10 +30,14 @@
     <div class="container">
       <nav class="navbar__inner" style="display: flex; align-items: center; justify-content: space-between;">
 
-        <!-- Brand -->
-        <a href="{% url 'core:home' %}" class="navbar__brand">
-          <img src="{% static 'img/logo-128.png' %}" alt="WorkWise Logo" class="navbar__brand-mark" width="34" height="34">
-          <span>WorkWise</span>
+        <!-- Brand with Minimal Logo -->
+        <a href="{% url 'core:home' %}" class="navbar__brand" aria-label="WorkWise Home">
+          <span class="brand-logo-badge">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 6l4 12 4-8 4 8 4-12"></path>
+            </svg>
+          </span>
+          <span class="brand-text">WorkWise</span>
         </a>
 
         <!-- Main nav -->
@@ -83,50 +96,72 @@
         </ul>
 
         <!-- Actions -->
-        <div class="navbar__actions" style="display: flex; align-items: center; gap: 0.85rem;">
-          <!-- Notification Bell Button -->
-          <div class="notification-wrapper" style="position: relative;">
-            <button type="button" class="btn-notification" id="btn-notification" onclick="toggleNotifications(event)" aria-label="Notifications" title="Notifications">
+        <div class="navbar__actions" style="display: flex; align-items: center; gap: 0.75rem;">
+          
+          <!-- Theme Toggle Button (Light / Dark Mode) -->
+          <button type="button" class="btn-theme-toggle" id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light and dark mode" title="Toggle theme">
+            <span class="theme-icon-sun" aria-hidden="true">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                <circle cx="12" cy="12" r="4"></circle>
+                <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
               </svg>
-              <span class="notification-dot" id="notification-dot"></span>
-            </button>
+            </span>
+            <span class="theme-icon-moon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+              </svg>
+            </span>
+          </button>
 
-            <!-- Notifications Dropdown -->
-            <div class="notification-dropdown" id="notification-dropdown" style="display: none;">
-              <div class="notification-dropdown__header">
-                <h4 style="margin: 0; font-size: 0.9375rem; font-weight: 700; color: #ffffff;">Notifications</h4>
-                <button type="button" onclick="markAllNotificationsRead()" class="btn-text-sm" style="background: none; border: none; color: #38bdf8; font-size: 0.75rem; font-weight: 600; cursor: pointer;">Mark all read</button>
-              </div>
-              <div class="notification-dropdown__list">
-                <div class="notification-item unread">
-                  <span style="font-size: 1.15rem; line-height: 1;">🚀</span>
-                  <div class="notification-item__content">
-                    <p class="notification-title">NovaTech Solutions is hiring: <strong>Frontend Developer</strong></p>
-                    <span class="notification-time">10 minutes ago</span>
-                  </div>
+          {% if request.user.is_authenticated %}
+            <!-- Notification Bell Button (Logged-in Account Only) -->
+            <div class="notification-wrapper" style="position: relative;">
+              <button type="button" class="btn-notification" id="btn-notification" onclick="toggleNotifications(event)" aria-label="Notifications" title="Notifications">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+                <span class="notification-dot" id="notification-dot"></span>
+              </button>
+
+              <!-- Notifications Dropdown -->
+              <div class="notification-dropdown" id="notification-dropdown" style="display: none;">
+                <div class="notification-dropdown__header">
+                  <h4 style="margin: 0; font-size: 0.9375rem; font-weight: 700; color: #ffffff;">Notifications</h4>
+                  <button type="button" onclick="markAllNotificationsRead()" class="btn-text-sm" style="background: none; border: none; color: #38bdf8; font-size: 0.75rem; font-weight: 600; cursor: pointer;">Mark all read</button>
                 </div>
-                <div class="notification-item unread">
-                  <span style="font-size: 1.15rem; line-height: 1;">💼</span>
-                  <div class="notification-item__content">
-                    <p class="notification-title">GreenStack Systems published <strong>Backend Developer</strong></p>
-                    <span class="notification-time">2 hours ago</span>
+                <div class="notification-dropdown__list">
+                  <div class="notification-item unread">
+                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 6px; background: rgba(56, 189, 248, 0.12); color: #38bdf8; flex-shrink: 0;">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 15 2 2 4-4"/><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+                    </span>
+                    <div class="notification-item__content">
+                      <p class="notification-title">NovaTech Solutions is hiring: <strong>Frontend Developer</strong></p>
+                      <span class="notification-time">10 minutes ago</span>
+                    </div>
                   </div>
-                </div>
-                <div class="notification-item">
-                  <span style="font-size: 1.15rem; line-height: 1;">✨</span>
-                  <div class="notification-item__content">
-                    <p class="notification-title">Welcome to WorkWise! Browse curated roles or post a job.</p>
-                    <span class="notification-time">Yesterday</span>
+                  <div class="notification-item unread">
+                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 6px; background: rgba(99, 102, 241, 0.12); color: #818cf8; flex-shrink: 0;">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                    </span>
+                    <div class="notification-item__content">
+                      <p class="notification-title">GreenStack Systems published <strong>Backend Developer</strong></p>
+                      <span class="notification-time">2 hours ago</span>
+                    </div>
+                  </div>
+                  <div class="notification-item">
+                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 6px; background: rgba(16, 185, 129, 0.12); color: #10b981; flex-shrink: 0;">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+                    </span>
+                    <div class="notification-item__content">
+                      <p class="notification-title">Welcome to WorkWise! Browse curated roles or post a job.</p>
+                      <span class="notification-time">Yesterday</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {% if request.user.is_authenticated %}
             <a href="{% url 'core:dashboard' %}" class="btn-signin-nav">
               Dashboard
             </a>
@@ -177,8 +212,12 @@
         <!-- Col 1: Brand & Tagline -->
         <div>
           <a href="{% url 'core:home' %}" class="footer-v2__brand">
-            <img src="{% static 'img/logo-128.png' %}" alt="WorkWise" class="navbar__brand-mark" width="32" height="32">
-            <span>WorkWise</span>
+            <span class="brand-logo-badge" style="width: 28px; height: 28px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 6l4 12 4-8 4 8 4-12"></path>
+              </svg>
+            </span>
+            <span class="brand-text" style="font-size: 1.05rem;">WorkWise</span>
           </a>
           <p class="footer-v2__tagline">
             Better Jobs, Brighter Futures.
@@ -310,7 +349,9 @@
         </div>
         <div style="display:flex; align-items:center; justify-content:space-between; padding:0.85rem 1rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:12px;">
           <div style="display:flex; align-items:center; gap:0.875rem;">
-            <div class="company-logo-tile logo--greenstack" style="width:40px; height:40px; font-size:1.05rem;">🍃</div>
+            <div class="company-logo-tile logo--greenstack" style="width:40px; height:40px; display:flex; align-items:center; justify-content:center; color:#fff;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+            </div>
             <div>
               <p style="margin:0; font-weight:700; color:#fff; font-size:0.95rem;">GreenStack Systems</p>
               <span style="font-size:0.75rem; color:#38bdf8;">DevOps & Sustainable Tech &bull; 3 Open Roles</span>
@@ -320,7 +361,9 @@
         </div>
         <div style="display:flex; align-items:center; justify-content:space-between; padding:0.85rem 1rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:12px;">
           <div style="display:flex; align-items:center; gap:0.875rem;">
-            <div class="company-logo-tile logo--brightwave" style="width:40px; height:40px; font-size:1.05rem;">📊</div>
+            <div class="company-logo-tile logo--brightwave" style="width:40px; height:40px; display:flex; align-items:center; justify-content:center; color:#fff;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+            </div>
             <div>
               <p style="margin:0; font-weight:700; color:#fff; font-size:0.95rem;">BrightWave Media</p>
               <span style="font-size:0.75rem; color:#38bdf8;">Growth & Creative Marketing &bull; 2 Open Roles</span>
@@ -330,7 +373,9 @@
         </div>
         <div style="display:flex; align-items:center; justify-content:space-between; padding:0.85rem 1rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:12px;">
           <div style="display:flex; align-items:center; gap:0.875rem;">
-            <div class="company-logo-tile logo--datamind" style="width:40px; height:40px; font-size:1.05rem;">☁️</div>
+            <div class="company-logo-tile logo--datamind" style="width:40px; height:40px; display:flex; align-items:center; justify-content:center; color:#fff;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+            </div>
             <div>
               <p style="margin:0; font-weight:700; color:#fff; font-size:0.95rem;">DataMind Analytics</p>
               <span style="font-size:0.75rem; color:#38bdf8;">Machine Learning & NLP &bull; 3 Open Roles</span>
@@ -350,17 +395,25 @@
       <h3 style="color:#fff; font-size:1.5rem; margin:0.35rem 0 1rem;">Career Resources & Guides</h3>
       <p style="color:#94a3b8; font-size:0.875rem; margin-bottom:1.5rem;">Sharpen your skills, prep for top interviews, and accelerate your tech career.</p>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
-        <div style="padding:1.25rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:14px;">
-          <span style="font-size:1.5rem; display:block; margin-bottom:0.5rem;">📄</span>
-          <h4 style="color:#fff; font-size:0.95rem; margin:0 0 0.35rem;">Resume Blueprint 2026</h4>
-          <p style="color:#94a3b8; font-size:0.8125rem; margin:0 0 0.85rem;">ATS-optimized resume templates tailored for developers, designers, and managers.</p>
-          <a href="{% url 'jobs:list' %}" class="section-action-link" style="font-size:0.8125rem;">Download Templates &rarr;</a>
+        <div style="padding:1.25rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:14px; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="width:38px; height:38px; border-radius:10px; background:rgba(56, 189, 248, 0.12); border:1px solid rgba(56, 189, 248, 0.25); display:flex; align-items:center; justify-content:center; color:#38bdf8; margin-bottom:0.85rem;">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div>
+            <h4 style="color:#fff; font-size:1rem; font-weight:700; margin:0 0 0.4rem;">Resume Blueprint 2026</h4>
+            <p style="color:#94a3b8; font-size:0.8125rem; line-height:1.6; margin:0 0 1rem;">ATS-optimized resume templates tailored for developers, designers, and managers.</p>
+          </div>
+          <a href="{% url 'jobs:list' %}" class="section-action-link" style="font-size:0.8125rem; font-weight:600; color:#38bdf8; text-decoration:none;">Download Templates &rarr;</a>
         </div>
-        <div style="padding:1.25rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:14px;">
-          <span style="font-size:1.5rem; display:block; margin-bottom:0.5rem;">🎯</span>
-          <h4 style="color:#fff; font-size:0.95rem; margin:0 0 0.35rem;">Interview Mastery</h4>
-          <p style="color:#94a3b8; font-size:0.8125rem; margin:0 0 0.85rem;">Ace behavioral and live technical rounds with real question breakdowns.</p>
-          <a href="{% url 'jobs:list' %}" class="section-action-link" style="font-size:0.8125rem;">Explore Questions &rarr;</a>
+        <div style="padding:1.25rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:14px; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="width:38px; height:38px; border-radius:10px; background:rgba(99, 102, 241, 0.12); border:1px solid rgba(99, 102, 241, 0.25); display:flex; align-items:center; justify-content:center; color:#818cf8; margin-bottom:0.85rem;">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            </div>
+            <h4 style="color:#fff; font-size:1rem; font-weight:700; margin:0 0 0.4rem;">Interview Mastery</h4>
+            <p style="color:#94a3b8; font-size:0.8125rem; line-height:1.6; margin:0 0 1rem;">Ace behavioral and live technical rounds with real question breakdowns.</p>
+          </div>
+          <a href="{% url 'jobs:list' %}" class="section-action-link" style="font-size:0.8125rem; font-weight:600; color:#38bdf8; text-decoration:none;">Explore Questions &rarr;</a>
         </div>
       </div>
     </div>
@@ -518,7 +571,22 @@
           });
         });
       } catch (e) {}
+
+      // Theme state initialization
+      const savedTheme = localStorage.getItem('workwise_theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
     });
+
+    // Theme toggle function
+    window.toggleTheme = function() {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('workwise_theme', next);
+      window.showToast(`Switched to ${next === 'dark' ? 'Dark' : 'Light'} Mode`, "info");
+    };
 
     // Global helper for HTMX / JS toasts
     window.showToast = function(message, type = "info", icon = "") {

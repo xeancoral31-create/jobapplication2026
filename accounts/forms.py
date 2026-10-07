@@ -15,15 +15,15 @@ from .models import User, EmployerProfile, ApplicantProfile
 class EmailAuthenticationForm(AuthenticationForm):
     """Override AuthenticationForm to use email instead of username."""
 
-    username = forms.EmailField(
-        label=_("Email"),
-        widget=forms.EmailInput(
+    username = forms.CharField(
+        label=_("Email or Username"),
+        widget=forms.TextInput(
             attrs={
                 "autofocus": True,
-                "placeholder": "you@example.com",
+                "placeholder": "you@example.com or username",
                 "class": "form-control",
                 "id": "id_email",
-                "autocomplete": "email",
+                "autocomplete": "username",
             }
         ),
     )
@@ -171,14 +171,105 @@ class SignupForm(forms.Form):
 # ── Styled password reset form ─────────────────────────────────────────────
 
 
-class WorkWisePasswordResetForm(PasswordResetForm):
+class WorkWisePasswordResetForm(forms.Form):
+    """Form to request a password reset email."""
     email = forms.EmailField(
         label=_("Email"),
         max_length=254,
         widget=forms.EmailInput(
-            attrs={**_FIELD_ATTRS, "placeholder": "you@example.com", "autocomplete": "email"}
+            attrs={
+                **_FIELD_ATTRS,
+                "placeholder": "you@example.com",
+                "autocomplete": "email",
+                "id": "id_email",
+                "class": "auth-input",
+            }
         ),
     )
+
+    def clean_email(self):
+        email = self.cleaned_data.get("email", "").strip().lower()
+        if not User.objects.filter(email__iexact=email).exists():
+            raise ValidationError(_("No registered account was found with this email address."))
+        return email
+
+
+class PasswordResetVerifyForm(forms.Form):
+    """Form to enter and validate the 6-digit verification code."""
+    code = forms.CharField(
+        label=_("Verification Code"),
+        max_length=6,
+        min_length=6,
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "123456",
+                "autocomplete": "one-time-code",
+                "id": "id_code",
+                "class": "auth-input verification-input",
+                "maxlength": "6",
+                "pattern": "[0-9]{6}",
+                "inputmode": "numeric",
+                "autofocus": "autofocus",
+            }
+        ),
+    )
+
+    def clean_code(self):
+        code = self.cleaned_data.get("code", "").strip()
+        if not code.isdigit() or len(code) != 6:
+            raise ValidationError(_("Please enter a valid 6-digit verification code."))
+        return code
+
+
+class PasswordResetChangePasswordForm(forms.Form):
+    """Form to set the new permanent password after code verification."""
+    new_password1 = forms.CharField(
+        label=_("New Password"),
+        widget=forms.PasswordInput(
+            attrs={
+                **_FIELD_ATTRS,
+                "placeholder": "••••••••",
+                "autocomplete": "new-password",
+                "id": "id_new_password1",
+                "class": "auth-input",
+            }
+        ),
+    )
+    new_password2 = forms.CharField(
+        label=_("Confirm New Password"),
+        widget=forms.PasswordInput(
+            attrs={
+                **_FIELD_ATTRS,
+                "placeholder": "••••••••",
+                "autocomplete": "new-password",
+                "id": "id_new_password2",
+                "class": "auth-input",
+            }
+        ),
+    )
+
+    def __init__(self, *args, user=None, **kwargs):
+        self.user = user
+        super().__init__(*args, **kwargs)
+
+    def clean_new_password2(self):
+        p1 = self.cleaned_data.get("new_password1", "")
+        p2 = self.cleaned_data.get("new_password2", "")
+        if p1 and p2 and p1 != p2:
+            raise ValidationError(_("The passwords do not match. Please re-enter."))
+        if len(p1) < 8:
+            raise ValidationError(_("Password must be at least 8 characters long."))
+        return p2
+
+    def save(self):
+        """Set user's new password permanently."""
+        if not self.user:
+            return None
+        new_pwd = self.cleaned_data["new_password1"]
+        self.user.set_password(new_pwd)
+        self.user.save()
+        return self.user
+
 
 
 class ApplicantProfileForm(forms.Form):

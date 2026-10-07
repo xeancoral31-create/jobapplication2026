@@ -194,8 +194,8 @@ class ApplicantJobBoardAndApplyTest(TestCase):
             first_name="Jane",
             last_name="Doe",
         )
-        self.cat_design = Category.objects.create(name="Design", slug="design", icon="🎨")
-        self.cat_dev = Category.objects.create(name="Development", slug="dev", icon="💻")
+        self.cat_design = Category.objects.create(name="Design", slug="design", icon="palette")
+        self.cat_dev = Category.objects.create(name="Development", slug="dev", icon="laptop")
 
         today = timezone.now().date()
         future_date = today + datetime.timedelta(days=14)

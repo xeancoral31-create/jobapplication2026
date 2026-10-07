@@ -14,20 +14,13 @@
       </a>
       <div class="auth-headline">
         <h1>Find Work<br>That Moves<br><em>You Forward.</em></h1>
-        <p class="auth-sub">Join 1,200+ companies and 40,000 candidates building careers on WorkWise.</p>
       </div>
     </div>
   </div>
 
   <!-- ── Right: form card ───────────────────────────────────── -->
   <div class="auth-right">
-    <div class="auth-card" id="auth-card" data-role="applicant">
-
-      <!-- Role tabs (purely visual — same form, color changes) -->
-      <div class="auth-tabs" role="tablist">
-        <button class="auth-tab is-active" data-role="applicant" role="tab" aria-selected="true"  type="button">Job Seeker</button>
-        <button class="auth-tab"           data-role="employer"  role="tab" aria-selected="false" type="button">Employer</button>
-      </div>
+    <div class="auth-card" id="auth-card">
 
       <h1 class="auth-title">Welcome back</h1>
       <p class="auth-subtitle">Sign in to continue to your dashboard.</p>
@@ -44,12 +37,12 @@
         {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
 
         <div class="auth-field">
-          <label class="auth-label" for="{{ form.username.id_for_label }}">Email</label>
+          <label class="auth-label" for="{{ form.username.id_for_label }}">Email or Username</label>
           <input class="auth-input{% if form.username.errors %} is-invalid{% endif %}"
-                 type="email" name="{{ form.username.html_name }}"
+                 type="text" name="{{ form.username.html_name }}"
                  id="{{ form.username.id_for_label }}"
-                 placeholder="you@example.com"
-                 autocomplete="email"
+                 placeholder="you@example.com or username"
+                 autocomplete="username"
                  value="{{ form.username.value|default:'' }}"
                  required>
           {% for err in form.username.errors %}<span class="auth-error">{{ err }}</span>{% endfor %}
@@ -70,30 +63,13 @@
       </form>
 
       <div class="auth-footer">
-        <a href="{% url 'accounts:password_reset' %}">Forgot your password?</a>
+        <a href="{% url 'accounts:password_reset' %}" class="auth-forgot-link">Forgot your password?</a>
         <p class="auth-footer__main">
           New to WorkWise? <a href="{% url 'accounts:register' %}">Create an account</a>
         </p>
-        <a href="{% url 'admin_login' %}" style="opacity:0.45;font-size:0.78rem;">Admin login</a>
       </div>
 
     </div><!-- /.auth-card -->
   </div><!-- /.auth-right -->
 </div><!-- /.auth-shell -->
-
-<script>
-  (function () {
-    const card = document.getElementById('auth-card');
-    const tabs = card.querySelectorAll('.auth-tab');
-
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => { t.classList.remove('is-active'); t.setAttribute('aria-selected', 'false'); });
-        tab.classList.add('is-active');
-        tab.setAttribute('aria-selected', 'true');
-        card.dataset.role = tab.dataset.role;
-      });
-    });
-  })();
-</script>
 {% endblock %}

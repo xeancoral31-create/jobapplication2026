@@ -93,13 +93,13 @@
                   <form method="post" action="{% url 'core:admin_employer_approve' emp.pk %}">
                     {% csrf_token %}
                     <button type="submit" class="btn btn--primary btn--sm" style="font-size: 0.72rem; padding: 4px 10px;">
-                      ✓ Approve
+                      Approve
                     </button>
                   </form>
                   <form method="post" action="{% url 'core:admin_employer_reject' emp.pk %}" onsubmit="return confirm('Reject employer {{ emp.username }}?');">
                     {% csrf_token %}
                     <button type="submit" class="btn btn--danger btn--sm" style="font-size: 0.72rem; padding: 4px 10px;">
-                      ✕ Reject
+                      Reject
                     </button>
                   </form>
                 </div>
@@ -111,7 +111,9 @@
       </div>
       {% else %}
       <div style="padding: var(--space-12); text-align: center;">
-        <div style="font-size: 2.5rem; margin-bottom: var(--space-2);" aria-hidden="true">🎉</div>
+        <div style="display: flex; justify-content: center; margin-bottom: var(--space-2); color: var(--color-success);" aria-hidden="true">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        </div>
         <h3 class="heading-3" style="margin-bottom: var(--space-1);">All caught up!</h3>
         <p class="text-muted text-sm">
           There are no employers awaiting verification at this time.

@@ -9,9 +9,8 @@
   <!-- ── 1. Header ──────────────────────────────────────────────── -->
   <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); margin-bottom: var(--space-8);">
     <div>
-      <h1 class="heading-1" style="margin: 0;">
+      <h1 class="heading-1" style="margin: 0; letter-spacing: -0.02em;">
         Welcome back, {{ user.first_name|default:user.username }}
-        <span style="font-size: 1.5rem;" aria-hidden="true">👋</span>
       </h1>
       <p class="text-muted" style="margin-top: var(--space-1);">
         {% with p=user.applicant_profile %}
@@ -30,7 +29,9 @@
   <div class="completeness-card card--hard-shadow">
     <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-2);">
       <div style="display: flex; align-items: center; gap: var(--space-3);">
-        <span style="font-size: 1.25rem;" aria-hidden="true">🎯</span>
+        <div style="width: 28px; height: 28px; border-radius: var(--radius-sm); background: var(--color-surface-2); display: flex; align-items: center; justify-content: center; color: var(--color-accent-400);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+        </div>
         <div>
           <span style="font-weight: 700; color: var(--color-text-primary); font-size: var(--text-base);">
             Profile Completeness
@@ -70,54 +71,62 @@
   <!-- ── 3. Hard-Shadow Stat Tiles (Applications by Status) ─────── -->
   <div class="grid-4" style="margin-bottom: var(--space-10);">
     <!-- Total Applications -->
-    <div class="stat-tile stat-tile--primary">
+    <a href="{% url 'applications:list' %}?status=all" class="stat-tile stat-tile--primary" style="text-decoration: none; display: block; transition: transform 0.15s ease, box-shadow 0.15s ease;" title="View all submitted applications">
       <div class="stat-tile__header">
         <span class="stat-tile__label">Total Applications</span>
-        <span class="stat-tile__icon" aria-hidden="true">📑</span>
+        <span class="stat-tile__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        </span>
       </div>
       <div class="stat-tile__value">{{ total_applications }}</div>
       <div class="stat-tile__label" style="font-size: var(--text-xs);">
-        {{ active_applications }} active in pipeline
+        {{ active_applications }} active in pipeline &rarr;
       </div>
-    </div>
+    </a>
 
     <!-- Under Review -->
-    <div class="stat-tile stat-tile--amber">
+    <a href="{% url 'applications:list' %}?status=active" class="stat-tile stat-tile--amber" style="text-decoration: none; display: block; transition: transform 0.15s ease, box-shadow 0.15s ease;" title="View active applications under review">
       <div class="stat-tile__header">
         <span class="stat-tile__label">Under Review</span>
-        <span class="stat-tile__icon" aria-hidden="true">👀</span>
+        <span class="stat-tile__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        </span>
       </div>
       <div class="stat-tile__value">{{ status_stats.under_review|default:0 }}</div>
       <div class="stat-tile__label" style="font-size: var(--text-xs); color: hsl(38 92% 70%);">
-        Being evaluated by employers
+        Being evaluated by employers &rarr;
       </div>
-    </div>
+    </a>
 
     <!-- Shortlisted -->
-    <div class="stat-tile stat-tile--teal">
+    <a href="{% url 'applications:list' %}?status=active" class="stat-tile stat-tile--teal" style="text-decoration: none; display: block; transition: transform 0.15s ease, box-shadow 0.15s ease;" title="View shortlisted applications">
       <div class="stat-tile__header">
         <span class="stat-tile__label">Shortlisted</span>
-        <span class="stat-tile__icon" aria-hidden="true">⭐</span>
+        <span class="stat-tile__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        </span>
       </div>
       <div class="stat-tile__value">{{ status_stats.shortlisted|default:0 }}</div>
       <div class="stat-tile__label" style="font-size: var(--text-xs); color: var(--color-accent-400);">
-        Advanced to candidate shortlist
+        Advanced to candidate shortlist &rarr;
       </div>
-    </div>
+    </a>
 
     <!-- Interviews & Offers -->
-    <div class="stat-tile stat-tile--coral">
+    <a href="{% url 'applications:list' %}?status=active" class="stat-tile stat-tile--coral" style="text-decoration: none; display: block; transition: transform 0.15s ease, box-shadow 0.15s ease;" title="View upcoming interviews and offers">
       <div class="stat-tile__header">
         <span class="stat-tile__label">Interviews / Offers</span>
-        <span class="stat-tile__icon" aria-hidden="true">🎉</span>
+        <span class="stat-tile__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        </span>
       </div>
       <div class="stat-tile__value">
         {{ upcoming_interviews|length }}
       </div>
       <div class="stat-tile__label" style="font-size: var(--text-xs); color: hsl(354 75% 70%);">
-        Scheduled sessions
+        Scheduled sessions &rarr;
       </div>
-    </div>
+    </a>
   </div>
 
   <!-- ── 4. Main Two-Column Layout ──────────────────────────────── -->
@@ -155,14 +164,17 @@
             </div>
 
             <div class="ticket-card__footer">
-              <span class="ticket-card__meta">
-                ⏱️ {{ iv.duration_minutes }} mins &middot;
+              <span class="ticket-card__meta" style="display: inline-flex; align-items: center; gap: 4px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <span>{{ iv.duration_minutes }} mins</span>
+                <span>&middot;</span>
                 {% if iv.meeting_link %}
                   <a href="{{ iv.meeting_link }}" target="_blank" rel="noopener" style="color: var(--color-accent-400); text-decoration: underline;">
                     Join Video Call
                   </a>
                 {% else %}
-                  📍 {{ iv.location|default:"Online" }}
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  <span>{{ iv.location|default:"Online" }}</span>
                 {% endif %}
               </span>
               <a href="{% url 'applications:detail' iv.application.pk %}" class="btn btn--ghost btn--sm">
@@ -173,7 +185,9 @@
         </div>
         {% empty %}
         <div class="card--hard-shadow" style="padding: var(--space-10); text-align: center;">
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);" aria-hidden="true">🎟️</div>
+          <div style="display: flex; justify-content: center; margin-bottom: var(--space-2); color: var(--color-text-muted);" aria-hidden="true">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          </div>
           <p class="font-semibold" style="margin-bottom: var(--space-1);">No upcoming interviews scheduled</p>
           <p class="text-sm text-muted">
             When an employer schedules an interview with you, your ticket passes will appear right here.
@@ -259,7 +273,9 @@
         </div>
         {% empty %}
         <div class="card--hard-shadow" style="padding: var(--space-10); text-align: center;">
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);" aria-hidden="true">📬</div>
+          <div style="display: flex; justify-content: center; margin-bottom: var(--space-2); color: var(--color-text-muted);" aria-hidden="true">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          </div>
           <p class="font-semibold" style="margin-bottom: var(--space-1);">No applications sent yet</p>
           <p class="text-sm text-muted" style="margin-bottom: var(--space-4);">
             Browse our open positions and start applying today.

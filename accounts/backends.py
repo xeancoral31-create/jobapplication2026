@@ -1,27 +1,28 @@
 """accounts/backends.py — Email-based authentication backend."""
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 
 User = get_user_model()
 
 
 class EmailBackend(ModelBackend):
-    """Authenticate with email + password instead of username + password."""
+    """Authenticate with either email or username + password."""
 
     def authenticate(self, request, username=None, password=None, email=None, **kwargs):
-        # Accept email either in the `email` kwarg or the standard `username` slot
-        lookup_email = email or username
-        if not lookup_email or not password:
+        # Accept username or email in either kwarg
+        lookup = (email or username or "").strip()
+        if not lookup or not password:
             return None
-        try:
-            user = User.objects.get(email__iexact=lookup_email)
-        except User.DoesNotExist:
-            # Run the default password hasher to avoid timing attacks
+
+        user = User.objects.filter(
+            Q(email__iexact=lookup) | Q(username__iexact=lookup)
+        ).order_by("-date_joined").first()
+
+        if user is None:
+            # Run the default password hasher to prevent timing attacks
             User().set_password(password)
             return None
-        except User.MultipleObjectsReturned:
-            # Pick the most recently joined account
-            user = User.objects.filter(email__iexact=lookup_email).order_by("-date_joined").first()
 
         if user.check_password(password) and self.user_can_authenticate(user):
             return user

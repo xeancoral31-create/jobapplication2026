@@ -7,11 +7,7 @@
   <!-- Page Header -->
   <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: var(--space-8); flex-wrap: wrap; gap: var(--space-4);">
     <div>
-      <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-1);">
-        <span class="badge badge--primary">Candidate Desk</span>
-        <span class="text-xs text-muted">Track your job applications and interview updates</span>
-      </div>
-      <h1 class="heading-1" style="font-family: var(--font-serif); margin: 0 0 var(--space-1);">
+      <h1 class="heading-1" style="font-weight: 700; margin: 0 0 var(--space-1); letter-spacing: -0.02em;">
         My Applications
       </h1>
       <p class="text-muted" style="margin: 0; font-size: var(--text-sm);">
@@ -62,21 +58,19 @@
             <!-- Job & Employer Info -->
             <td style="padding: var(--space-4);">
               <div style="display: flex; align-items: center; gap: var(--space-3);">
-                <div style="width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--color-surface-2); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">
-                  {% if app.job.category and app.job.category.icon %}
-                    {{ app.job.category.icon }}
-                  {% else %}
-                    💼
-                  {% endif %}
+                <div style="width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--color-surface-2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--color-text-secondary);">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                 </div>
                 <div>
                   <a href="{% url 'jobs:detail' app.job.slug %}" class="text-primary-color" style="font-weight: 600; font-size: var(--text-md); text-decoration: none;">
                     {{ app.job.title }}
                   </a>
-                  <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin: 2px 0 0;">
-                    {{ app.job.employer.employer_profile.company_name|default:app.job.employer.get_full_name }}
-                    &middot; 📍 {{ app.job.location }}
-                    {% if app.job.is_remote %}&middot; <span class="text-accent">Remote</span>{% endif %}
+                  <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin: 2px 0 0; display: flex; align-items: center; gap: 4px;">
+                    <span>{{ app.job.employer.employer_profile.company_name|default:app.job.employer.get_full_name }}</span>
+                    <span>&middot;</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    <span>{{ app.job.location }}</span>
+                    {% if app.job.is_remote %}<span>&middot;</span> <span class="text-accent">Remote</span>{% endif %}
                   </p>
                 </div>
               </div>
@@ -114,8 +108,10 @@
   {% else %}
   <!-- Empty State -->
   <div class="card" style="padding: var(--space-12) var(--space-6); text-align: center; background: var(--color-surface-1); border: 1px solid var(--color-border);">
-    <div style="font-size: 3rem; margin-bottom: var(--space-3);">📋</div>
-    <h3 class="heading-3" style="font-family: var(--font-serif); margin-bottom: var(--space-2);">
+    <div style="display: flex; justify-content: center; margin-bottom: var(--space-3); color: var(--color-text-muted);">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+    </div>
+    <h3 class="heading-3" style="font-weight: 600; margin-bottom: var(--space-2);">
       No applications found
     </h3>
     <p class="text-muted" style="max-width: 440px; margin: 0 auto var(--space-6); font-size: var(--text-sm);">

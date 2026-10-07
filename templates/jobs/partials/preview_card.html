@@ -1,11 +1,23 @@
 {% load static %}
 <div class="job-card card--hard-shadow animate-fade-in" style="margin: 0; background: var(--color-surface-1);">
   <div class="job-card__top">
-    <div class="job-card__logo" style="background: var(--color-surface-2);">
+    <div class="job-card__logo" style="background: var(--color-surface-2); display: flex; align-items: center; justify-content: center;">
       {% if employer.employer_profile.company_logo %}
         <img src="{{ employer.employer_profile.company_logo.url }}" alt="{{ employer.employer_profile.company_name }}" style="width: 100%; height: 100%; object-fit: cover;">
       {% else %}
-        <span>🏢</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-text-muted); opacity: 0.85;">
+          <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+          <path d="M9 22v-4h6v4"></path>
+          <path d="M8 6h.01"></path>
+          <path d="M16 6h.01"></path>
+          <path d="M12 6h.01"></path>
+          <path d="M12 10h.01"></path>
+          <path d="M12 14h.01"></path>
+          <path d="M16 10h.01"></path>
+          <path d="M16 14h.01"></path>
+          <path d="M8 10h.01"></path>
+          <path d="M8 14h.01"></path>
+        </svg>
       {% endif %}
     </div>
     <div style="display: flex; gap: var(--space-2); align-items: center;">
@@ -31,14 +43,14 @@
 
     <div style="display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-3);">
       {% if job.category %}
-        <span class="tag" style="background: hsl(248 78% 52% / 0.15); color: var(--color-primary-300); border-color: hsl(248 78% 52% / 0.3);">
-          {{ job.category.icon }} {{ job.category.name }}
+        <span class="tag" style="display: inline-flex; align-items: center; gap: 4px; background: hsl(248 78% 52% / 0.15); color: var(--color-primary-300); border-color: hsl(248 78% 52% / 0.3);">
+          {{ job.category.svg_icon }} {{ job.category.name }}
         </span>
       {% else %}
         <span class="tag text-muted">No category selected</span>
       {% endif %}
 
-      <span class="tag">{{ job.get_job_type_display|default:"Full-time" }}</span>
+      <span class="tag">{{ job.get_job_type_display|default:"Full-Time" }}</span>
       <span class="tag">{{ job.get_experience_level_display|default:"Mid Level" }}</span>
     </div>
 
@@ -51,17 +63,29 @@
 
   <div class="job-card__footer">
     <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
-      <span class="text-xs text-muted">
-        📍 {{ job.location|default:"Location not set" }}
+      <span class="text-xs text-muted" style="display: inline-flex; align-items: center; gap: 0.25rem;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-text-muted); flex-shrink: 0;">
+          <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+        <span>{{ job.location|default:"Location not set" }}</span>
         {% if job.is_remote %}
-          &middot; <span class="text-accent font-semibold">🌐 Remote Friendly</span>
+          &middot;
+          <span class="text-accent font-semibold" style="display: inline-flex; align-items: center; gap: 0.25rem;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+              <path d="M2 12h20"></path>
+            </svg>
+            Remote Friendly
+          </span>
         {% endif %}
       </span>
       <span class="text-xs font-semibold text-primary-color">
         {{ job.salary_display }}
       </span>
     </div>
-    <span class="btn btn--primary btn--sm" style="pointer-events: none; opacity: 0.85;">
+    <span class="btn btn--primary btn--sm" style="pointer-events: none; opacity: 0.95;">
       Apply Now
     </span>
   </div>

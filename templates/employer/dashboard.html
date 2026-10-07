@@ -9,7 +9,9 @@
   <!-- ── 1. Unverified Employer Notice Banner ───────────────────── -->
   {% if not is_verified %}
   <div class="banner--verification animate-fade-in" role="alert">
-    <div class="banner--verification__icon" aria-hidden="true">⏳</div>
+    <div class="banner--verification__icon" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+    </div>
     <div style="flex: 1;">
       <h3 class="banner--verification__title">Employer Account Awaiting Verification</h3>
       <p class="banner--verification__desc">
@@ -27,11 +29,14 @@
   <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); margin-bottom: var(--space-8);">
     <div>
       <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-1);">
-        <h1 class="heading-1" style="margin: 0;">
+        <h1 class="heading-1" style="margin: 0; letter-spacing: -0.02em;">
           {{ user.employer_profile.company_name|default:user.get_full_name|default:user.username }}
         </h1>
         {% if is_verified %}
-          <span class="badge badge--success" title="Verified Employer Account">✓ Verified</span>
+          <span class="badge badge--success" title="Verified Employer Account" style="display: inline-flex; align-items: center; gap: 4px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Verified
+          </span>
         {% else %}
           <span class="badge badge--warning">Pending</span>
         {% endif %}
@@ -50,52 +55,60 @@
   <!-- ── 3. Hard-Shadow Stat Tiles ──────────────────────────────── -->
   <div class="grid-4" style="margin-bottom: var(--space-10);">
     <!-- Open Jobs -->
-    <div class="stat-tile stat-tile--primary">
+    <a href="{% url 'jobs:manage_list' %}?status=open" class="stat-tile stat-tile--primary" style="text-decoration: none; display: block; transition: transform 0.15s ease, box-shadow 0.15s ease;" title="View all open job postings">
       <div class="stat-tile__header">
         <span class="stat-tile__label">Open Jobs</span>
-        <span class="stat-tile__icon" aria-hidden="true">💼</span>
+        <span class="stat-tile__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+        </span>
       </div>
       <div class="stat-tile__value">{{ open_jobs }}</div>
       <div style="font-size: var(--text-xs); color: var(--color-text-muted);">
-        {{ total_jobs }} total posting{{ total_jobs|pluralize }}
+        {{ total_jobs }} total posting{{ total_jobs|pluralize }} &rarr;
       </div>
-    </div>
+    </a>
 
     <!-- Total Applications -->
-    <div class="stat-tile stat-tile--teal">
+    <a href="{% url 'jobs:manage_list' %}" class="stat-tile stat-tile--teal" style="text-decoration: none; display: block; transition: transform 0.15s ease, box-shadow 0.15s ease;" title="View applications across all jobs">
       <div class="stat-tile__header">
         <span class="stat-tile__label">Total Applications</span>
-        <span class="stat-tile__icon" aria-hidden="true">📄</span>
+        <span class="stat-tile__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        </span>
       </div>
       <div class="stat-tile__value">{{ total_applications }}</div>
       <div style="font-size: var(--text-xs); color: var(--color-accent-400);">
-        Across all listings
+        Across all listings &rarr;
       </div>
-    </div>
+    </a>
 
     <!-- Shortlisted -->
-    <div class="stat-tile stat-tile--amber">
+    <a href="{% url 'jobs:manage_list' %}" class="stat-tile stat-tile--amber" style="text-decoration: none; display: block; transition: transform 0.15s ease, box-shadow 0.15s ease;" title="View shortlisted candidates">
       <div class="stat-tile__header">
         <span class="stat-tile__label">Shortlisted</span>
-        <span class="stat-tile__icon" aria-hidden="true">⭐</span>
+        <span class="stat-tile__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        </span>
       </div>
       <div class="stat-tile__value">{{ shortlisted }}</div>
       <div style="font-size: var(--text-xs); color: hsl(38 92% 70%);">
-        High-priority candidates
+        High-priority candidates &rarr;
       </div>
-    </div>
+    </a>
 
     <!-- Interviews Next 7 Days -->
-    <div class="stat-tile stat-tile--coral">
+    <a href="{% url 'jobs:manage_list' %}" class="stat-tile stat-tile--coral" style="text-decoration: none; display: block; transition: transform 0.15s ease, box-shadow 0.15s ease;" title="View interview pipeline">
       <div class="stat-tile__header">
         <span class="stat-tile__label">Interviews in Next 7 Days</span>
-        <span class="stat-tile__icon" aria-hidden="true">📅</span>
+        <span class="stat-tile__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        </span>
       </div>
       <div class="stat-tile__value">{{ interviews_next_7_days }}</div>
       <div style="font-size: var(--text-xs); color: hsl(354 75% 70%);">
-        Upcoming sessions
+        Upcoming sessions &rarr;
       </div>
-    </div>
+    </a>
   </div>
 
   <!-- ── 4. Main Two-Column Layout ──────────────────────────────── -->
@@ -139,9 +152,20 @@
                   </div>
                 </td>
                 <td>
-                  <span style="font-weight: 500; color: var(--color-text-primary); font-size: var(--text-sm);">
+                  <span style="font-weight: 500; color: var(--color-text-primary); font-size: var(--text-sm); display: block;">
                     {{ app.job.title }}
                   </span>
+                  <div style="display: flex; gap: var(--space-1); align-items: center; margin-top: 2px;">
+                    <span class="badge badge--{{ app.job.job_type }}" style="font-size: 0.68rem; padding: 0.15rem 0.45rem;">
+                      {{ app.job.get_job_type_display }}
+                    </span>
+                    {% if app.job.department %}
+                      <span class="text-xs text-muted" style="display: inline-flex; align-items: center; gap: 3px;">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="22.01"></line><line x1="15" y1="22" x2="15" y2="22.01"></line><line x1="9" y1="18" x2="9" y2="18.01"></line><line x1="15" y1="18" x2="15" y2="18.01"></line><line x1="9" y1="14" x2="9" y2="14.01"></line><line x1="15" y1="14" x2="15" y2="14.01"></line><line x1="9" y1="10" x2="9" y2="10.01"></line><line x1="15" y1="10" x2="15" y2="10.01"></line><line x1="9" y1="6" x2="9" y2="6.01"></line><line x1="15" y1="6" x2="15" y2="6.01"></line></svg>
+                        {{ app.job.department }}
+                      </span>
+                    {% endif %}
+                  </div>
                 </td>
                 <td style="font-size: var(--text-xs); color: var(--color-text-muted); white-space: nowrap;">
                   {{ app.applied_at|date:"M j, Y" }}
@@ -158,7 +182,9 @@
         </div>
         {% else %}
         <div style="padding: var(--space-12); text-align: center;">
-          <div style="font-size: 2.5rem; margin-bottom: var(--space-3);" aria-hidden="true">📥</div>
+          <div style="display: flex; justify-content: center; margin-bottom: var(--space-3); color: var(--color-text-muted);" aria-hidden="true">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg>
+          </div>
           <p class="font-semibold" style="margin-bottom: var(--space-1);">No applications received yet</p>
           <p class="text-sm text-muted" style="margin-bottom: var(--space-4);">
             When candidates apply to your posted jobs, they will appear here.

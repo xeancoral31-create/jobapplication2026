@@ -5,60 +5,141 @@
 <div class="container" style="padding-top: var(--space-8); padding-bottom: var(--space-12);">
 
   <!-- Hero Header -->
-  <div style="margin-bottom: var(--space-8); text-align: left;">
+  <div style="margin-bottom: var(--space-6); text-align: left;">
     <div style="display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-2);">
-      <span class="badge badge--primary">Job Board</span>
-      <span class="text-xs text-muted">Curated opportunities for craftspeople & engineers</span>
+      <span class="badge badge--primary">Career Opportunities</span>
+      <span class="text-xs text-muted">Diverse positions across every professional field</span>
     </div>
-    <h1 class="heading-1" style="font-family: var(--font-serif); margin-bottom: var(--space-2);">
-      Open Roles at Top Companies
+    <h1 class="heading-1" style="font-family: var(--font-display); margin-bottom: var(--space-2); letter-spacing: -0.02em;">
+      Find Positions That Move You Forward
     </h1>
-    <p class="text-muted" style="max-width: 650px; font-size: var(--text-md); margin: 0;">
-      Find your next career move. Filter by role, location, category, and minimum compensation.
+    <p class="text-secondary" style="max-width: 680px; font-size: var(--text-base); margin: 0; line-height: 1.55;">
+      Explore opportunities in Healthcare, IT, Education, Engineering, Finance, Public Service, Uniformed Personnel, and more. Filter by career field, specific position, and employment type.
     </p>
   </div>
 
+  <!-- Dedicated Uniformed Personnel Quick Bar -->
+  <div class="card" style="background: var(--color-surface-1); border: 1px solid var(--color-border); padding: var(--space-4) var(--space-5); margin-bottom: var(--space-6); border-radius: var(--radius-lg);">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3);">
+      <div style="display: flex; align-items: center; gap: var(--space-2);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-primary-500);" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
+        <div>
+          <strong style="font-size: var(--text-sm); color: var(--color-text-primary);">Uniformed Personnel &amp; Defense:</strong>
+          <span class="text-xs text-muted" style="margin-left: var(--space-1);">Explore official military and law enforcement roles</span>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap;">
+        <a href="{% url 'jobs:list' %}?category=uniformed-personnel"
+           class="badge-filter-pill {% if selected_category == 'uniformed-personnel' and not selected_branch %}is-active{% endif %}">
+          All Uniformed
+        </a>
+        <a href="{% url 'jobs:list' %}?category=uniformed-personnel&branch=army"
+           class="badge-filter-pill {% if selected_branch == 'army' %}is-active{% endif %}" title="Army Defense & Medical">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><polygon points="12 8 13.5 11.5 17 11.8 14.3 14.2 15.1 17.7 12 15.8 8.9 17.7 9.7 14.2 7 11.8 10.5 11.5 12 8"/></svg>
+          Army
+        </a>
+        <a href="{% url 'jobs:list' %}?category=uniformed-personnel&branch=navy"
+           class="badge-filter-pill {% if selected_branch == 'navy' %}is-active{% endif %}" title="Navy Fleet & Marine Engineering">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="3"/><line x1="12" x2="12" y1="22" y2="8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg>
+          Navy
+        </a>
+        <a href="{% url 'jobs:list' %}?category=uniformed-personnel&branch=coast_guard"
+           class="badge-filter-pill {% if selected_branch == 'coast_guard' %}is-active{% endif %}" title="Coast Guard Search & Rescue">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/><circle cx="12" cy="12" r="4"/></svg>
+          Coast Guard
+        </a>
+        <a href="{% url 'jobs:list' %}?category=uniformed-personnel&branch=police"
+           class="badge-filter-pill {% if selected_branch == 'police' %}is-active{% endif %}" title="Police & Criminal Investigation">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
+          Police
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- Filter & Search Controls Form -->
-  <div class="card" style="background: var(--color-surface-1); border: 1px solid var(--color-border); padding: var(--space-5); margin-bottom: var(--space-8); box-shadow: var(--shadow-sm);">
+  <div class="card" style="background: var(--color-surface-1); border: 1px solid var(--color-border); padding: var(--space-5); margin-bottom: var(--space-8); box-shadow: var(--shadow-sm); border-radius: var(--radius-lg);">
     <form id="filter-form"
           method="get"
           action="{% url 'jobs:list' %}"
           hx-get="{% url 'jobs:list' %}"
           hx-target="#jobs-results-container"
           hx-push-url="true">
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); align-items: flex-end;">
-        
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: var(--space-4); align-items: flex-end;">
+
         <!-- Keyword Search -->
         <div class="form-group" style="margin-bottom: 0;">
-          <label class="form-label text-xs font-semibold" for="filter-q">Keyword / Title / Company</label>
+          <label class="form-label text-xs font-semibold" for="filter-q">Keyword / Title / Employer</label>
           <input type="text"
                  name="q"
                  id="filter-q"
                  class="form-control"
-                 placeholder="Search roles or skills..."
+                 placeholder="Search e.g. Nurse, Engineer, Officer..."
                  value="{{ search_query }}"
                  hx-get="{% url 'jobs:list' %}"
-                 hx-trigger="input changed delay:350ms, search"
+                 hx-trigger="input changed delay:300ms, search"
                  hx-include="#filter-form"
                  hx-target="#jobs-results-container"
                  hx-push-url="true">
         </div>
 
-        <!-- Category Dropdown -->
+        <!-- Career Field / Category Dropdown -->
         <div class="form-group" style="margin-bottom: 0;">
-          <label class="form-label text-xs font-semibold" for="filter-category">Category</label>
+          <label class="form-label text-xs font-semibold" for="filter-category">Career Field / Category</label>
           <select name="category"
                   id="filter-category"
+                  class="form-control"
+                  onchange="updatePositionsDropdown(this.value);"
+                  hx-get="{% url 'jobs:list' %}"
+                  hx-trigger="change"
+                  hx-include="#filter-form"
+                  hx-target="#jobs-results-container"
+                  hx-push-url="true">
+            <option value="">All Career Fields</option>
+            {% for cat in categories %}
+              <option value="{{ cat.slug }}" {% if selected_category == cat.slug %}selected{% endif %}>
+                {{ cat.name }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Dynamic Position Filter -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label text-xs font-semibold" for="filter-position">Specific Position</label>
+          <select name="position"
+                  id="filter-position"
                   class="form-control"
                   hx-get="{% url 'jobs:list' %}"
                   hx-trigger="change"
                   hx-include="#filter-form"
                   hx-target="#jobs-results-container"
                   hx-push-url="true">
-            <option value="">All Categories</option>
-            {% for cat in categories %}
-              <option value="{{ cat.slug }}" {% if selected_category == cat.slug %}selected{% endif %}>
-                {{ cat.icon }} {{ cat.name }}
+            <option value="">All Positions</option>
+            {% for pos in positions %}
+              <option value="{{ pos }}" {% if selected_position == pos %}selected{% endif %}>
+                {{ pos }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Employment Type Filter -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label text-xs font-semibold" for="filter-job-type">Employment Type</label>
+          <select name="job_type"
+                  id="filter-job-type"
+                  class="form-control"
+                  hx-get="{% url 'jobs:list' %}"
+                  hx-trigger="change"
+                  hx-include="#filter-form"
+                  hx-target="#jobs-results-container"
+                  hx-push-url="true">
+            <option value="">All Types</option>
+            {% for jt_val, jt_label in employment_types %}
+              <option value="{{ jt_val }}" {% if selected_job_type == jt_val %}selected{% endif %}>
+                {{ jt_label }}
               </option>
             {% endfor %}
           </select>
@@ -71,7 +152,7 @@
                  name="location"
                  id="filter-location"
                  class="form-control"
-                 placeholder="e.g. San Francisco or Remote"
+                 placeholder="e.g. Metro Manila, Remote"
                  value="{{ selected_location }}"
                  hx-get="{% url 'jobs:list' %}"
                  hx-trigger="input changed delay:350ms"
@@ -80,47 +161,55 @@
                  hx-push-url="true">
         </div>
 
-        <!-- Min Salary Filter -->
-        <div class="form-group" style="margin-bottom: 0;">
-          <label class="form-label text-xs font-semibold" for="filter-salary">Minimum Salary</label>
-          <select name="min_salary"
-                  id="filter-salary"
-                  class="form-control"
-                  hx-get="{% url 'jobs:list' %}"
-                  hx-trigger="change"
-                  hx-include="#filter-form"
-                  hx-target="#jobs-results-container"
-                  hx-push-url="true">
-            <option value="">Any Salary</option>
-            <option value="50000" {% if min_salary == "50000" %}selected{% endif %}>$50,000+ / yr</option>
-            <option value="80000" {% if min_salary == "80000" %}selected{% endif %}>$80,000+ / yr</option>
-            <option value="100000" {% if min_salary == "100000" %}selected{% endif %}>$100,000+ / yr</option>
-            <option value="120000" {% if min_salary == "120000" %}selected{% endif %}>$120,000+ / yr</option>
-            <option value="150000" {% if min_salary == "150000" %}selected{% endif %}>$150,000+ / yr</option>
-          </select>
-        </div>
-
       </div>
 
-      <!-- Secondary Filters & Remote Toggle -->
+      <!-- Secondary Filters Bar -->
       <div style="display: flex; align-items: center; justify-content: space-between; margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--color-border-subtle); flex-wrap: wrap; gap: var(--space-3);">
-        <label style="display: inline-flex; align-items: center; gap: var(--space-2); cursor: pointer; user-select: none;">
-          <input type="checkbox"
-                 name="is_remote"
-                 value="1"
-                 {% if is_remote %}checked{% endif %}
-                 hx-get="{% url 'jobs:list' %}"
-                 hx-trigger="change"
-                 hx-include="#filter-form"
-                 hx-target="#jobs-results-container"
-                 hx-push-url="true"
-                 class="checkbox-input">
-          <span class="text-sm font-semibold">🌐 Remote friendly roles only</span>
-        </label>
+        <div style="display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap;">
+          <label style="display: inline-flex; align-items: center; gap: var(--space-2); cursor: pointer; user-select: none;">
+            <input type="checkbox"
+                   name="is_remote"
+                   value="1"
+                   {% if is_remote %}checked{% endif %}
+                   hx-get="{% url 'jobs:list' %}"
+                   hx-trigger="change"
+                   hx-include="#filter-form"
+                   hx-target="#jobs-results-container"
+                   hx-push-url="true"
+                   class="checkbox-input">
+            <span class="text-sm font-medium" style="display: inline-flex; align-items: center; gap: 5px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              Remote friendly only
+            </span>
+          </label>
 
-        <noscript>
-          <button type="submit" class="btn btn--primary btn--sm">Apply Filters</button>
-        </noscript>
+          <!-- Min Salary Select -->
+          <div style="display: inline-flex; align-items: center; gap: var(--space-2);">
+            <label for="filter-salary" class="text-xs text-muted font-medium">Min Salary:</label>
+            <select name="min_salary"
+                    id="filter-salary"
+                    class="form-control"
+                    style="padding: 0.25rem 0.65rem; font-size: var(--text-xs); height: auto;"
+                    hx-get="{% url 'jobs:list' %}"
+                    hx-trigger="change"
+                    hx-include="#filter-form"
+                    hx-target="#jobs-results-container"
+                    hx-push-url="true">
+              <option value="">Any</option>
+              <option value="40000" {% if min_salary == "40000" %}selected{% endif %}>$40,000+</option>
+              <option value="60000" {% if min_salary == "60000" %}selected{% endif %}>$60,000+</option>
+              <option value="80000" {% if min_salary == "80000" %}selected{% endif %}>$80,000+</option>
+              <option value="100000" {% if min_salary == "100000" %}selected{% endif %}>$100,000+</option>
+              <option value="120000" {% if min_salary == "120000" %}selected{% endif %}>$120,000+</option>
+            </select>
+          </div>
+        </div>
+
+        {% if search_query or selected_category or selected_position or selected_job_type or selected_branch or selected_location or is_remote or min_salary %}
+        <a href="{% url 'jobs:list' %}" class="btn btn--ghost btn--sm" style="font-size: var(--text-xs);">
+          Reset Filters
+        </a>
+        {% endif %}
       </div>
     </form>
   </div>
@@ -129,4 +218,20 @@
   {% include "jobs/partials/job_list_results.html" %}
 
 </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  function updatePositionsDropdown(categorySlug) {
+    const positionSelect = document.getElementById('filter-position');
+    if (!positionSelect) return;
+    
+    fetch(`{% url 'jobs:positions_by_field' %}?category=${encodeURIComponent(categorySlug)}`)
+      .then(res => res.text())
+      .then(html => {
+        positionSelect.innerHTML = html;
+      })
+      .catch(err => console.error(err));
+  }
+</script>
 {% endblock %}

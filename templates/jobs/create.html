@@ -23,7 +23,14 @@
 
   {% if not is_verified %}
   <div class="banner--verification animate-fade-in" style="margin-bottom: var(--space-8);">
-    <div class="banner--verification__icon">⏳</div>
+    <div class="banner--verification__icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-warning);">
+        <path d="M5 22h14"></path>
+        <path d="M5 2h14"></path>
+        <path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"></path>
+        <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"></path>
+      </svg>
+    </div>
     <div style="flex: 1;">
       <h3 class="banner--verification__title">Draft Mode Only — Verification Pending</h3>
       <p class="banner--verification__desc">
@@ -116,8 +123,13 @@
         <div class="form-group" style="margin-bottom: var(--space-6);">
           <label style="display: flex; align-items: center; gap: var(--space-3); cursor: pointer;">
             {{ form.is_remote }}
-            <span class="text-sm font-semibold" style="color: var(--color-text-primary);">
-              🌐 This position is open to Remote candidates
+            <span class="text-sm font-semibold" style="color: var(--color-text-primary); display: inline-flex; align-items: center; gap: 0.35rem;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-accent-400);">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                <path d="M2 12h20"></path>
+              </svg>
+              This position is open to Remote candidates
             </span>
           </label>
         </div>
@@ -230,7 +242,10 @@
     <div style="position: sticky; top: var(--space-8);">
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-3);">
         <div style="display: flex; align-items: center; gap: var(--space-2);">
-          <span style="font-size: 1.1rem;">👁️</span>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-accent-400);">
+            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
           <span class="font-semibold text-sm" style="color: var(--color-text-primary);">Live Applicant View</span>
         </div>
         <span class="text-xs text-accent">Updates in Real-Time</span>

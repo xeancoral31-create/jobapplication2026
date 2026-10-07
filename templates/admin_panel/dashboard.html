@@ -9,11 +9,11 @@
   <!-- ── 1. Header ──────────────────────────────────────────────── -->
   <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); margin-bottom: var(--space-8);">
     <div style="display: flex; align-items: center; gap: var(--space-4);">
-      <div style="width: 48px; height: 48px; background: linear-gradient(135deg, hsl(270 60% 55%), hsl(270 65% 68%)); border-radius: var(--radius-lg); display: grid; place-items: center; font-size: 1.5rem; box-shadow: 2px 2px 0px hsl(270 60% 40%);" aria-hidden="true">
-        🛡️
+      <div style="width: 44px; height: 44px; background: var(--color-surface-2); border: 1.5px solid var(--color-border); border-radius: var(--radius-md); display: grid; place-items: center; color: var(--color-primary-300);" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
       </div>
       <div>
-        <h1 class="heading-1" style="margin: 0;">Platform Administration</h1>
+        <h1 class="heading-1" style="margin: 0; letter-spacing: -0.02em;">Platform Administration</h1>
         <p class="text-muted" style="margin: var(--space-1) 0 0;">
           Control Centre &middot; Signed in as {{ user.get_full_name|default:user.username }} ({{ user.get_role_display }})
         </p>
@@ -48,7 +48,9 @@
     <div class="stat-tile stat-tile--plum">
       <div class="stat-tile__header">
         <span class="stat-tile__label">Total Users</span>
-        <span class="stat-tile__icon" aria-hidden="true">👥</span>
+        <span class="stat-tile__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        </span>
       </div>
       <div class="stat-tile__value">{{ total_users }}</div>
       <div style="font-size: var(--text-xs); color: hsl(270 65% 75%); display: flex; gap: var(--space-2); flex-wrap: wrap;">
@@ -62,7 +64,9 @@
     <div class="stat-tile stat-tile--amber">
       <div class="stat-tile__header">
         <span class="stat-tile__label">Awaiting Verification</span>
-        <span class="stat-tile__icon" aria-hidden="true">⏳</span>
+        <span class="stat-tile__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        </span>
       </div>
       <div class="stat-tile__value">{{ employers_awaiting_verification }}</div>
       <div style="font-size: var(--text-xs); color: hsl(38 92% 70%);">
@@ -78,7 +82,9 @@
     <div class="stat-tile stat-tile--teal">
       <div class="stat-tile__header">
         <span class="stat-tile__label">Open Jobs</span>
-        <span class="stat-tile__icon" aria-hidden="true">💼</span>
+        <span class="stat-tile__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+        </span>
       </div>
       <div class="stat-tile__value">{{ open_jobs }}</div>
       <div style="font-size: var(--text-xs); color: var(--color-accent-400);">
@@ -90,7 +96,9 @@
     <div class="stat-tile stat-tile--coral">
       <div class="stat-tile__header">
         <span class="stat-tile__label">Open Flags</span>
-        <span class="stat-tile__icon" aria-hidden="true">🚩</span>
+        <span class="stat-tile__icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+        </span>
       </div>
       <div class="stat-tile__value">{{ open_flags }}</div>
       <div style="font-size: var(--text-xs); color: hsl(354 75% 70%);">
@@ -171,13 +179,13 @@
                   <form method="post" action="{% url 'core:admin_employer_approve' emp.pk %}">
                     {% csrf_token %}
                     <button type="submit" class="btn btn--primary btn--sm" style="font-size: 0.72rem; padding: 2px 8px;">
-                      ✓ Approve
+                      Approve
                     </button>
                   </form>
                   <form method="post" action="{% url 'core:admin_employer_reject' emp.pk %}">
                     {% csrf_token %}
                     <button type="submit" class="btn btn--danger btn--sm" style="font-size: 0.72rem; padding: 2px 8px;" onclick="return confirm('Reject this employer verification?');">
-                      ✕ Reject
+                      Reject
                     </button>
                   </form>
                 </div>
@@ -239,7 +247,9 @@
         </div>
         {% else %}
         <div style="padding: var(--space-10); text-align: center;">
-          <div style="font-size: 2rem; margin-bottom: var(--space-2);" aria-hidden="true">📋</div>
+          <div style="display: flex; justify-content: center; margin-bottom: var(--space-2); color: var(--color-text-muted);" aria-hidden="true">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+          </div>
           <p class="font-semibold" style="margin-bottom: var(--space-1);">No audit logs recorded yet</p>
           <p class="text-sm text-muted">
             Platform administrative actions and moderation events will be logged here.

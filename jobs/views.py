@@ -13,10 +13,180 @@ from .forms import JobForm
 from .models import Category, Job
 
 
+CAREER_FIELD_CHOICES = [
+    ("it", "Information Technology", "💻"),
+    ("healthcare", "Nursing & Healthcare", "🩺"),
+    ("education", "Education", "📚"),
+    ("engineering", "Engineering", "⚙️"),
+    ("business", "Business & Finance", "💼"),
+    ("hospitality", "Hospitality & Tourism", "🏨"),
+    ("government", "Government & Public Service", "🏛️"),
+    ("uniformed", "Uniformed Personnel", "🎖️"),
+    ("other", "Other Professional Fields", "🌐"),
+]
+
+UNIFORMED_BRANCH_CHOICES = [
+    ("army", "Army", "🪖", "Ground defense, combat medicine, communications & logistics"),
+    ("navy", "Navy", "⚓", "Maritime defense, fleet engineering & surface operations"),
+    ("coast_guard", "Coast Guard", "🚢", "Maritime safety, search and rescue & coastal protection"),
+    ("police", "Police", "👮", "Public safety, community policing & criminal investigation"),
+]
+
+CAREER_FIELD_POSITIONS = {
+    "healthcare": [
+        "Registered Nurse (RN)",
+        "Clinical Nurse Specialist",
+        "ICU Staff Nurse",
+        "Emergency Room Nurse",
+        "Nurse Practitioner",
+        "Medical Laboratory Technologist",
+        "Radiologic Technologist",
+        "Physical Therapist",
+        "Healthcare Administrator",
+        "Pharmacist",
+    ],
+    "it": [
+        "Software Engineer",
+        "Frontend Developer",
+        "Backend Developer",
+        "Full-Stack Developer",
+        "Cloud & DevOps Engineer",
+        "Cybersecurity Analyst",
+        "Data Scientist / AI Engineer",
+        "Systems Administrator",
+        "IT Support Specialist",
+        "Database Administrator",
+    ],
+    "education": [
+        "High School Teacher",
+        "Elementary School Educator",
+        "University Lecturer / Professor",
+        "Special Education Teacher",
+        "Academic Coordinator",
+        "Guidance Counselor",
+        "Instructional Designer",
+        "Curriculum Developer",
+    ],
+    "engineering": [
+        "Civil Engineer",
+        "Mechanical Engineer",
+        "Electrical Engineer",
+        "Structural Design Engineer",
+        "Chemical Process Engineer",
+        "Industrial Safety Engineer",
+        "Environmental Engineer",
+        "Project Engineer",
+    ],
+    "business": [
+        "Financial Analyst",
+        "Senior Accountant",
+        "Business Operations Manager",
+        "Human Resources Manager",
+        "Marketing Specialist",
+        "Corporate Auditor",
+        "Product Manager",
+        "Sales Account Executive",
+    ],
+    "hospitality": [
+        "Hotel Operations Manager",
+        "Executive Chef / Sous Chef",
+        "Front Desk Supervisor",
+        "Food & Beverage Director",
+        "Travel & Tourism Coordinator",
+        "Event & Banquet Planner",
+        "Resort Manager",
+    ],
+    "government": [
+        "Public Administration Officer",
+        "Community & Social Services Specialist",
+        "Policy Research Analyst",
+        "Urban & Regional Planner",
+        "Regulatory Compliance Officer",
+        "Civil Service Executive",
+    ],
+    "uniformed": [
+        "Army Tactical Communications Officer",
+        "Army Combat Medic Specialist",
+        "Naval Surface Warfare Specialist",
+        "Marine Propulsion Engineer",
+        "Coast Guard Search & Rescue Specialist",
+        "Maritime Environmental Protection Inspector",
+        "Police Patrol Operations Officer",
+        "Police Criminal Investigation Detective",
+    ],
+    "other": [
+        "Corporate Legal Counsel",
+        "Commercial Architecture Designer",
+        "Supply Chain Specialist",
+        "Media & Communications Officer",
+    ],
+}
+
+SLUG_TO_FIELD = {
+    "information-technology": "it",
+    "development": "it",
+    "nursing-and-healthcare": "healthcare",
+    "healthcare": "healthcare",
+    "education": "education",
+    "engineering": "engineering",
+    "business-and-finance": "business",
+    "finance": "business",
+    "hospitality-and-tourism": "hospitality",
+    "government-and-public-service": "government",
+    "uniformed-personnel": "uniformed",
+    "uniformed-army": "uniformed",
+    "uniformed-navy": "uniformed",
+    "uniformed-coast-guard": "uniformed",
+    "uniformed-police": "uniformed",
+    "other-professional-fields": "other",
+}
+
+
+def get_available_positions_for_field(field_or_category=None):
+    """Return list of distinct, relevant position titles for a field or category."""
+    field_code = ""
+    if field_or_category:
+        clean = field_or_category.strip().lower()
+        field_code = SLUG_TO_FIELD.get(clean, clean)
+
+    positions = []
+    if field_code and field_code in CAREER_FIELD_POSITIONS:
+        positions.extend(CAREER_FIELD_POSITIONS[field_code])
+
+    # Also dynamically query open jobs matching this field/category for actual titles
+    qs = Job.objects.filter(status=Job.Status.OPEN)
+    if field_code:
+        qs = qs.filter(Q(job_field=field_code) | Q(category__slug__icontains=field_code))
+    db_titles = list(qs.values_list("title", flat=True).distinct()[:25])
+    for t in db_titles:
+        if t and t not in positions:
+            positions.append(t)
+
+    if not positions:
+        # Generic fallback
+        for f_pos in CAREER_FIELD_POSITIONS.values():
+            for p in f_pos[:3]:
+                if p not in positions:
+                    positions.append(p)
+
+    return sorted(positions)
+
+
 # ── Public Job Views ──────────────────────────────────────────────────────────
 
+def positions_by_field(request):
+    """HTMX / AJAX endpoint returning position <option> choices for selected field."""
+    field = request.GET.get("field") or request.GET.get("category", "").strip()
+    selected_position = request.GET.get("position", "").strip()
+    positions = get_available_positions_for_field(field)
+    return render(request, "jobs/partials/position_options.html", {
+        "positions": positions,
+        "selected_position": selected_position,
+    })
+
+
 def job_list(request):
-    """Public browse jobs list with search, category, location, salary filters and HTMX pagination."""
+    """Public browse jobs list with career field, position, uniformed branch, department, location, salary filters and HTMX pagination."""
     today = timezone.now().date()
     qs = (
         Job.objects.filter(status=Job.Status.OPEN)
@@ -30,22 +200,72 @@ def job_list(request):
         qs = qs.filter(
             Q(title__icontains=q)
             | Q(description__icontains=q)
+            | Q(department__icontains=q)
             | Q(employer__employer_profile__company_name__icontains=q)
             | Q(location__icontains=q)
         )
 
+    # Category / Field filter
     category_slug = request.GET.get("category", "").strip()
-    if category_slug:
-        qs = qs.filter(category__slug=category_slug)
+    field_param = request.GET.get("field", "").strip()
+    effective_field = field_param or (SLUG_TO_FIELD.get(category_slug) if category_slug else "")
 
+    if category_slug:
+        if category_slug == "uniformed-personnel":
+            qs = qs.filter(Q(job_field="uniformed") | Q(category__slug__startswith="uniformed"))
+        elif category_slug in ["uniformed-army", "uniformed-navy", "uniformed-coast-guard", "uniformed-police"]:
+            branch_val = category_slug.replace("uniformed-", "").replace("-", "_")
+            qs = qs.filter(Q(uniformed_branch=branch_val) | Q(category__slug=category_slug))
+        else:
+            qs = qs.filter(
+                Q(category__slug=category_slug)
+                | Q(job_field=SLUG_TO_FIELD.get(category_slug, category_slug))
+            )
+    elif field_param:
+        if field_param == "uniformed":
+            qs = qs.filter(Q(job_field="uniformed") | Q(category__slug__startswith="uniformed"))
+        else:
+            qs = qs.filter(Q(job_field=field_param) | Q(category__slug__icontains=field_param))
+
+    # Uniformed Branch filter
+    branch = request.GET.get("branch", "").strip()
+    if branch:
+        qs = qs.filter(
+            Q(uniformed_branch=branch)
+            | Q(category__slug=f"uniformed-{branch.replace('_', '-')}")
+            | Q(title__icontains=branch)
+            | Q(department__icontains=branch)
+        )
+
+    # Position filter
+    position = request.GET.get("position", "").strip()
+    if position:
+        qs = qs.filter(Q(title__icontains=position) | Q(description__icontains=position))
+
+    # Department filter
+    department = request.GET.get("department", "").strip()
+    if department:
+        qs = qs.filter(department__icontains=department)
+
+    # Employment Type filter
+    job_type = request.GET.get("job_type", "").strip()
+    if job_type:
+        if job_type in ["contract", "contractual"]:
+            qs = qs.filter(Q(job_type="contract") | Q(job_type="contractual"))
+        else:
+            qs = qs.filter(job_type=job_type)
+
+    # Location
     location = request.GET.get("location", "").strip()
     if location:
         qs = qs.filter(location__icontains=location)
 
+    # Remote toggle
     is_remote = request.GET.get("is_remote")
     if is_remote in ["1", "true", "True", "on"]:
         qs = qs.filter(is_remote=True)
 
+    # Min salary
     min_salary = request.GET.get("min_salary", "").strip()
     if min_salary:
         try:
@@ -54,17 +274,33 @@ def job_list(request):
         except ValueError:
             pass
 
-    paginator = Paginator(qs, 6)
+    paginator = Paginator(qs, 9)
     page_number = request.GET.get("page", 1)
     page_obj = paginator.get_page(page_number)
     categories = Category.objects.all().order_by("name")
+    positions = get_available_positions_for_field(effective_field or category_slug)
 
     context = {
         "page_obj": page_obj,
         "jobs": page_obj.object_list,
         "categories": categories,
+        "career_fields": CAREER_FIELD_CHOICES,
+        "uniformed_branches": UNIFORMED_BRANCH_CHOICES,
+        "positions": positions,
+        "employment_types": [
+            ("full_time", "Full-Time"),
+            ("part_time", "Part-Time"),
+            ("contractual", "Contractual"),
+            ("temporary", "Temporary"),
+            ("internship", "Internship"),
+        ],
         "total_count": paginator.count,
         "selected_category": category_slug,
+        "selected_field": field_param,
+        "selected_branch": branch,
+        "selected_position": position,
+        "selected_department": department,
+        "selected_job_type": job_type,
         "search_query": q,
         "selected_location": location,
         "is_remote": bool(is_remote in ["1", "true", "True", "on"]),
@@ -124,14 +360,21 @@ def _ensure_employer(user):
 
 @login_required
 def employer_job_list(request):
-    """List employer jobs with status tabs (Draft/Open/Closed) and application counts."""
+    """List employer jobs with Department, Category, and Employment Type filters."""
     _ensure_employer(request.user)
 
     # Status tabs filter
     active_tab = request.GET.get("status", "all").lower()
+    dept_filter = request.GET.get("department", "").strip()
+    cat_filter = request.GET.get("category", "").strip()
+    job_type_filter = request.GET.get("job_type", "").strip()
+    q = request.GET.get("q", "").strip()
+
+    # Base query for counts
+    base_qs = Job.objects.filter(employer=request.user).exclude(status=Job.Status.REMOVED)
 
     # Aggregate counts across all non-removed statuses (1 query)
-    counts = Job.objects.filter(employer=request.user).exclude(status=Job.Status.REMOVED).aggregate(
+    counts = base_qs.aggregate(
         all_count=Count("id"),
         open_count=Count("id", filter=Q(status=Job.Status.OPEN)),
         draft_count=Count("id", filter=Q(status=Job.Status.DRAFT)),
@@ -139,8 +382,7 @@ def employer_job_list(request):
     )
 
     qs = (
-        Job.objects.filter(employer=request.user)
-        .exclude(status=Job.Status.REMOVED)
+        base_qs
         .select_related("category")
         .annotate(applicant_count=Count("applications"))
         .order_by("-created_at")
@@ -153,10 +395,52 @@ def employer_job_list(request):
     elif active_tab == "closed":
         qs = qs.filter(status=Job.Status.CLOSED)
 
+    if q:
+        qs = qs.filter(
+            Q(title__icontains=q)
+            | Q(department__icontains=q)
+            | Q(location__icontains=q)
+            | Q(description__icontains=q)
+        )
+
+    if dept_filter:
+        qs = qs.filter(department__icontains=dept_filter)
+
+    if cat_filter:
+        qs = qs.filter(Q(category__slug=cat_filter) | Q(job_field=cat_filter))
+
+    if job_type_filter:
+        if job_type_filter in ["contract", "contractual"]:
+            qs = qs.filter(Q(job_type="contract") | Q(job_type="contractual"))
+        else:
+            qs = qs.filter(job_type=job_type_filter)
+
+    # Distinct departments for filter dropdown
+    distinct_departments = (
+        Job.objects.filter(employer=request.user)
+        .exclude(department="")
+        .values_list("department", flat=True)
+        .distinct()
+    )
+    categories = Category.objects.all().order_by("name")
+
     return render(request, "jobs/manage_list.html", {
         "jobs": qs,
         "active_tab": active_tab,
         "counts": counts,
+        "distinct_departments": sorted(list(distinct_departments)),
+        "categories": categories,
+        "selected_department": dept_filter,
+        "selected_category": cat_filter,
+        "selected_job_type": job_type_filter,
+        "search_query": q,
+        "employment_types": [
+            ("full_time", "Full-Time"),
+            ("part_time", "Part-Time"),
+            ("contractual", "Contractual"),
+            ("temporary", "Temporary"),
+            ("internship", "Internship"),
+        ],
         "is_verified": getattr(request.user, "is_verified", True),
     })
 

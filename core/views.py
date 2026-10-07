@@ -22,50 +22,46 @@ def custom_404(request, exception=None):
 # ── Public ─────────────────────────────────────────────────────────────────
 
 def home(request):
-    featured_slugs = [
-        "frontend-developer",
-        "ui-ux-designer",
-        "backend-developer",
-        "marketing-manager",
-        "product-designer",
-        "data-scientist-nlp",
-    ]
-    jobs_by_slug = {
-        j.slug: j
-        for j in Job.objects.filter(slug__in=featured_slugs).select_related(
-            "employer", "employer__employer_profile", "category"
-        ).prefetch_related("tags")
-    }
-    featured_jobs = [jobs_by_slug[slug] for slug in featured_slugs if slug in jobs_by_slug]
-    if len(featured_jobs) < 6:
-        extra_jobs = list(
-            Job.objects.filter(status=Job.Status.OPEN)
-            .exclude(slug__in=[j.slug for j in featured_jobs])
-            .select_related("employer", "employer__employer_profile", "category")
-            .prefetch_related("tags")[: 6 - len(featured_jobs)]
-        )
-        featured_jobs.extend(extra_jobs)
+    featured_jobs = list(
+        Job.objects.filter(status=Job.Status.OPEN)
+        .select_related("employer", "employer__employer_profile", "category")
+        .prefetch_related("tags")
+        .order_by("-created_at")[:6]
+    )
 
-    category_slugs = [
-        "development",
-        "design",
-        "marketing",
-        "sales",
-        "finance",
-        "operations",
-        "customer-support",
-        "hr",
+    categories = list(Category.objects.all().order_by("name"))
+
+    career_fields = [
+        {"slug": "information-technology", "name": "Information Technology", "icon": "💻", "desc": "Software, Cloud, Cybersecurity & Systems", "color": "#3b82f6"},
+        {"slug": "nursing-and-healthcare", "name": "Nursing & Healthcare", "icon": "🩺", "desc": "Clinical Nursing, ICU, Diagnostics & Healthcare", "color": "#06b6d4"},
+        {"slug": "education", "name": "Education", "icon": "📚", "desc": "Teaching, Higher Education, Academic & Special Ed", "color": "#8b5cf6"},
+        {"slug": "engineering", "name": "Engineering", "icon": "⚙️", "desc": "Civil, Mechanical, Electrical & Structural", "color": "#f59e0b"},
+        {"slug": "business-and-finance", "name": "Business & Finance", "icon": "💼", "desc": "Finance, Accounting, Operations, HR & Strategy", "color": "#10b981"},
+        {"slug": "hospitality-and-tourism", "name": "Hospitality & Tourism", "icon": "🏨", "desc": "Hotel Operations, Culinary Arts & Tourism", "color": "#ec4899"},
+        {"slug": "government-and-public-service", "name": "Government & Public Service", "icon": "🏛️", "desc": "Public Administration, Civic Policy & Social Work", "color": "#6366f1"},
+        {"slug": "uniformed-personnel", "name": "Uniformed Personnel", "icon": "🎖️", "desc": "Army, Navy, Coast Guard & Police Services", "color": "#14b8a6"},
+        {"slug": "other-professional-fields", "name": "Other Professional Fields", "icon": "🌐", "desc": "Legal, Architecture, Design & Specialized Fields", "color": "#64748b"},
     ]
-    cats_by_slug = {c.slug: c for c in Category.objects.filter(slug__in=category_slugs)}
-    categories = [cats_by_slug[slug] for slug in category_slugs if slug in cats_by_slug]
-    if len(categories) < 8:
-        extra_cats = list(Category.objects.exclude(slug__in=[c.slug for c in categories])[: 8 - len(categories)])
-        categories.extend(extra_cats)
+
+    uniformed_branches = [
+        {"slug": "army", "name": "Army", "icon": "🪖", "desc": "Tactical defense, combat medicine & military logistics"},
+        {"slug": "navy", "name": "Navy", "icon": "⚓", "desc": "Fleet operations, marine engineering & navigation"},
+        {"slug": "coast_guard", "name": "Coast Guard", "icon": "🚢", "desc": "Maritime safety, search and rescue & coastal protection"},
+        {"slug": "police", "name": "Police", "icon": "👮", "desc": "Public safety, community policing & criminal investigation"},
+    ]
+
+    total_jobs = Job.objects.filter(status=Job.Status.OPEN).count()
 
     return render(
         request,
         "core/home.html",
-        {"featured_jobs": featured_jobs, "categories": categories},
+        {
+            "featured_jobs": featured_jobs,
+            "categories": categories,
+            "career_fields": career_fields,
+            "uniformed_branches": uniformed_branches,
+            "total_jobs": total_jobs,
+        },
     )
 
 

@@ -1,0 +1,6 @@
+<option value="">All Positions</option>
+{% for pos in positions %}
+  <option value="{{ pos }}" {% if selected_position == pos %}selected{% endif %}>
+    {{ pos }}
+  </option>
+{% endfor %}

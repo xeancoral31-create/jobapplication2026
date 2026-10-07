@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,9 +9,18 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  {% load static %}
   <link rel="stylesheet" href="{% static 'css/inkboard.css' %}">
   <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+  <script>
+    (function() {
+      try {
+        const saved = localStorage.getItem('workwise_theme');
+        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        const theme = saved ? saved : (prefersLight ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {}
+    })();
+  </script>
   <style>
     /* ── Auth layout reset ───────────────────────────────────── */
     html, body { height: 100%; margin: 0; }
@@ -214,51 +224,57 @@
       box-shadow: 0 2px 8px hsl(0 0% 0% / 0.25);
     }
 
-    /* role-driven color variables */
+    /* role-driven color variables with clean default */
+    .auth-card {
+      width: 100%;
+      max-width: 440px;
+      --auth-accent: hsl(174 72% 38%);
+      --auth-btn: hsl(174 72% 38%);
+      --auth-btn-hover: hsl(174 72% 32%);
+    }
     .auth-card[data-role="applicant"] { --auth-accent: hsl(174 72% 38%); --auth-btn: hsl(174 72% 38%); --auth-btn-hover: hsl(174 72% 32%); }
     .auth-card[data-role="employer"]  { --auth-accent: hsl(6 78% 58%);   --auth-btn: hsl(6 78% 58%);   --auth-btn-hover: hsl(6 78% 50%); }
-    .auth-card[data-role="admin"]     { --auth-accent: hsl(270 58% 55%); --auth-btn: hsl(270 58% 55%); --auth-btn-hover: hsl(270 60% 48%); }
 
     .auth-title {
       font-family: 'Sora', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 700;
+      font-size: 1.85rem;
+      font-weight: 800;
       letter-spacing: -0.03em;
       color: #ffffff;
-      margin: 0 0 0.35rem;
+      margin: 0 0 0.4rem;
     }
     .auth-subtitle {
-      font-size: 0.925rem;
+      font-size: 0.975rem;
       color: #94a3b8;
-      margin: 0 0 1.75rem;
+      margin: 0 0 2rem;
     }
 
     /* ── Form fields ─────────────────────────────────────────── */
-    .auth-field { margin-bottom: 1.15rem; }
+    .auth-field { margin-bottom: 1.35rem; }
     .auth-label {
       display: block;
-      font-size: 0.825rem;
+      font-size: 0.875rem;
       font-weight: 600;
       color: #cbd5e1;
-      margin-bottom: 0.45rem;
+      margin-bottom: 0.5rem;
       letter-spacing: 0.01em;
     }
     .auth-input {
       width: 100%;
-      padding: 0.75rem 0.95rem;
-      background: hsl(228 20% 11%);
-      border: 1px solid hsl(228 15% 22%);
-      border-radius: var(--radius-md);
+      padding: 0.85rem 1.1rem;
+      background: hsl(218 25% 12%);
+      border: 1.5px solid hsl(218 20% 24%);
+      border-radius: 10px;
       color: #ffffff;
-      font-size: 0.9375rem;
+      font-size: 0.975rem;
       font-family: inherit;
       transition: border-color 0.15s, box-shadow 0.15s;
       box-sizing: border-box;
       outline: none;
     }
     .auth-input:focus {
-      border-color: var(--auth-accent, var(--color-primary-500));
-      box-shadow: 0 0 0 3px hsl(from var(--auth-accent, var(--color-primary-500)) h s l / 0.18);
+      border-color: var(--auth-accent, hsl(174 72% 38%));
+      box-shadow: 0 0 0 3px hsl(174 72% 38% / 0.2);
     }
     .auth-input::placeholder { color: #64748b; opacity: 0.8; }
     .auth-input.is-invalid { border-color: var(--color-danger); }
@@ -267,42 +283,49 @@
     /* ── Submit button ───────────────────────────────────────── */
     .auth-btn {
       width: 100%;
-      padding: 0.75rem 1.5rem;
-      background: var(--auth-btn, var(--color-primary-500));
-      color: #fff;
+      padding: 0.85rem 1.5rem;
+      background: var(--auth-btn, hsl(174 72% 38%));
+      color: #ffffff;
       border: none;
-      border-radius: var(--radius-md);
-      font-size: 0.9375rem;
-      font-weight: 600;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
       font-family: inherit;
       cursor: pointer;
-      margin-top: 0.5rem;
+      margin-top: 0.75rem;
       transition: background 0.2s, transform 0.1s;
     }
-    .auth-btn:hover  { background: var(--auth-btn-hover, var(--color-primary-600)); }
-    .auth-btn:active { transform: scale(0.98); }
+    .auth-btn:hover  { background: var(--auth-btn-hover, hsl(174 72% 32%)); }
+    .auth-btn:active { transform: scale(0.99); }
 
     /* ── Footer links ────────────────────────────────────────── */
     .auth-footer {
-      margin-top: 1.5rem;
+      margin-top: 2rem;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.75rem;
       align-items: center;
+      text-align: center;
     }
     .auth-footer a {
-      font-size: 0.85rem;
-      color: var(--color-text-muted);
+      font-size: 0.9rem;
+      color: #94a3b8;
       text-decoration: none;
+      transition: color 0.15s;
     }
-    .auth-footer a:hover { color: var(--auth-accent, var(--color-primary-400)); }
+    .auth-footer a:hover { color: #ffffff; }
     .auth-footer__main {
-      font-size: 0.875rem;
-      color: var(--color-text-muted);
+      font-size: 0.925rem;
+      color: #94a3b8;
+      margin: 0;
     }
     .auth-footer__main a {
-      color: var(--auth-accent, var(--color-primary-400));
+      color: var(--auth-accent, hsl(174 72% 42%));
       font-weight: 600;
+      text-decoration: none;
+    }
+    .auth-footer__main a:hover {
+      text-decoration: underline;
     }
 
     /* ── Alerts ──────────────────────────────────────────────── */
@@ -363,6 +386,32 @@
     {% endfor %}
   </div>
   {% endif %}
+  <!-- Floating Theme Toggle for Auth Pages -->
+  <div style="position:fixed; top:1.25rem; right:1.25rem; z-index:999;">
+    <button type="button" class="btn-theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme" title="Toggle theme">
+      <span class="theme-icon-sun" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+        </svg>
+      </span>
+      <span class="theme-icon-moon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+        </svg>
+      </span>
+    </button>
+  </div>
+
   {% block body %}{% endblock %}
+
+  <script>
+    window.toggleTheme = function() {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('workwise_theme', next);
+    };
+  </script>
 </body>
 </html>
