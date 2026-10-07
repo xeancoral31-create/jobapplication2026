@@ -102,11 +102,11 @@
             <td>
               <div style="display: flex; align-items: center; gap: var(--space-3);">
                 <div class="avatar-placeholder avatar--sm" style="font-size: 0.8rem; font-weight: 700;">
-                  {{ u.first_name|default:u.username|slice:":1"|upper }}
+                  {{ u.first_name|default:u.email|slice:":1"|upper }}
                 </div>
                 <div>
                   <div style="font-weight: 600; color: var(--color-text-primary); font-size: var(--text-sm);">
-                    {{ u.get_full_name|default:u.username }}
+                    {{ u.get_full_name|default:u.username|default:u.email }}
                   </div>
                   <div style="font-size: var(--text-xs); color: var(--color-text-muted);">
                     {{ u.email }} &middot; @{{ u.username }}

@@ -123,14 +123,14 @@
             <td>
               <div style="display: flex; align-items: center; gap: var(--space-2);">
                 <div class="avatar-placeholder avatar--sm" style="font-size: 0.7rem; font-weight: 700;">
-                  {{ item.actor.username|default:item.admin.username|default:"A"|slice:":1"|upper }}
+                  {% if item.actor %}{{ item.actor.username|slice:":1"|upper }}{% elif item.admin %}{{ item.admin.username|slice:":1"|upper }}{% else %}A{% endif %}
                 </div>
                 <div>
                   <div style="font-weight: 600; font-size: var(--text-sm); color: var(--color-text-primary);">
-                    {{ item.admin.get_full_name|default:item.admin.username|default:item.actor.username|default:"System" }}
+                    {% if item.admin %}{{ item.admin.get_full_name|default:item.admin.username|default:item.admin.email }}{% elif item.actor %}{{ item.actor.get_full_name|default:item.actor.username|default:item.actor.email }}{% else %}System{% endif %}
                   </div>
                   <div style="font-size: 0.7rem; color: var(--color-text-muted);">
-                    {{ item.admin.get_access_level_display|default:item.admin.role|title }}
+                    {% if item.admin %}{{ item.admin.get_access_level_display|default:item.admin.role|title }}{% elif item.actor %}{{ item.actor.get_access_level_display|default:item.actor.role|title }}{% else %}—{% endif %}
                   </div>
                 </div>
               </div>
