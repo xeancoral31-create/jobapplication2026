@@ -600,3 +600,60 @@ class Stage7HardeningTest(TestCase):
         self.assertEqual(prod.X_FRAME_OPTIONS, "DENY")
         self.assertEqual(prod.STATICFILES_STORAGE, "whitenoise.storage.CompressedManifestStaticFilesStorage")
 
+
+class NotificationPersistenceTest(TestCase):
+    """Test notification persistence, mark all read, and state synchronization."""
+
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="notif_user",
+            email="notif@test.com",
+            password="password123",
+            role=User.Role.APPLICANT,
+        )
+        self.client = Client()
+
+    def test_default_notifications_and_mark_all_read(self):
+        from core.models import Notification
+        from core.notifications import ensure_default_notifications
+
+        # 1. Login user
+        self.client.login(username="notif_user", password="password123")
+
+        # 2. Access dashboard or home to trigger context processor / defaults
+        resp = self.client.get(reverse("core:applicant_dashboard"))
+        self.assertEqual(resp.status_code, 200)
+
+        # 3. Check notifications created in database
+        user_notifs = Notification.objects.filter(user=self.user)
+        self.assertGreater(user_notifs.count(), 0)
+        unread_initial = user_notifs.filter(is_read=False).count()
+        self.assertGreater(unread_initial, 0)
+
+        # 4. State endpoint returns unread count
+        state_resp = self.client.get(reverse("core:notifications_state"))
+        self.assertEqual(state_resp.status_code, 200)
+        self.assertEqual(state_resp.json()["unread_count"], unread_initial)
+
+        # 5. Mark all as read via POST endpoint
+        mark_all_resp = self.client.post(reverse("core:notifications_mark_all_read"))
+        self.assertEqual(mark_all_resp.status_code, 200)
+        data = mark_all_resp.json()
+        self.assertTrue(data["ok"])
+        self.assertEqual(data["unread_count"], 0)
+
+        # 6. Verify in database: All are marked read permanently
+        self.assertEqual(Notification.objects.filter(user=self.user, is_read=False).count(), 0)
+        for n in Notification.objects.filter(user=self.user):
+            self.assertTrue(n.is_read)
+            self.assertIsNotNone(n.read_at)
+
+        # 7. Refresh / Re-query / Next request: unread remains 0
+        resp_after = self.client.get(reverse("core:applicant_dashboard"))
+        self.assertEqual(resp_after.context["unread_notification_count"], 0)
+
+        state_after = self.client.get(reverse("core:notifications_state"))
+        self.assertEqual(state_after.json()["unread_count"], 0)
+        self.assertEqual(state_after.json()["unread_ids"], [])
+
+

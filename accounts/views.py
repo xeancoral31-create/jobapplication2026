@@ -92,7 +92,11 @@ class LoginView(View):
     def get(self, request):
         if request.user.is_authenticated:
             return redirect(_role_redirect_url(request.user))
-        return render(request, self.template_name, {"form": self.form_class(request)})
+        return render(
+            request,
+            self.template_name,
+            {"form": self.form_class(request), "next": request.GET.get("next", "")},
+        )
 
     def post(self, request):
         if _is_rate_limited(request):
@@ -108,7 +112,9 @@ class LoginView(View):
             user = form.get_user()
             login(request, user)
             messages.success(request, f"Welcome back, {user.first_name or user.username}!")
-            next_url = request.GET.get("next") or _role_redirect_url(user)
+            next_url = request.POST.get("next") or request.GET.get("next")
+            if not next_url or next_url in ["/", "/accounts/login/", "/accounts/redirect/", "/accounts/register/"]:
+                next_url = _role_redirect_url(user)
             return redirect(next_url)
 
         _record_failed_login(request)
@@ -117,7 +123,11 @@ class LoginView(View):
                 request,
                 "Your account has been suspended. Contact support@workwise.dev.",
             )
-        return render(request, self.template_name, {"form": form})
+        return render(
+            request,
+            self.template_name,
+            {"form": form, "next": request.POST.get("next", "")},
+        )
 
 
 # ── Logout ─────────────────────────────────────────────────────────────────

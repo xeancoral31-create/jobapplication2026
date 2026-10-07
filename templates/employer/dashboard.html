@@ -139,7 +139,7 @@
                 <td>
                   <div style="display: flex; align-items: center; gap: var(--space-3);">
                     <div class="avatar-placeholder avatar--sm" style="font-size: 0.75rem;">
-                      {{ app.applicant.first_name.0|default:app.applicant.username.0|upper }}
+                      {{ app.applicant.first_name|default:app.applicant.username|slice:":1"|upper }}
                     </div>
                     <div>
                       <p style="font-weight: 600; color: var(--color-text-primary); margin: 0; font-size: var(--text-sm);">

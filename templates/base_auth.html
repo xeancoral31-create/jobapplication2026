@@ -376,6 +376,95 @@
       text-transform: uppercase;
       letter-spacing: 0.06em;
     }
+    /* ── Password Visibility Toggle ──────────────────────────── */
+    .password-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+    .password-input-wrap .auth-input,
+    .password-input-wrap .auth-input-light,
+    .password-input-wrap .form-control {
+      padding-right: 3rem !important;
+    }
+    .btn-toggle-password {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      padding: 6px;
+      margin: 0;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #000000 !important; /* Solid black in both dark mode and light mode */
+      opacity: 0.85;
+      transition: opacity 0.2s ease, transform 0.15s ease;
+      border-radius: 6px;
+      z-index: 5;
+    }
+    .btn-toggle-password:hover {
+      opacity: 1;
+      color: #000000 !important;
+      transform: translateY(-50%) scale(1.08);
+    }
+    .btn-toggle-password:focus-visible {
+      outline: 2px solid var(--auth-accent, hsl(174 72% 38%));
+      outline-offset: 2px;
+    }
+    .btn-toggle-password svg,
+    .btn-toggle-password .eye-icon,
+    .btn-toggle-password .eye-off-icon {
+      color: #000000 !important;
+      stroke: #000000 !important;
+    }
+
+    [data-theme="light"] .btn-toggle-password,
+    [data-theme="dark"] .btn-toggle-password {
+      color: #000000 !important;
+    }
+
+    /* ── Light Mode Auth Theming ──────────────────────────────── */
+    [data-theme="light"] body {
+      background: #f8fafc;
+    }
+    [data-theme="light"] .auth-right {
+      background: #f8fafc;
+    }
+    [data-theme="light"] .auth-title {
+      color: #0f172a;
+    }
+    [data-theme="light"] .auth-subtitle {
+      color: #64748b;
+    }
+    [data-theme="light"] .auth-label {
+      color: #334155;
+    }
+    [data-theme="light"] .auth-input {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      color: #0f172a;
+    }
+    [data-theme="light"] .auth-input:focus {
+      border-color: var(--auth-accent, hsl(174 72% 38%));
+      box-shadow: 0 0 0 3px hsl(174 72% 38% / 0.15);
+    }
+    [data-theme="light"] .auth-input::placeholder {
+      color: #94a3b8;
+    }
+    [data-theme="light"] .auth-footer a {
+      color: #64748b;
+    }
+    [data-theme="light"] .auth-footer a:hover {
+      color: #0f172a;
+    }
+    [data-theme="light"] .auth-footer__main {
+      color: #64748b;
+    }
   </style>
 </head>
 <body>
@@ -411,6 +500,27 @@
       const next = current === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('workwise_theme', next);
+    };
+
+    window.togglePasswordVisibility = function(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      const isPassword = input.type === 'password';
+      input.type = isPassword ? 'text' : 'password';
+
+      const eye = btn.querySelector('.eye-icon');
+      const eyeOff = btn.querySelector('.eye-off-icon');
+      if (eye && eyeOff) {
+        if (isPassword) {
+          eye.style.display = 'none';
+          eyeOff.style.display = 'block';
+          btn.setAttribute('aria-label', 'Hide password');
+        } else {
+          eye.style.display = 'block';
+          eyeOff.style.display = 'none';
+          btn.setAttribute('aria-label', 'Show password');
+        }
+      }
     };
   </script>
 </body>

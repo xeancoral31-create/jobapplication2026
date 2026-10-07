@@ -2,6 +2,7 @@
 from django.urls import path
 from . import views
 from . import admin_panel_views
+from . import notifications
 
 app_name = "core"
 
@@ -9,6 +10,10 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("dashboard/", views.dashboard, name="dashboard"),
     path("styleguide/", views.styleguide, name="styleguide"),
+    # Notifications (persistent read state)
+    path("notifications/state/",          notifications.notifications_state,         name="notifications_state"),
+    path("notifications/mark-all-read/",  notifications.notifications_mark_all_read, name="notifications_mark_all_read"),
+    path("notifications/<int:pk>/read/",  notifications.notification_mark_read,      name="notification_mark_read"),
     # Role dashboards
     path("applicant/",         views.applicant_dashboard, name="applicant_dashboard"),
     path("employer/",          views.employer_dashboard,  name="employer_dashboard"),

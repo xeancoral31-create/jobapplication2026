@@ -121,50 +121,80 @@
                   <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                   <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                 </svg>
-                <span class="notification-dot" id="notification-dot"></span>
+                <span class="notification-badge" id="notification-badge" data-count="{{ unread_notification_count }}" aria-live="polite"{% if not unread_notification_count %} hidden{% endif %}>{% if unread_notification_count > 9 %}9+{% else %}{{ unread_notification_count }}{% endif %}</span>
               </button>
 
-              <!-- Notifications Dropdown -->
-              <div class="notification-dropdown" id="notification-dropdown" style="display: none;">
+              <!-- Notifications Dropdown (server-rendered; read state persisted in DB) -->
+              <div class="notification-dropdown" id="notification-dropdown" style="display: none;"
+                   data-mark-all-url="{% url 'core:notifications_mark_all_read' %}"
+                   data-state-url="{% url 'core:notifications_state' %}"
+                   data-mark-one-url="{% url 'core:notification_mark_read' 0 %}">
                 <div class="notification-dropdown__header">
                   <h4 style="margin: 0; font-size: 0.9375rem; font-weight: 700; color: #ffffff;">Notifications</h4>
-                  <button type="button" onclick="markAllNotificationsRead()" class="btn-text-sm" style="background: none; border: none; color: #38bdf8; font-size: 0.75rem; font-weight: 600; cursor: pointer;">Mark all read</button>
+                  <button type="button" id="btn-mark-all-read" onclick="markAllNotificationsRead()" class="btn-text-sm btn-mark-all-read"{% if not unread_notification_count %} disabled{% endif %}>Mark all read</button>
                 </div>
-                <div class="notification-dropdown__list">
-                  <div class="notification-item unread">
-                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 6px; background: rgba(56, 189, 248, 0.12); color: #38bdf8; flex-shrink: 0;">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 15 2 2 4-4"/><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
-                    </span>
-                    <div class="notification-item__content">
-                      <p class="notification-title">NovaTech Solutions is hiring: <strong>Frontend Developer</strong></p>
-                      <span class="notification-time">10 minutes ago</span>
-                    </div>
+                <div class="notification-dropdown__list" id="notification-list">
+                  {% for n in nav_notifications %}
+                    {% include "partials/notification_item.html" with n=n %}
+                  {% empty %}
+                    <p class="notification-empty">You're all caught up. New notifications will appear here.</p>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- Notification Detail Card / Popup -->
+              <div class="notification-detail-card" id="notification-detail-card" style="display: none;" role="dialog" aria-labelledby="notification-detail-title" aria-modal="true">
+                <div class="notification-detail-card__header">
+                  <div class="notification-detail-card__tag">
+                    <span class="notification-detail-card__icon" id="notification-detail-icon"></span>
+                    <span class="notification-detail-card__category" id="notification-detail-category">Notification</span>
                   </div>
-                  <div class="notification-item unread">
-                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 6px; background: rgba(99, 102, 241, 0.12); color: #818cf8; flex-shrink: 0;">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-                    </span>
-                    <div class="notification-item__content">
-                      <p class="notification-title">GreenStack Systems published <strong>Backend Developer</strong></p>
-                      <span class="notification-time">2 hours ago</span>
-                    </div>
+                  <button type="button" class="notification-card-close" onclick="closeNotificationDetail(event)" aria-label="Close notification details" title="Close and return to notification list">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                  </button>
+                </div>
+
+                <div class="notification-detail-card__body">
+                  <h4 class="notification-detail-card__title" id="notification-detail-title">Notification Title</h4>
+                  <div class="notification-detail-card__meta">
+                    <span class="notification-detail-card__time" id="notification-detail-time">Just now</span>
+                    <span class="notification-detail-card__status" id="notification-detail-status">Active</span>
                   </div>
-                  <div class="notification-item">
-                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 6px; background: rgba(16, 185, 129, 0.12); color: #10b981; flex-shrink: 0;">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-                    </span>
-                    <div class="notification-item__content">
-                      <p class="notification-title">Welcome to WorkWise! Browse curated roles or post a job.</p>
-                      <span class="notification-time">Yesterday</span>
-                    </div>
-                  </div>
+                  <div class="notification-detail-card__divider"></div>
+                  <p class="notification-detail-card__desc" id="notification-detail-desc"></p>
+                  <div class="notification-detail-card__extra" id="notification-detail-extra"></div>
+                </div>
+
+                <div class="notification-detail-card__footer">
+                  <a href="#" class="notification-detail-card__action" id="notification-detail-action-btn">
+                    <span id="notification-detail-action-text">View Details</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M5 12h14"></path>
+                      <path d="m12 5 7 7-7 7"></path>
+                    </svg>
+                  </a>
+                  <button type="button" class="notification-detail-card__back" onclick="closeNotificationDetail(event)">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="m15 18-6-6 6-6"/>
+                    </svg>
+                    Back to all notifications
+                  </button>
                 </div>
               </div>
             </div>
 
-            <a href="{% url 'core:dashboard' %}" class="btn-signin-nav">
-              Dashboard
-            </a>
+            {% if request.user.role == 'admin' or request.user.is_staff or request.user.is_superuser %}
+              <a href="{% url 'core:admin_panel' %}" class="btn-signin-nav">
+                Admin Panel
+              </a>
+            {% else %}
+              <a href="{% url 'core:dashboard' %}" class="btn-signin-nav">
+                Dashboard
+              </a>
+            {% endif %}
             <a href="{% url 'accounts:logout' %}" class="btn-signin-nav">
               Sign out
             </a>
@@ -608,31 +638,245 @@
       }, 5000);
     };
 
-    // Notification Dropdown Toggle
+    // Notification Dropdown & Detail Interactions
     window.toggleNotifications = function(e) {
       if (e) e.stopPropagation();
       const dropdown = document.getElementById('notification-dropdown');
+      const detailCard = document.getElementById('notification-detail-card');
       if (!dropdown) return;
+
+      if (detailCard && detailCard.style.display === 'block') {
+        detailCard.style.display = 'none';
+        dropdown.style.display = 'none';
+        return;
+      }
+
       const isOpen = dropdown.style.display === 'block';
       dropdown.style.display = isOpen ? 'none' : 'block';
+      if (detailCard) detailCard.style.display = 'none';
     };
+
+    window.openNotificationDetail = function(el) {
+      if (!el) return;
+      const dropdown = document.getElementById('notification-dropdown');
+      const detailCard = document.getElementById('notification-detail-card');
+      if (!detailCard) return;
+
+      // Mark clicked item as read (persisted server-side)
+      markNotificationRead(el);
+
+      // Populate card attributes
+      const title = el.getAttribute('data-title') || 'Notification';
+      const time = el.getAttribute('data-time') || '';
+      const category = el.getAttribute('data-category') || 'Notification';
+      const badgeBg = el.getAttribute('data-badge-bg') || 'rgba(56, 189, 248, 0.12)';
+      const badgeColor = el.getAttribute('data-badge-color') || '#38bdf8';
+      const iconSrc = el.querySelector('.notification-item__icon');
+      const icon = iconSrc ? iconSrc.innerHTML : '';
+      const status = el.getAttribute('data-status') || 'Active';
+      const desc = el.getAttribute('data-desc') || '';
+      const actionUrl = el.getAttribute('data-action-url') || '#';
+      const actionText = el.getAttribute('data-action-text') || 'View Details';
+      let pills = [];
+      try {
+        pills = JSON.parse(el.getAttribute('data-pills') || '[]');
+      } catch (e) {
+        pills = [];
+      }
+
+      // Update detail popup elements
+      const iconEl = document.getElementById('notification-detail-icon');
+      if (iconEl) {
+        iconEl.innerHTML = icon;
+        iconEl.style.background = badgeBg;
+        iconEl.style.color = badgeColor;
+      }
+
+      const catEl = document.getElementById('notification-detail-category');
+      if (catEl) {
+        catEl.textContent = category;
+        catEl.style.background = badgeBg;
+        catEl.style.color = badgeColor;
+      }
+
+      const titleEl = document.getElementById('notification-detail-title');
+      if (titleEl) titleEl.textContent = title;
+
+      const timeEl = document.getElementById('notification-detail-time');
+      if (timeEl) timeEl.textContent = time;
+
+      const statusEl = document.getElementById('notification-detail-status');
+      if (statusEl) statusEl.textContent = status;
+
+      const descEl = document.getElementById('notification-detail-desc');
+      if (descEl) descEl.textContent = desc;
+
+      const extraEl = document.getElementById('notification-detail-extra');
+      if (extraEl) {
+        extraEl.innerHTML = '';
+        pills.forEach(p => {
+          const span = document.createElement('span');
+          span.className = 'notification-pill';
+          span.textContent = p;
+          extraEl.appendChild(span);
+        });
+      }
+
+      const actionBtn = document.getElementById('notification-detail-action-btn');
+      if (actionBtn) {
+        actionBtn.setAttribute('href', actionUrl);
+      }
+      const actionTextEl = document.getElementById('notification-detail-action-text');
+      if (actionTextEl) {
+        actionTextEl.textContent = actionText;
+      }
+
+      // Hide list dropdown and smoothly display detail card
+      if (dropdown) dropdown.style.display = 'none';
+      detailCard.style.display = 'block';
+    };
+
+    window.closeNotificationDetail = function(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      const detailCard = document.getElementById('notification-detail-card');
+      const dropdown = document.getElementById('notification-dropdown');
+      if (detailCard) detailCard.style.display = 'none';
+      if (dropdown) dropdown.style.display = 'block';
+    };
+
+    // ── Persistent notification read state ─────────────────────────
+    function notifCsrfToken() {
+      const m = document.cookie.match(/(?:^|;\s*)csrftoken=([^;]+)/);
+      if (m) return decodeURIComponent(m[1]);
+      try { return JSON.parse(document.body.getAttribute('hx-headers') || '{}')['X-CSRFToken'] || ''; }
+      catch (e) { return ''; }
+    }
+
+    function notifPost(url) {
+      return fetch(url, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'X-CSRFToken': notifCsrfToken(), 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' },
+      }).then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
+    }
+
+    function setUnreadCount(count) {
+      const badge = document.getElementById('notification-badge');
+      const btn = document.getElementById('btn-mark-all-read');
+      count = Math.max(0, count | 0);
+      if (badge) {
+        badge.dataset.count = count;
+        badge.textContent = count > 9 ? '9+' : String(count);
+        badge.hidden = count === 0;
+      }
+      if (btn) btn.disabled = count === 0;
+      const bell = document.getElementById('btn-notification');
+      if (bell) bell.setAttribute('aria-label', count ? `Notifications (${count} unread)` : 'Notifications');
+    }
+
+    // Reconcile DOM with authoritative server state ({unread_count, unread_ids}).
+    function applyNotificationState(state) {
+      if (!state || typeof state.unread_count !== 'number') return;
+      const unread = new Set((state.unread_ids || []).map(String));
+      document.querySelectorAll('.notification-item[data-id]').forEach(el => {
+        const isUnread = unread.has(el.dataset.id);
+        el.classList.toggle('unread', isUnread);
+        el.dataset.read = isUnread ? 'false' : 'true';
+      });
+      setUnreadCount(state.unread_count);
+    }
+
+    function markNotificationRead(el) {
+      if (!el || el.dataset.read === 'true' || !el.dataset.id) return;
+      const dropdown = document.getElementById('notification-dropdown');
+      const badge = document.getElementById('notification-badge');
+      const prev = badge ? parseInt(badge.dataset.count || '0', 10) : 0;
+      // Optimistic update
+      el.classList.remove('unread');
+      el.dataset.read = 'true';
+      setUnreadCount(prev - 1);
+      const url = dropdown.dataset.markOneUrl.replace(/\/0\/read\/$/, `/${el.dataset.id}/read/`);
+      notifPost(url).then(applyNotificationState).catch(() => {
+        el.classList.add('unread');
+        el.dataset.read = 'false';
+        setUnreadCount(prev);
+      });
+    }
 
     window.markAllNotificationsRead = function() {
-      const items = document.querySelectorAll('.notification-item.unread');
-      items.forEach(el => el.classList.remove('unread'));
-      const dot = document.getElementById('notification-dot');
-      if (dot) dot.style.display = 'none';
-      window.showToast("All notifications marked as read.", "info");
+      const dropdown = document.getElementById('notification-dropdown');
+      const btn = document.getElementById('btn-mark-all-read');
+      const badge = document.getElementById('notification-badge');
+      if (!dropdown || (btn && btn.disabled)) return;
+
+      const items = Array.from(document.querySelectorAll('.notification-item.unread'));
+      const prev = badge ? parseInt(badge.dataset.count || '0', 10) : items.length;
+
+      // Optimistic update — badge clears immediately
+      items.forEach(el => { el.classList.remove('unread'); el.dataset.read = 'true'; });
+      setUnreadCount(0);
+      if (btn) btn.setAttribute('aria-busy', 'true');
+
+      notifPost(dropdown.dataset.markAllUrl)
+        .then(state => {
+          applyNotificationState(state);
+          window.showToast('All notifications marked as read.', 'info');
+        })
+        .catch(() => {
+          // Roll back so the UI never claims a state the server didn't save
+          items.forEach(el => { el.classList.add('unread'); el.dataset.read = 'false'; });
+          setUnreadCount(prev);
+          window.showToast('Could not mark notifications as read. Please try again.', 'error');
+        })
+        .finally(() => { if (btn) btn.removeAttribute('aria-busy'); });
     };
 
-    // Close notifications on outer click
-    document.addEventListener('click', function(e) {
+    function syncNotificationState() {
       const dropdown = document.getElementById('notification-dropdown');
-      const btn = document.getElementById('btn-notification');
-      if (dropdown && dropdown.style.display === 'block') {
-        if (!dropdown.contains(e.target) && (!btn || !btn.contains(e.target))) {
-          dropdown.style.display = 'none';
+      if (!dropdown || !dropdown.dataset.stateUrl) return;
+      fetch(dropdown.dataset.stateUrl, { credentials: 'same-origin', headers: { 'Accept': 'application/json' }, cache: 'no-store' })
+        .then(r => r.ok ? r.json() : null)
+        .then(applyNotificationState)
+        .catch(() => {});
+    }
+
+    // Back/forward cache restores a stale DOM; other tabs may have changed state.
+    window.addEventListener('pageshow', e => { if (e.persisted) syncNotificationState(); });
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') syncNotificationState(); });
+
+    // Password Visibility Toggle
+    window.togglePasswordVisibility = function(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      const isPassword = input.type === 'password';
+      input.type = isPassword ? 'text' : 'password';
+
+      const eye = btn.querySelector('.eye-icon');
+      const eyeOff = btn.querySelector('.eye-off-icon');
+      if (eye && eyeOff) {
+        if (isPassword) {
+          eye.style.display = 'none';
+          eyeOff.style.display = 'block';
+          btn.setAttribute('aria-label', 'Hide password');
+        } else {
+          eye.style.display = 'block';
+          eyeOff.style.display = 'none';
+          btn.setAttribute('aria-label', 'Show password');
         }
+      }
+    };
+
+    // Close notifications and detail popups on outer click
+    document.addEventListener('click', function(e) {
+      const wrapper = document.querySelector('.notification-wrapper');
+      const dropdown = document.getElementById('notification-dropdown');
+      const detailCard = document.getElementById('notification-detail-card');
+      if (wrapper && !wrapper.contains(e.target)) {
+        if (dropdown) dropdown.style.display = 'none';
+        if (detailCard) detailCard.style.display = 'none';
       }
     });
 

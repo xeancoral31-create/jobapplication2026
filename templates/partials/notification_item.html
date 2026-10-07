@@ -1,0 +1,24 @@
+{% load notification_tags %}<div class="notification-item{% if not n.is_read %} unread{% endif %}"
+     role="button" tabindex="0"
+     onclick="openNotificationDetail(this)"
+     onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openNotificationDetail(this);}"
+     data-id="{{ n.pk }}"
+     data-read="{{ n.is_read|yesno:'true,false' }}"
+     data-category="{{ n.get_kind_display }}"
+     data-badge-bg="{% notification_color n.kind 'bg' %}"
+     data-badge-color="{% notification_color n.kind 'fg' %}"
+     data-title="{{ n.title }}"
+     data-time="{{ n.created_at|timesince }} ago"
+     data-status="{{ n.status_label }}"
+     data-desc="{{ n.description }}"
+     data-pills="{{ n.pills|notification_json }}"
+     data-action-url="{{ n.action_url|default:'#' }}"
+     data-action-text="{{ n.action_text|default:'View Details' }}">
+  <span class="notification-item__icon notification-item__icon--{{ n.kind }}">
+    {% notification_icon n.kind %}
+  </span>
+  <div class="notification-item__content">
+    <p class="notification-title">{{ n.message }}{% if n.highlight %} <strong>{{ n.highlight }}</strong>{% endif %}</p>
+    <span class="notification-time">{{ n.created_at|timesince }} ago</span>
+  </div>
+</div>

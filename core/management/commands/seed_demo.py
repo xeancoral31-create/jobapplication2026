@@ -393,64 +393,84 @@ class Command(BaseCommand):
             Job.objects.all().delete()
             Category.objects.all().delete()
             User.objects.filter(username__startswith="demo_").delete()
-            User.objects.filter(username="admin").delete()
+            User.objects.filter(username__in=["admin", "employer1", "employer2", "employer3", "applicant1", "applicant2", "applicant3"]).delete()
+            User.objects.filter(email__in=[
+                "admin@workwise.dev",
+                "employer1@workwise.dev",
+                "employer2@workwise.dev",
+                "employer3@workwise.dev",
+                "applicant1@workwise.dev",
+                "applicant2@workwise.dev",
+                "applicant3@workwise.dev",
+            ]).delete()
 
         self.stdout.write("Creating users...")
 
         # ── Admin ──────────────────────────────────────────────────
-        admin, created = User.objects.get_or_create(
+        admin, _ = User.objects.get_or_create(
             username="admin",
             defaults={
                 "email": "admin@workwise.dev",
-                "first_name": "Site",
+                "first_name": "Platform",
                 "last_name": "Admin",
                 "role": User.Role.ADMIN,
                 "status": User.Status.ACTIVE,
                 "is_staff": True,
                 "is_superuser": True,
+                "access_level": User.AccessLevel.SUPERADMIN,
             },
         )
+        admin.email = "admin@workwise.dev"
+        admin.first_name = "Platform"
+        admin.last_name = "Admin"
         admin.role = User.Role.ADMIN
         admin.status = User.Status.ACTIVE
         admin.is_staff = True
         admin.is_superuser = True
+        admin.access_level = User.AccessLevel.SUPERADMIN
         admin.set_password("admin1234")
         admin.save()
-        self.stdout.write("  [+] admin (admin@workwise.dev / password: admin1234)")
+        self.stdout.write("  [+] admin (admin@workwise.dev / password: admin1234) -> /admin-panel/")
 
         # ── Employers ──────────────────────────────────────────────
         employers = []
         employer_data = [
             {
-                "username": "demo_employer1",
+                "username": "employer1",
                 "email": "employer1@workwise.dev",
-                "first_name": "Priya",
-                "last_name": "Sharma",
-                "company_name": "Metro Health & Tech Consortium",
-                "industry": "Healthcare & Technology",
-                "company_size": "501-1000",
+                "first_name": "Elena",
+                "last_name": "Vance",
+                "password": "employer1234",
+                "company_name": "Synapse Labs",
+                "industry": "Technology & AI",
+                "company_size": "201-500",
+                "location": "San Francisco, CA",
             },
             {
-                "username": "demo_employer2",
+                "username": "employer2",
                 "email": "employer2@workwise.dev",
                 "first_name": "Marcus",
                 "last_name": "Webb",
-                "company_name": "National Defense & Public Service Agency",
-                "industry": "Government & Defense",
-                "company_size": "1000+",
+                "password": "employer1234",
+                "company_name": "Orbit Systems",
+                "industry": "Aerospace & Defense",
+                "company_size": "501-1000",
+                "location": "Austin, TX",
             },
             {
-                "username": "demo_employer3",
+                "username": "employer3",
                 "email": "employer3@workwise.dev",
-                "first_name": "Elena",
-                "last_name": "Vargas",
+                "first_name": "Priya",
+                "last_name": "Sharma",
+                "password": "employer1234",
                 "company_name": "Apex Global Services",
-                "industry": "Finance & Hospitality",
-                "company_size": "201-500",
+                "industry": "Finance & Healthcare",
+                "company_size": "1000+",
+                "location": "New York, NY",
             },
         ]
         for ed in employer_data:
-            u, created = User.objects.get_or_create(
+            u, _ = User.objects.get_or_create(
                 username=ed["username"],
                 defaults={
                     "email": ed["email"],
@@ -458,8 +478,8 @@ class Command(BaseCommand):
                     "last_name": ed["last_name"],
                     "role": User.Role.EMPLOYER,
                     "status": User.Status.ACTIVE,
-                    "location": fake.city(),
-                    "bio": fake.sentence(nb_words=20),
+                    "location": ed["location"],
+                    "bio": f"Hiring team at {ed['company_name']}.",
                 },
             )
             u.role = User.Role.EMPLOYER
@@ -467,31 +487,57 @@ class Command(BaseCommand):
             u.email = ed["email"]
             u.first_name = ed["first_name"]
             u.last_name = ed["last_name"]
-            u.set_password("password123")
+            u.set_password(ed["password"])
             u.save()
 
-            # Ensure profile has company details (signal auto-creates an empty profile on User create)
             ep, _ = EmployerProfile.objects.get_or_create(user=u)
             ep.company_name = ed["company_name"]
             ep.industry = ed["industry"]
             ep.company_size = ed["company_size"]
-            ep.company_description = fake.paragraph(nb_sentences=4)
-            ep.founded_year = random.randint(2005, 2020)
+            ep.company_description = f"{ed['company_name']} is an industry leader driving forward-thinking innovation and high-impact careers."
+            ep.founded_year = 2018
             ep.save()
             u.employer_profile = ep
 
-            self.stdout.write(f"  [+] {u.username} ({u.email} / {ed['company_name']})")
+            self.stdout.write(f"  [+] {u.username} ({u.email} / {ed['company_name']} / password: {ed['password']}) -> /employer/")
             employers.append(u)
 
         # ── Applicants ─────────────────────────────────────────────
         applicants = []
         applicant_data = [
-            {"username": "demo_applicant1", "email": "applicant1@workwise.dev", "first_name": "Alex",    "last_name": "Chen",   "headline": "Cloud Engineer & DevOps Specialist"},
-            {"username": "demo_applicant2", "email": "applicant2@workwise.dev", "first_name": "Sarah",   "last_name": "Johnson","headline": "Registered Nurse (RN) | Emergency & Critical Care"},
-            {"username": "demo_applicant3", "email": "applicant3@workwise.dev", "first_name": "David",   "last_name": "Kim",    "headline": "Public Safety Officer & Logistics Specialist"},
+            {
+                "username": "applicant1",
+                "email": "applicant1@workwise.dev",
+                "first_name": "Alex",
+                "last_name": "Rivera",
+                "password": "applicant1234",
+                "headline": "Senior Cloud Infrastructure & Full Stack Engineer",
+                "skills": "Python, Django, React, AWS, Docker, Kubernetes, PostgreSQL",
+                "location": "San Francisco, CA",
+            },
+            {
+                "username": "applicant2",
+                "email": "applicant2@workwise.dev",
+                "first_name": "Sam",
+                "last_name": "Chen",
+                "password": "applicant1234",
+                "headline": "Registered Nurse (RN) & Critical Care Specialist",
+                "skills": "Critical Care, BLS/ACLS, Patient Assessment, ICU, Emergency Care",
+                "location": "Boston, MA",
+            },
+            {
+                "username": "applicant3",
+                "email": "applicant3@workwise.dev",
+                "first_name": "David",
+                "last_name": "Kim",
+                "password": "applicant1234",
+                "headline": "Senior Financial Analyst & Corporate FP&A Specialist",
+                "skills": "Financial Modeling, Forecasting, Budgeting, Excel, SQL, Data Analysis",
+                "location": "Chicago, IL",
+            },
         ]
         for ad in applicant_data:
-            u, created = User.objects.get_or_create(
+            u, _ = User.objects.get_or_create(
                 username=ad["username"],
                 defaults={
                     "email": ad["email"],
@@ -499,8 +545,8 @@ class Command(BaseCommand):
                     "last_name": ad["last_name"],
                     "role": User.Role.APPLICANT,
                     "status": User.Status.ACTIVE,
-                    "location": fake.city(),
-                    "bio": fake.sentence(nb_words=25),
+                    "location": ad["location"],
+                    "bio": f"{ad['first_name']} {ad['last_name']} - {ad['headline']}",
                 },
             )
             u.role = User.Role.APPLICANT
@@ -508,19 +554,18 @@ class Command(BaseCommand):
             u.email = ad["email"]
             u.first_name = ad["first_name"]
             u.last_name = ad["last_name"]
-            u.set_password("password123")
+            u.set_password(ad["password"])
             u.save()
 
-            # Ensure profile has applicant details (signal auto-creates an empty profile on User create)
             ap, _ = ApplicantProfile.objects.get_or_create(user=u)
             ap.headline = ad["headline"]
-            ap.experience_level = random.choice(["entry", "mid", "senior"])
-            ap.skills = ", ".join(fake.words(nb=8))
-            ap.available_from = datetime.date.today() + datetime.timedelta(days=random.randint(7, 60))
+            ap.experience_level = "senior"
+            ap.skills = ad["skills"]
+            ap.available_from = datetime.date.today() + datetime.timedelta(days=14)
             ap.save()
             u.applicant_profile = ap
 
-            self.stdout.write(f"  [+] {u.username} ({u.email})")
+            self.stdout.write(f"  [+] {u.username} ({u.email} / {ad['first_name']} {ad['last_name']} / password: {ad['password']}) -> /applicant/")
             applicants.append(u)
 
         # ── Categories ─────────────────────────────────────────────
@@ -564,7 +609,7 @@ class Command(BaseCommand):
                     "description": f"{title} position at {employer.employer_profile.company_name}.\n\n" + "\n\n".join(fake.paragraphs(nb=3)),
                     "requirements": "\n".join([f"- {fake.sentence()}" for _ in range(5)]),
                     "responsibilities": "\n".join([f"- {fake.sentence()}" for _ in range(5)]),
-                    "benefits": "\n".join([f"- Comprehensive healthcare and retirement package", "- Professional development allowances", "- Generous paid time off"]),
+                    "benefits": "\n".join(["- Comprehensive healthcare and retirement package", "- Professional development allowances", "- Generous paid time off"]),
                     "status": Job.Status.OPEN,
                     "job_type": item.get("job_type", Job.JobType.FULL_TIME),
                     "experience_level": item.get("experience_level", Job.ExperienceLevel.MID),
@@ -580,73 +625,110 @@ class Command(BaseCommand):
             if created:
                 for tw in item.get("tags", []):
                     JobTag.objects.get_or_create(job=job, name=tw)
-                self.stdout.write(f"  [+] [{job.get_job_type_display()}] {job.title} ({job.department})")
+                self.stdout.write(f"  [+] [{job.get_job_type_display()}] {job.title} ({job.employer.employer_profile.company_name})")
             jobs.append(job)
 
         # ── Applications ────────────────────────────────────────────
         self.stdout.write("Creating applications...")
-        statuses = [
-            Application.Status.SUBMITTED,
-            Application.Status.UNDER_REVIEW,
-            Application.Status.SHORTLISTED,
-            Application.Status.INTERVIEW_SCHEDULED,
-            Application.Status.REJECTED,
-        ]
         applications = []
-        # Each applicant applies to 3 distinct jobs
-        job_pool = jobs[:6]
-        for ai, applicant in enumerate(applicants):
-            selected_jobs = job_pool[ai * 2 : ai * 2 + 3]
-            for job in selected_jobs:
-                app, created = Application.objects.get_or_create(
-                    applicant=applicant,
-                    job=job,
-                    defaults={
-                        "cover_letter": fake.paragraph(nb_sentences=5),
-                        "status": random.choice(statuses),
-                        "portfolio_url": f"https://portfolio.example.com/{applicant.username}",
-                        "rating": random.randint(3, 5),
-                        "employer_notes": fake.sentence(),
-                    },
-                )
-                if created:
-                    self.stdout.write(f"  [+] {applicant.username} -> {job.title}")
-                applications.append(app)
+
+        # Applicant 1 (Alex Rivera) applied to multiple jobs across Synapse Labs & Orbit Systems
+        alex = applicants[0]
+        alex_jobs_and_statuses = [
+            (jobs[0], Application.Status.SHORTLISTED),
+            (jobs[1], Application.Status.UNDER_REVIEW),
+            (jobs[2], Application.Status.SUBMITTED),
+            (jobs[3], Application.Status.UNDER_REVIEW),
+        ]
+        for job, status in alex_jobs_and_statuses:
+            app, created = Application.objects.get_or_create(
+                applicant=alex,
+                job=job,
+                defaults={
+                    "cover_letter": "I am excited to submit my application for this role. With extensive engineering experience in cloud architecture and resilient system design, I am confident in adding immediate value to your team.",
+                    "status": status,
+                    "portfolio_url": "https://alexrivera.dev",
+                    "rating": 5,
+                    "employer_notes": "Strong candidate portfolio with hands-on systems experience.",
+                },
+            )
+            applications.append(app)
+            if created:
+                self.stdout.write(f"  [+] {alex.username} -> {job.title} [{status}]")
+
+        # Applicant 2 (Sam Chen) candidate with scheduled interviews
+        sam = applicants[1]
+        sam_jobs_and_statuses = [
+            (jobs[3], Application.Status.INTERVIEW_SCHEDULED),
+            (jobs[4], Application.Status.INTERVIEW_SCHEDULED),
+            (jobs[5], Application.Status.SHORTLISTED),
+        ]
+        for job, status in sam_jobs_and_statuses:
+            app, created = Application.objects.get_or_create(
+                applicant=sam,
+                job=job,
+                defaults={
+                    "cover_letter": "I am passionate about high-quality clinical outcomes and compassionate patient care. My background in critical care and team collaboration aligns with your mission.",
+                    "status": status,
+                    "portfolio_url": "https://samchen-healthcare.dev",
+                    "rating": 5,
+                    "employer_notes": "Excellent clinical credentials and references.",
+                },
+            )
+            applications.append(app)
+            if created:
+                self.stdout.write(f"  [+] {sam.username} -> {job.title} [{status}]")
+
+        # Applicant 3 (David Kim)
+        david = applicants[2]
+        david_jobs_and_statuses = [
+            (jobs[6], Application.Status.UNDER_REVIEW),
+            (jobs[7], Application.Status.SUBMITTED),
+        ]
+        for job, status in david_jobs_and_statuses:
+            app, created = Application.objects.get_or_create(
+                applicant=david,
+                job=job,
+                defaults={
+                    "cover_letter": "With a strong foundation in data-driven finance and operational analysis, I welcome the opportunity to contribute to your organization.",
+                    "status": status,
+                    "portfolio_url": "https://davidkim.finance",
+                    "rating": 4,
+                    "employer_notes": "Solid analytical skills and financial modeling.",
+                },
+            )
+            applications.append(app)
+            if created:
+                self.stdout.write(f"  [+] {david.username} -> {job.title} [{status}]")
 
         # ── Interviews ──────────────────────────────────────────────
-        self.stdout.write("Creating interviews...")
-        interview_apps = [a for a in applications if a.status in [
-            Application.Status.SHORTLISTED,
-            Application.Status.INTERVIEW_SCHEDULED,
-        ]][:3]
-        for app in interview_apps:
+        self.stdout.write("Creating scheduled interviews for candidate pipeline...")
+        # Schedule interviews for Sam Chen
+        sam_interview_apps = [a for a in applications if a.applicant == sam and a.status == Application.Status.INTERVIEW_SCHEDULED]
+        for i, app in enumerate(sam_interview_apps):
             if not app.interviews.exists():
-                scheduled = timezone.now() + datetime.timedelta(days=random.randint(3, 14))
+                scheduled = timezone.now() + datetime.timedelta(days=i + 3, hours=i * 2 + 10)
                 Interview.objects.create(
                     application=app,
                     scheduled_at=scheduled,
-                    duration_minutes=random.choice([45, 60, 90]),
-                    format=random.choice([
-                        Interview.Format.VIDEO,
-                        Interview.Format.TECHNICAL,
-                        Interview.Format.PHONE,
-                    ]),
-                    meeting_link="https://meet.example.com/workwise-interview",
+                    duration_minutes=60,
+                    format=Interview.Format.VIDEO if i % 2 == 0 else Interview.Format.TECHNICAL,
+                    meeting_link=f"https://meet.workwise.dev/interview-sam-{app.id}",
                     outcome=Interview.Outcome.PENDING,
                 )
-                self.stdout.write(f"  [+] Interview for {app.applicant.username} @ {app.job.title}")
+                self.stdout.write(f"  [+] Scheduled Interview for {sam.get_full_name()} ({sam.email}) @ {app.job.title} on {scheduled.strftime('%Y-%m-%d %H:%M')}")
 
         self.stdout.write(self.style.SUCCESS(
             "\n[OK] Seed complete! All accounts are active and functional:\n\n"
             "   [ADMIN] -> Redirects to /admin-panel/\n"
             "   * Username: admin | Email: admin@workwise.dev | Password: admin1234\n\n"
             "   [EMPLOYERS] -> Redirects to /employer/\n"
-            "   * demo_employer1 | employer1@workwise.dev (Metro Health & Tech) | Password: password123\n"
-            "   * demo_employer2 | employer2@workwise.dev (National Defense Agency) | Password: password123\n"
-            "   * demo_employer3 | employer3@workwise.dev (Apex Global Services) | Password: password123\n\n"
+            "   * employer1 | employer1@workwise.dev (Synapse Labs) | Password: employer1234\n"
+            "   * employer2 | employer2@workwise.dev (Orbit Systems) | Password: employer1234\n"
+            "   * employer3 | employer3@workwise.dev (Apex Global Services) | Password: employer1234\n\n"
             "   [APPLICANTS] -> Redirects to /applicant/\n"
-            "   * demo_applicant1 | applicant1@workwise.dev (Alex Chen) | Password: password123\n"
-            "   * demo_applicant2 | applicant2@workwise.dev (Sarah Johnson) | Password: password123\n"
-            "   * demo_applicant3 | applicant3@workwise.dev (David Kim) | Password: password123\n\n"
+            "   * applicant1 | applicant1@workwise.dev (Alex Rivera) | Password: applicant1234\n"
+            "   * applicant2 | applicant2@workwise.dev (Sam Chen - Scheduled Interviews) | Password: applicant1234\n"
+            "   * applicant3 | applicant3@workwise.dev (David Kim) | Password: applicant1234\n\n"
             f"   Stats: {Category.objects.count()} Categories | {Job.objects.count()} Jobs | {Application.objects.count()} Applications | {Interview.objects.count()} Interviews\n"
         ))
