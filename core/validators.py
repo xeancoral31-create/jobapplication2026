@@ -18,19 +18,19 @@ def validate_resume_file(file):
     if not file:
         return
 
-    # Check file size
-    file_size = getattr(file, "size", None)
-    if file_size and file_size > MAX_RESUME_SIZE_BYTES:
-        max_mb = MAX_RESUME_SIZE_BYTES // (1024 * 1024)
-        raise ValidationError(
-            _(f"Resume file size must not exceed {max_mb} MB. Uploaded file is {file_size / (1024 * 1024):.1f} MB.")
-        )
-
-    # Check file extension
+    # Check file extension first (gives cleaner error for wrong format)
     file_name = getattr(file, "name", "")
     ext = os.path.splitext(file_name)[1].lower()
     if ext not in ALLOWED_RESUME_EXTENSIONS:
-        allowed = ", ".join(ext.upper().lstrip(".") for ext in sorted(ALLOWED_RESUME_EXTENSIONS))
+        allowed = ", ".join(e.upper().lstrip(".") for e in sorted(ALLOWED_RESUME_EXTENSIONS))
         raise ValidationError(
             _(f"Invalid file format '{ext}'. Only {allowed} files are accepted.")
+        )
+
+    # Check file size (use is not None so that 0-byte files are also evaluated)
+    file_size = getattr(file, "size", None)
+    if file_size is not None and file_size > MAX_RESUME_SIZE_BYTES:
+        max_mb = MAX_RESUME_SIZE_BYTES // (1024 * 1024)
+        raise ValidationError(
+            _(f"Resume file size must not exceed {max_mb} MB. Uploaded file is {file_size / (1024 * 1024):.1f} MB.")
         )

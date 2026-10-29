@@ -47,6 +47,57 @@
     </div>
   </div>
 
+  {% if application.status == 'hired' %}
+  <!-- Official Hire Notification Banner -->
+  <div class="card" style="background: linear-gradient(135deg, hsl(145, 65%, 96%), hsl(145, 65%, 92%)); border: 2px solid hsl(145, 63%, 50%); padding: var(--space-6); margin-bottom: var(--space-8); border-radius: var(--radius-lg); box-shadow: 0 4px 14px hsl(145 63% 42% / 0.15);">
+    <div style="display: flex; align-items: flex-start; gap: var(--space-4);">
+      <div style="width: 48px; height: 48px; border-radius: 50%; background: hsl(145, 63%, 42%); color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; box-shadow: 0 2px 8px hsl(145 63% 42% / 0.3);">
+        🎉
+      </div>
+      <div style="flex-grow: 1;">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-1);">
+          <h2 style="font-size: 1.25rem; font-weight: 800; color: hsl(145, 80%, 20%); margin: 0; letter-spacing: -0.01em;">
+            Congratulations! You've Been Officially Hired!
+          </h2>
+          <span class="badge badge--success" style="font-size: 0.75rem; padding: 4px 10px;">Confirmed Offer</span>
+        </div>
+        <p style="font-size: var(--text-sm); color: hsl(145, 60%, 25%); margin: 0 0 var(--space-4);">
+          <strong>{{ application.job.employer.employer_profile.company_name|default:application.job.employer.get_full_name }}</strong> has confirmed your hire for the role of <strong>{{ application.job.title }}</strong>.
+        </p>
+
+        <!-- Official Start Date Highlight Box -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-4);">
+          <div style="background: #ffffff; border: 1.5px solid hsl(145, 60%, 75%); border-radius: var(--radius-md); padding: var(--space-4); box-shadow: var(--shadow-sm);">
+            <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; color: hsl(145, 70%, 30%); display: block; margin-bottom: 4px;">
+              📅 Official Work Start Date
+            </span>
+            <span style="font-size: 1.15rem; font-weight: 800; color: hsl(145, 80%, 20%); display: block;">
+              {{ application.start_date|date:"l, F j, Y"|default:"Confirmed upon onboarding" }}
+            </span>
+            {% if application.hired_at %}
+            <span style="font-size: 0.72rem; color: var(--color-text-muted); display: block; margin-top: 4px;">
+              Confirmed on {{ application.hired_at|date:"M j, Y, g:i A" }}
+            </span>
+            {% endif %}
+          </div>
+        </div>
+
+        {% if application.hire_message %}
+        <!-- Employer Welcome Message -->
+        <div style="background: #ffffff; border: 1.5px solid hsl(145, 60%, 75%); border-radius: var(--radius-md); padding: var(--space-4); box-shadow: var(--shadow-sm);">
+          <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; color: hsl(145, 70%, 30%); display: block; margin-bottom: 6px;">
+            💬 Message from Employer
+          </span>
+          <div style="font-size: var(--text-sm); line-height: 1.6; color: #1e293b; white-space: pre-line;">
+            {{ application.hire_message }}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
   <!-- Status Timeline Card -->
   <div class="card" style="background: var(--color-surface-1); border: 1px solid var(--color-border); padding: var(--space-8); margin-bottom: var(--space-8); box-shadow: var(--shadow-sm);">
     

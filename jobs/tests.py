@@ -209,6 +209,54 @@ class JobValidationTest(TestCase):
         form = JobForm(data=data, employer=self.employer)
         self.assertTrue(form.is_valid(), form.errors)
 
+    def test_job_form_supports_global_currencies(self):
+        from jobs.forms import JobForm
+        for currency in ["PHP", "EUR", "GBP", "JPY", "CAD", "AUD", "SGD", "AED"]:
+            data = {
+                "title": f"Engineer ({currency})",
+                "category": self.category.pk,
+                "job_type": Job.JobType.FULL_TIME,
+                "experience_level": Job.ExperienceLevel.MID,
+                "location": "Remote",
+                "salary_min": 50000,
+                "salary_max": 90000,
+                "salary_period": Job.SalaryPeriod.YEARLY,
+                "salary_currency": currency,
+                "description": "Valid description text.",
+                "status": Job.Status.OPEN,
+            }
+            form = JobForm(data=data, employer=self.employer)
+            self.assertTrue(form.is_valid(), f"Failed for currency {currency}: {form.errors}")
+            self.assertEqual(form.cleaned_data["salary_currency"], currency)
+
+    def test_job_form_currency_defaults_to_usd_when_empty(self):
+        from jobs.forms import JobForm
+        data = {
+            "title": "Engineer Default Currency",
+            "category": self.category.pk,
+            "job_type": Job.JobType.FULL_TIME,
+            "experience_level": Job.ExperienceLevel.MID,
+            "location": "Remote",
+            "salary_min": 50000,
+            "salary_max": 90000,
+            "salary_period": Job.SalaryPeriod.YEARLY,
+            "salary_currency": "",
+            "description": "Valid description text.",
+            "status": Job.Status.OPEN,
+        }
+        form = JobForm(data=data, employer=self.employer)
+        self.assertTrue(form.is_valid(), form.errors)
+        self.assertEqual(form.cleaned_data["salary_currency"], "USD")
+
+    def test_job_currency_choices_comprehensive(self):
+        from core.currencies import ISO_CURRENCIES, CURRENCY_CHOICES, VALID_CURRENCY_CODES
+        self.assertGreaterEqual(len(ISO_CURRENCIES), 150)
+        self.assertIn("USD", VALID_CURRENCY_CODES)
+        self.assertIn("PHP", VALID_CURRENCY_CODES)
+        self.assertIn("EUR", VALID_CURRENCY_CODES)
+        self.assertIn("GBP", VALID_CURRENCY_CODES)
+        self.assertIn("JPY", VALID_CURRENCY_CODES)
+
     def test_deadline_in_past_fails_validation(self):
         import datetime
         from django.utils import timezone

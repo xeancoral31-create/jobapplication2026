@@ -70,7 +70,7 @@ class User(AbstractUser):
     def is_superadmin(self):
         if self.access_level == self.AccessLevel.SUPERADMIN:
             return True
-        if self.is_superuser and self.access_level != self.AccessLevel.MODERATOR:
+        if self.is_superuser:
             return True
         return False
 
@@ -85,7 +85,8 @@ class User(AbstractUser):
         return self.is_superadmin
 
     def save(self, *args, **kwargs):
-        if self.is_superuser and not self.access_level:
+        # Automatically promote superusers to SUPERADMIN access level
+        if self.is_superuser and self.access_level != self.AccessLevel.SUPERADMIN:
             self.access_level = self.AccessLevel.SUPERADMIN
         super().save(*args, **kwargs)
 

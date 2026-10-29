@@ -10,6 +10,12 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("dashboard/", views.dashboard, name="dashboard"),
     path("styleguide/", views.styleguide, name="styleguide"),
+    # Career Resources
+    path("resume-blueprint/", views.resume_blueprint, name="resume_blueprint"),
+    path("resume-blueprint/interactive/", views.resume_blueprint_interactive, name="resume_blueprint_interactive"),
+    path("resume-blueprint/download/", views.download_resume_template, name="download_resume_template"),
+    path("interview-mastery/", views.interview_mastery, name="interview_mastery"),
+    path("interview-mastery/download/", views.download_interview_guide, name="download_interview_guide"),
     # Notifications (persistent read state)
     path("notifications/state/",          notifications.notifications_state,         name="notifications_state"),
     path("notifications/mark-all-read/",  notifications.notifications_mark_all_read, name="notifications_mark_all_read"),

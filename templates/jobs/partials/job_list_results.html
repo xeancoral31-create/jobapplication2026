@@ -138,11 +138,11 @@
           {% if job.salary_min or job.salary_max %}
           <div style="font-size: 0.95rem; font-weight: 700; color: var(--color-text-primary); margin-top: 2px;">
             {% if job.salary_min and job.salary_max %}
-              ${{ job.salary_min|floatformat:0 }} – ${{ job.salary_max|floatformat:0 }}
+              {{ job.salary_currency }} {{ job.salary_min|floatformat:0 }} – {{ job.salary_max|floatformat:0 }}
             {% elif job.salary_min %}
-              From ${{ job.salary_min|floatformat:0 }}
+              From {{ job.salary_currency }} {{ job.salary_min|floatformat:0 }}
             {% elif job.salary_max %}
-              Up to ${{ job.salary_max|floatformat:0 }}
+              Up to {{ job.salary_currency }} {{ job.salary_max|floatformat:0 }}
             {% endif %}
             <span style="font-size: 0.8125rem; font-weight: normal; color: var(--color-text-muted);">/ {{ job.get_salary_period_display|lower }}</span>
           </div>

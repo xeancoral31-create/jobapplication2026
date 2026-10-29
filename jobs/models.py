@@ -5,6 +5,8 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.utils.text import slugify
 
+from core.currencies import CURRENCY_CHOICES, get_currency_symbol
+
 
 class Category(models.Model):
     """Job category / department bucket."""
@@ -296,7 +298,12 @@ class Job(models.Model):
         default=SalaryPeriod.YEARLY,
         blank=True,
     )
-    salary_currency = models.CharField(max_length=5, default="USD")
+    salary_currency = models.CharField(
+        max_length=5,
+        default="USD",
+        choices=CURRENCY_CHOICES,
+        help_text="Salary currency (ISO 4217 code)",
+    )
 
     # Dates
     deadline = models.DateField(blank=True, null=True)
@@ -381,12 +388,20 @@ class Job(models.Model):
         self.status = self.Status.REMOVED
         self.save(update_fields=["status", "updated_at"])
 
+    @property
+    def currency_symbol(self):
+        return get_currency_symbol(self.salary_currency)
+
     def salary_display(self):
         if self.salary_min and self.salary_max:
             return (
                 f"{self.salary_currency} {self.salary_min:,.0f}–"
                 f"{self.salary_max:,.0f} / {self.salary_period}"
             )
+        elif self.salary_min:
+            return f"From {self.salary_currency} {self.salary_min:,.0f} / {self.salary_period}"
+        elif self.salary_max:
+            return f"Up to {self.salary_currency} {self.salary_max:,.0f} / {self.salary_period}"
         return "Salary not specified"
 
 

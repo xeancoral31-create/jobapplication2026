@@ -70,6 +70,70 @@ def styleguide(request):
     return render(request, "core/styleguide.html", {})
 
 
+# ── Career Resources ───────────────────────────────────────────────────────
+
+def resume_blueprint(request):
+    """ATS Resume Blueprint templates and downloads."""
+    from .career_resources import RESUME_TEMPLATES
+    active_tab = request.GET.get("tab", "universal")
+    if active_tab not in RESUME_TEMPLATES:
+        active_tab = "universal"
+    return render(
+        request,
+        "core/resume_blueprint.html",
+        {
+            "templates": RESUME_TEMPLATES,
+            "active_tab": active_tab,
+            "current_template": RESUME_TEMPLATES[active_tab],
+        },
+    )
+
+
+def resume_blueprint_interactive(request):
+    """Interactive, printable, in-browser editable Navy Blueprint resume template."""
+    return render(request, "core/resume_template_navy_blueprint.html", {})
+
+
+def download_resume_template(request):
+    """Download individual resume template (.doc/.txt) or all templates (.zip)."""
+    from django.http import HttpResponse
+    from .career_resources import get_resume_download
+
+    template_id = request.GET.get("template", "bundle")
+    file_format = request.GET.get("format", "doc")
+    content, filename, content_type = get_resume_download(template_id, file_format)
+    response = HttpResponse(content, content_type=content_type)
+    response["Content-Disposition"] = f'attachment; filename="{filename}"'
+    return response
+
+
+def interview_mastery(request):
+    """Comprehensive interview preparation guide with STAR and technical models."""
+    from .career_resources import INTERVIEW_CATEGORIES
+    active_category = request.GET.get("category", "behavioral")
+    selected_cat = next((c for c in INTERVIEW_CATEGORIES if c["id"] == active_category), INTERVIEW_CATEGORIES[0])
+    return render(
+        request,
+        "core/interview_mastery.html",
+        {
+            "categories": INTERVIEW_CATEGORIES,
+            "active_category": selected_cat["id"],
+            "current_category": selected_cat,
+        },
+    )
+
+
+def download_interview_guide(request):
+    """Download the complete interview preparation handbook as a text guide."""
+    from django.http import HttpResponse
+    from .career_resources import get_interview_guide_download
+
+    content, filename, content_type = get_interview_guide_download()
+    response = HttpResponse(content, content_type=content_type)
+    response["Content-Disposition"] = f'attachment; filename="{filename}"'
+    return response
+
+
 # ── Generic dashboard (legacy redirect) ────────────────────────────────────
 
 @login_required

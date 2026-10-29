@@ -433,7 +433,7 @@
             <h4 style="color:#fff; font-size:1rem; font-weight:700; margin:0 0 0.4rem;">Resume Blueprint 2026</h4>
             <p style="color:#94a3b8; font-size:0.8125rem; line-height:1.6; margin:0 0 1rem;">ATS-optimized resume templates tailored for developers, designers, and managers.</p>
           </div>
-          <a href="{% url 'jobs:list' %}" class="section-action-link" style="font-size:0.8125rem; font-weight:600; color:#38bdf8; text-decoration:none;">Download Templates &rarr;</a>
+          <a href="{% url 'core:resume_blueprint' %}" onclick="openResumeBlueprintModal(event)" class="section-action-link" style="font-size:0.8125rem; font-weight:600; color:#38bdf8; text-decoration:none; cursor:pointer;">Download Templates &rarr;</a>
         </div>
         <div style="padding:1.25rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:14px; display:flex; flex-direction:column; justify-content:space-between;">
           <div>
@@ -443,8 +443,174 @@
             <h4 style="color:#fff; font-size:1rem; font-weight:700; margin:0 0 0.4rem;">Interview Mastery</h4>
             <p style="color:#94a3b8; font-size:0.8125rem; line-height:1.6; margin:0 0 1rem;">Ace behavioral and live technical rounds with real question breakdowns.</p>
           </div>
-          <a href="{% url 'jobs:list' %}" class="section-action-link" style="font-size:0.8125rem; font-weight:600; color:#38bdf8; text-decoration:none;">Explore Questions &rarr;</a>
+          <a href="{% url 'core:interview_mastery' %}" onclick="openInterviewMasteryModal(event)" class="section-action-link" style="font-size:0.8125rem; font-weight:600; color:#818cf8; text-decoration:none; cursor:pointer;">Explore Questions &rarr;</a>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2a. Resume Blueprint Modal -->
+  <div class="app-modal-backdrop" id="modal-resume-blueprint" onclick="if(event.target === this) closeResumeBlueprintModal();">
+    <div class="app-modal-card" style="max-width: 680px;">
+      <button type="button" class="app-modal-close" onclick="closeResumeBlueprintModal()" aria-label="Close">&times;</button>
+      <span class="section-eyebrow">ATS RESOURCE CENTER</span>
+      <h3 style="color:#fff; font-size:1.45rem; margin:0.35rem 0 0.5rem;">Resume Blueprint 2026</h3>
+      <p style="color:#94a3b8; font-size:0.85rem; line-height:1.5; margin-bottom:1.25rem;">
+        ATS-verified templates engineered for automated parsing engines (Workday, Greenhouse, Lever). Select your specialization below:
+      </p>
+
+      <!-- Role Selector Pills in Modal -->
+      <div style="display:flex; gap:0.5rem; margin-bottom:1.25rem; flex-wrap:wrap;">
+        <button type="button" onclick="modalSwitchResume('tech')" id="modal-tab-tech" style="padding:0.45rem 0.85rem; border-radius:8px; font-size:0.8rem; font-weight:700; cursor:pointer; background:rgba(56, 189, 248, 0.15); border:1px solid rgba(56, 189, 248, 0.4); color:#38bdf8; display:inline-flex; align-items:center; gap:0.35rem;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Software Engineer
+        </button>
+        <button type="button" onclick="modalSwitchResume('design')" id="modal-tab-design" style="padding:0.45rem 0.85rem; border-radius:8px; font-size:0.8rem; font-weight:700; cursor:pointer; background:rgba(255, 255, 255, 0.04); border:1px solid rgba(255, 255, 255, 0.1); color:#94a3b8; display:inline-flex; align-items:center; gap:0.35rem;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
+          UI/UX Designer
+        </button>
+        <button type="button" onclick="modalSwitchResume('manager')" id="modal-tab-manager" style="padding:0.45rem 0.85rem; border-radius:8px; font-size:0.8rem; font-weight:700; cursor:pointer; background:rgba(255, 255, 255, 0.04); border:1px solid rgba(255, 255, 255, 0.1); color:#94a3b8; display:inline-flex; align-items:center; gap:0.35rem;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Tech Lead &amp; Manager
+        </button>
+      </div>
+
+      <!-- Tech Preview Card -->
+      <div id="modal-resume-view-tech" class="modal-resume-panel">
+        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1rem; margin-bottom:1rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+            <strong style="color:#fff; font-size:0.95rem;">Software Engineer &amp; Cloud Architect</strong>
+            <span style="font-size:0.75rem; color:#10b981; font-weight:600;">100% ATS Verified</span>
+          </div>
+          <p style="color:#94a3b8; font-size:0.8rem; line-height:1.5; margin:0 0 0.75rem;">
+            Pre-formatted with optimal sections: Professional Summary, Core Skills, Work Experience with quantified impact, Projects, and Certifications.
+          </p>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <a href="{% url 'core:download_resume_template' %}?template=tech&format=rtf" class="btn btn--primary btn--sm" style="font-size:0.78rem; text-decoration:none;">
+              Download Word (.doc)
+            </a>
+            <a href="{% url 'core:download_resume_template' %}?template=tech&format=txt" class="btn btn--ghost btn--sm" style="font-size:0.78rem; text-decoration:none;">
+              Download Text (.txt)
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Design Preview Card -->
+      <div id="modal-resume-view-design" class="modal-resume-panel" style="display:none;">
+        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1rem; margin-bottom:1rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+            <strong style="color:#fff; font-size:0.95rem;">UI/UX &amp; Product Designer</strong>
+            <span style="font-size:0.75rem; color:#10b981; font-weight:600;">100% ATS Verified</span>
+          </div>
+          <p style="color:#94a3b8; font-size:0.8rem; line-height:1.5; margin:0 0 0.75rem;">
+            Optimized for portfolio links, design systems, usability research, conversion metrics, and accessible component hierarchies.
+          </p>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <a href="{% url 'core:download_resume_template' %}?template=design&format=rtf" class="btn btn--primary btn--sm" style="font-size:0.78rem; text-decoration:none;">
+              Download Word (.doc)
+            </a>
+            <a href="{% url 'core:download_resume_template' %}?template=design&format=txt" class="btn btn--ghost btn--sm" style="font-size:0.78rem; text-decoration:none;">
+              Download Text (.txt)
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Manager Preview Card -->
+      <div id="modal-resume-view-manager" class="modal-resume-panel" style="display:none;">
+        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1rem; margin-bottom:1rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+            <strong style="color:#fff; font-size:0.95rem;">Engineering Manager &amp; Tech Lead</strong>
+            <span style="font-size:0.75rem; color:#10b981; font-weight:600;">100% ATS Verified</span>
+          </div>
+          <p style="color:#94a3b8; font-size:0.8rem; line-height:1.5; margin:0 0 0.75rem;">
+            Highlights engineering team scaling, cross-functional delivery, operational SLA metrics, and budget planning.
+          </p>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <a href="{% url 'core:download_resume_template' %}?template=manager&format=rtf" class="btn btn--primary btn--sm" style="font-size:0.78rem; text-decoration:none;">
+              Download Word (.doc)
+            </a>
+            <a href="{% url 'core:download_resume_template' %}?template=manager&format=txt" class="btn btn--ghost btn--sm" style="font-size:0.78rem; text-decoration:none;">
+              Download Text (.txt)
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bundle & Fullscreen Action Footer -->
+      <div style="display:flex; justify-content:space-between; align-items:center; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.08); flex-wrap:wrap; gap:0.75rem;">
+        <a href="{% url 'core:download_resume_template' %}?template=bundle" class="btn btn--primary btn--sm" style="display:inline-flex; align-items:center; gap:0.35rem; font-size:0.8rem; font-weight:700; text-decoration:none;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download All Templates (.zip)
+        </a>
+        <a href="{% url 'core:resume_blueprint' %}" style="color:#38bdf8; font-size:0.8125rem; font-weight:600; text-decoration:none;">
+          Open Fullscreen Blueprint Page &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2b. Interview Mastery Modal -->
+  <div class="app-modal-backdrop" id="modal-interview-mastery" onclick="if(event.target === this) closeInterviewMasteryModal();">
+    <div class="app-modal-card" style="max-width: 680px;">
+      <button type="button" class="app-modal-close" onclick="closeInterviewMasteryModal()" aria-label="Close">&times;</button>
+      <span class="section-eyebrow">INTERVIEW PREPARATION</span>
+      <h3 style="color:#fff; font-size:1.45rem; margin:0.35rem 0 0.5rem;">Interview Mastery 2026</h3>
+      <p style="color:#94a3b8; font-size:0.85rem; line-height:1.5; margin-bottom:1.25rem;">
+        Real questions asked by tech recruiters with verified behavioral STAR breakdowns and technical architecture rubrics.
+      </p>
+
+      <div style="display:flex; flex-direction:column; gap:0.85rem; margin-bottom:1.25rem;">
+        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem;">
+            <span style="font-size:0.75rem; font-weight:700; color:#818cf8; text-transform:uppercase;">Behavioral &bull; STAR Method</span>
+            <span style="font-size:0.75rem; color:#10b981; font-weight:600;">High Frequency</span>
+          </div>
+          <strong style="color:#fff; font-size:0.9rem; display:block; margin-bottom:0.4rem;">
+            &ldquo;Tell me about a time you handled a critical production outage under pressure.&rdquo;
+          </strong>
+          <p style="color:#94a3b8; font-size:0.8rem; line-height:1.5; margin:0 0 0.5rem;">
+            Assessors look for composure, systematic root-cause analysis, proactive stakeholder communication, and prevention mindset.
+          </p>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem;">
+            <span style="font-size:0.75rem; font-weight:700; color:#38bdf8; text-transform:uppercase;">System Design</span>
+            <span style="font-size:0.75rem; color:#10b981; font-weight:600;">Architecture</span>
+          </div>
+          <strong style="color:#fff; font-size:0.9rem; display:block; margin-bottom:0.4rem;">
+            &ldquo;How would you design a distributed notification system processing 10M alerts/minute?&rdquo;
+          </strong>
+          <p style="color:#94a3b8; font-size:0.8rem; line-height:1.5; margin:0 0 0.5rem;">
+            Master event-driven message queuing (Kafka), fan-out workers, Redis rate-limiting, and delivery idempotency.
+          </p>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem;">
+            <span style="font-size:0.75rem; font-weight:700; color:#f59e0b; text-transform:uppercase;">Compensation Strategy</span>
+            <span style="font-size:0.75rem; color:#10b981; font-weight:600;">Negotiation</span>
+          </div>
+          <strong style="color:#fff; font-size:0.9rem; display:block; margin-bottom:0.4rem;">
+            &ldquo;What are your salary expectations?&rdquo;
+          </strong>
+          <p style="color:#94a3b8; font-size:0.8rem; line-height:1.5; margin:0 0 0.5rem;">
+            Tactfully anchor around market compensation brackets while redirecting to the company's budgeted salary band.
+          </p>
+        </div>
+      </div>
+
+      <!-- Action Footer -->
+      <div style="display:flex; justify-content:space-between; align-items:center; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.08); flex-wrap:wrap; gap:0.75rem;">
+        <a href="{% url 'core:download_interview_guide' %}" class="btn btn--primary btn--sm" style="display:inline-flex; align-items:center; gap:0.35rem; font-size:0.8rem; font-weight:700; text-decoration:none;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Complete Guide (.txt)
+        </a>
+        <a href="{% url 'core:interview_mastery' %}" style="color:#818cf8; font-size:0.8125rem; font-weight:600; text-decoration:none;">
+          Open Fullscreen Interview Mastery Page &rarr;
+        </a>
       </div>
     </div>
   </div>
@@ -895,6 +1061,41 @@
 
     window.openResourcesModal   = () => openModal('modal-resources');
     window.closeResourcesModal  = () => closeModal('modal-resources');
+
+    window.openResumeBlueprintModal = function(e) {
+      if (e) e.preventDefault();
+      closeResourcesModal();
+      openModal('modal-resume-blueprint');
+    };
+    window.closeResumeBlueprintModal = () => closeModal('modal-resume-blueprint');
+
+    window.openInterviewMasteryModal = function(e) {
+      if (e) e.preventDefault();
+      closeResourcesModal();
+      openModal('modal-interview-mastery');
+    };
+    window.closeInterviewMasteryModal = () => closeModal('modal-interview-mastery');
+
+    window.modalSwitchResume = function(tabId) {
+      document.querySelectorAll('.modal-resume-panel').forEach(p => p.style.display = 'none');
+      const target = document.getElementById('modal-resume-view-' + tabId);
+      if (target) target.style.display = 'block';
+
+      ['tech', 'design', 'manager'].forEach(t => {
+        const btn = document.getElementById('modal-tab-' + t);
+        if (btn) {
+          if (t === tabId) {
+            btn.style.background = 'rgba(56, 189, 248, 0.15)';
+            btn.style.border = '1px solid rgba(56, 189, 248, 0.4)';
+            btn.style.color = '#38bdf8';
+          } else {
+            btn.style.background = 'rgba(255, 255, 255, 0.04)';
+            btn.style.border = '1px solid rgba(255, 255, 255, 0.1)';
+            btn.style.color = '#94a3b8';
+          }
+        }
+      });
+    };
 
     window.openSalaryGuideModal = () => openModal('modal-salary');
     window.closeSalaryGuideModal= () => closeModal('modal-salary');

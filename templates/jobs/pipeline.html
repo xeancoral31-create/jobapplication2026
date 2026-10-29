@@ -68,4 +68,154 @@
 <!-- Drawer Container for Candidate Detail Slide-Over -->
 <div id="application-drawer-container"></div>
 
+<!-- Hire Candidate Modal Dialog (Start Date & Welcome Message) -->
+<div id="pipeline-hire-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1050; align-items: center; justify-content: center; backdrop-filter: blur(2px);">
+  <div class="card" style="width: 100%; max-width: 520px; background: var(--color-surface-1); border: 2px solid hsl(145, 60%, 50%); border-radius: var(--radius-lg); padding: var(--space-6); box-shadow: var(--shadow-xl); animation: fadeIn 0.15s ease-out; margin: var(--space-4);">
+    <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: var(--space-4); border-bottom: 1px solid var(--color-border); padding-bottom: var(--space-3);">
+      <div>
+        <span class="badge badge--success" style="font-size: 0.7rem; margin-bottom: 4px;">🎉 Official Hire Offer</span>
+        <h3 id="hire-modal-title" style="margin: 0; font-size: 1.15rem; font-weight: 700; color: var(--color-text-primary);">
+          Hire Candidate
+        </h3>
+        <p id="hire-modal-subtitle" style="font-size: var(--text-xs); color: var(--color-text-muted); margin: 2px 0 0;">
+          {{ job.title }}
+        </p>
+      </div>
+      <button type="button" onclick="closePipelineHireModal()" class="btn btn--ghost btn--sm" style="font-size: 1.1rem; padding: 2px 8px;" aria-label="Close modal">✕</button>
+    </div>
+
+    <div id="pipeline-hire-error" style="display: none; padding: var(--space-2) var(--space-3); font-size: 0.75rem; margin-bottom: var(--space-3); background: #fee2e2; border: 1px solid #f87171; color: #991b1b; border-radius: var(--radius-sm);"></div>
+
+    <form id="pipeline-hire-form" method="post" onsubmit="submitPipelineHire(event)">
+      {% csrf_token %}
+      <input type="hidden" name="new_status" value="hired">
+
+      <div style="margin-bottom: var(--space-4);">
+        <label class="form-label" for="pipeline-hire-date" style="font-weight: 600; font-size: var(--text-xs);">
+          Official Work Start Date <span class="text-danger">*</span>
+        </label>
+        <input type="date"
+               id="pipeline-hire-date"
+               name="start_date"
+               required
+               class="form-control"
+               style="font-size: 0.85rem;">
+        <span class="form-hint" style="font-size: 0.72rem; color: var(--color-text-muted);">
+          The candidate's official first day of work.
+        </span>
+      </div>
+
+      <div style="margin-bottom: var(--space-5);">
+        <label class="form-label" for="pipeline-hire-message" style="font-weight: 600; font-size: var(--text-xs);">
+          Message to Applicant <span class="text-danger">*</span>
+        </label>
+        <textarea id="pipeline-hire-message"
+                  name="hire_message"
+                  required
+                  rows="4"
+                  class="form-control"
+                  placeholder="Welcome to the team! We are thrilled to have you join us. On your first day, please report to..."
+                  style="font-size: 0.85rem; line-height: 1.5;"></textarea>
+        <span class="form-hint" style="font-size: 0.72rem; color: var(--color-text-muted);">
+          This message and start date will be saved in the system and immediately delivered to the candidate's account notifications.
+        </span>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: var(--space-2);">
+        <button type="button" onclick="closePipelineHireModal()" class="btn btn--ghost btn--sm">
+          Cancel
+        </button>
+        <button type="submit" id="btn-pipeline-hire-submit" class="btn btn--success btn--sm" style="background: hsl(145, 70%, 38%); color: #fff; font-weight: 600;">
+          Confirm Hire & Deliver Notification &rarr;
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  let activeHireUrl = '';
+
+  window.handlePipelineMove = function(sel) {
+    if (!sel || !sel.value) return;
+    const targetStatus = sel.value;
+    const appId = sel.dataset.appId;
+    const appName = sel.dataset.appName;
+    const url = sel.dataset.url;
+
+    if (targetStatus === 'hired') {
+      sel.value = ''; // reset dropdown
+      openPipelineHireModal(appId, appName, url);
+    } else {
+      htmx.ajax('POST', url, {
+        values: { new_status: targetStatus },
+        target: '#pipeline-board',
+        swap: 'outerHTML'
+      });
+    }
+  };
+
+  window.openPipelineHireModal = function(appId, appName, url) {
+    activeHireUrl = url;
+    const modal = document.getElementById('pipeline-hire-modal');
+    const title = document.getElementById('hire-modal-title');
+    const errBox = document.getElementById('pipeline-hire-error');
+    if (title) title.textContent = 'Hire Candidate: ' + appName;
+    if (errBox) { errBox.style.display = 'none'; errBox.textContent = ''; }
+    document.getElementById('pipeline-hire-date').value = '';
+    document.getElementById('pipeline-hire-message').value = '';
+    if (modal) {
+      modal.style.display = 'flex';
+      setTimeout(() => document.getElementById('pipeline-hire-date').focus(), 50);
+    }
+  };
+
+  window.closePipelineHireModal = function() {
+    const modal = document.getElementById('pipeline-hire-modal');
+    if (modal) modal.style.display = 'none';
+    activeHireUrl = '';
+  };
+
+  window.submitPipelineHire = function(e) {
+    e.preventDefault();
+    const dateVal = document.getElementById('pipeline-hire-date').value;
+    const msgVal = document.getElementById('pipeline-hire-message').value;
+    const errBox = document.getElementById('pipeline-hire-error');
+    const btn = document.getElementById('btn-pipeline-hire-submit');
+
+    if (!dateVal) {
+      errBox.textContent = 'Please provide an official work start date.';
+      errBox.style.display = 'block';
+      return;
+    }
+    if (!msgVal.trim()) {
+      errBox.textContent = 'Please write a message to the applicant.';
+      errBox.style.display = 'block';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Delivering notification...';
+
+    htmx.ajax('POST', activeHireUrl, {
+      values: {
+        new_status: 'hired',
+        start_date: dateVal,
+        hire_message: msgVal.trim()
+      },
+      target: '#pipeline-board',
+      swap: 'outerHTML'
+    }).then(function() {
+      btn.disabled = false;
+      btn.textContent = 'Confirm Hire & Deliver Notification →';
+      closePipelineHireModal();
+    }).catch(function(err) {
+      btn.disabled = false;
+      btn.textContent = 'Confirm Hire & Deliver Notification →';
+      errBox.textContent = 'An error occurred while confirming hire.';
+      errBox.style.display = 'block';
+    });
+  };
+</script>
+
 {% endblock %}

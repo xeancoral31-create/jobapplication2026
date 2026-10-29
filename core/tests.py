@@ -657,3 +657,66 @@ class NotificationPersistenceTest(TestCase):
         self.assertEqual(state_after.json()["unread_ids"], [])
 
 
+class CareerResourcesTest(TestCase):
+    """Test Career Resources pages, templates, downloads, and ATS content."""
+
+    def setUp(self):
+        self.client = Client()
+
+    def test_home_page_renders_with_career_resource_links(self):
+        url = reverse("core:home")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, reverse("core:resume_blueprint"))
+        self.assertContains(response, reverse("core:interview_mastery"))
+
+    def test_resume_blueprint_page_renders_successfully(self):
+        url = reverse("core:resume_blueprint")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Resume Blueprint 2026")
+        self.assertContains(response, "Software Engineer &amp; Cloud Architect")
+        self.assertContains(response, "UI/UX &amp; Product Designer")
+        self.assertContains(response, "Engineering Manager &amp; Tech Lead")
+
+    def test_resume_blueprint_tabs(self):
+        for tab in ["tech", "design", "manager"]:
+            response = self.client.get(f"{reverse('core:resume_blueprint')}?tab={tab}")
+            self.assertEqual(response.status_code, 200)
+
+    def test_resume_downloads(self):
+        # 1. Bundle download
+        bundle_url = f"{reverse('core:download_resume_template')}?template=bundle"
+        resp = self.client.get(bundle_url)
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp["Content-Type"], "application/zip")
+        self.assertTrue(len(resp.content) > 1000)
+
+        # 2. Individual doc download
+        doc_url = f"{reverse('core:download_resume_template')}?template=tech&format=doc"
+        resp_doc = self.client.get(doc_url)
+        self.assertEqual(resp_doc.status_code, 200)
+        self.assertEqual(resp_doc["Content-Type"], "application/msword")
+
+        # 3. Individual txt download
+        txt_url = f"{reverse('core:download_resume_template')}?template=tech&format=txt"
+        resp_txt = self.client.get(txt_url)
+        self.assertEqual(resp_txt.status_code, 200)
+        self.assertIn("text/plain", resp_txt["Content-Type"])
+
+    def test_interview_mastery_page_renders_successfully(self):
+        url = reverse("core:interview_mastery")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Interview Mastery 2026")
+        self.assertContains(response, "Behavioral (STAR Method)")
+
+    def test_interview_guide_download(self):
+        url = reverse("core:download_interview_guide")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("text/plain", response["Content-Type"])
+        self.assertTrue(len(response.content) > 1000)
+
+
+

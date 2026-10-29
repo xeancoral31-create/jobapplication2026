@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Resume Blueprint 2026 — ATS-Optimized Templates | WorkWise{% endblock %}
+{% block meta_description %}ATS-verified resume templates engineered for automated parsing engines like Workday, Greenhouse, and Lever. Free downloads in Word and text formats.{% endblock %}
+
+{% block content %}
+<div class="container py-8" style="max-width: 1040px; margin: 0 auto; padding-top: var(--space-8); padding-bottom: var(--space-12);">
+
+  <!-- Breadcrumb & Eyebrow -->
+  <div style="margin-bottom: var(--space-4);">
+    <a href="{% url 'core:home' %}" style="color: var(--color-text-muted); font-size: var(--text-xs); text-decoration: none;">&larr; Back to Home</a>
+  </div>
+
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: var(--space-4); margin-bottom: var(--space-8);">
+    <div>
+      <span class="section-eyebrow" style="color: #38bdf8; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;">CAREER ACCELERATION RESOURCES</span>
+      <h1 class="display-3" style="margin-top: 0.35rem; margin-bottom: 0.5rem; color: var(--color-text-primary);">Resume Blueprint 2026</h1>
+      <p style="color: var(--color-text-secondary); max-width: 680px; font-size: var(--text-sm); line-height: 1.6; margin: 0;">
+        Engineered specifically to achieve 95%+ pass rates on applicant tracking systems (Workday, Taleo, Greenhouse, Lever). Pre-formatted with industry-tested typographical hierarchy, action verbs, and quantifiable impact formulas.
+      </p>
+    </div>
+
+    <!-- Action Buttons -->
+    <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+      <a href="{% url 'core:resume_blueprint_interactive' %}" target="_blank" class="btn" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.65rem 1.25rem; background: #0f2b48; color: #ffffff; border: 1px solid #1e3a8a; border-radius: var(--radius-md); font-weight: 600;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Interactive Navy Blueprint &amp; PDF
+      </a>
+      <a href="{% url 'core:download_resume_template' %}?template=bundle" class="btn btn--primary" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.65rem 1.25rem;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download All (.zip)
+      </a>
+    </div>
+  </div>
+
+  <!-- Role Tabs -->
+  <div style="display: flex; gap: var(--space-2); margin-bottom: var(--space-6); border-bottom: 1px solid var(--color-border); padding-bottom: var(--space-3); overflow-x: auto; flex-wrap: wrap;">
+    <a href="?tab=universal" class="btn btn--sm {% if active_tab == 'universal' %}btn--primary{% else %}btn--subtle{% endif %}" style="text-decoration: none; border-radius: var(--radius-full); font-weight: 600; display:inline-flex; align-items:center; gap:0.35rem;">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      Universal Blueprint
+    </a>
+    <a href="?tab=tech" class="btn btn--sm {% if active_tab == 'tech' %}btn--primary{% else %}btn--subtle{% endif %}" style="text-decoration: none; border-radius: var(--radius-full); font-weight: 600; display:inline-flex; align-items:center; gap:0.35rem;">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      Software Engineer &amp; Cloud
+    </a>
+    <a href="?tab=healthcare" class="btn btn--sm {% if active_tab == 'healthcare' %}btn--primary{% else %}btn--subtle{% endif %}" style="text-decoration: none; border-radius: var(--radius-full); font-weight: 600; display:inline-flex; align-items:center; gap:0.35rem;">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      Healthcare &amp; Nursing
+    </a>
+    <a href="?tab=business" class="btn btn--sm {% if active_tab == 'business' %}btn--primary{% else %}btn--subtle{% endif %}" style="text-decoration: none; border-radius: var(--radius-full); font-weight: 600; display:inline-flex; align-items:center; gap:0.35rem;">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+      Business &amp; Finance
+    </a>
+    <a href="?tab=design" class="btn btn--sm {% if active_tab == 'design' %}btn--primary{% else %}btn--subtle{% endif %}" style="text-decoration: none; border-radius: var(--radius-full); font-weight: 600; display:inline-flex; align-items:center; gap:0.35rem;">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><path d="M17.5 10.5a5 5 0 0 1-5 5H9a5 5 0 0 1 0-10h3.5"/><path d="M9 15.5V19a2 2 0 0 0 4 0v-3.5"/></svg>
+      UI/UX &amp; Product Design
+    </a>
+    <a href="?tab=manager" class="btn btn--sm {% if active_tab == 'manager' %}btn--primary{% else %}btn--subtle{% endif %}" style="text-decoration: none; border-radius: var(--radius-full); font-weight: 600; display:inline-flex; align-items:center; gap:0.35rem;">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Engineering Manager
+    </a>
+  </div>
+
+  <!-- Main Grid: Template Card & ATS Guidelines -->
+  <div style="display: grid; grid-template-columns: 2fr 1.1fr; gap: var(--space-8); align-items: start;">
+    
+    <!-- Template Live Preview Card -->
+    <div class="card" style="padding: var(--space-6); background: var(--color-surface-1); border: 1px solid var(--color-border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4); border-bottom: 1px solid var(--color-border-subtle); padding-bottom: var(--space-3);">
+        <div>
+          <span style="font-size: var(--text-xs); font-weight: 700; color: #38bdf8; text-transform: uppercase;">{{ current_template.badge }}</span>
+          <h2 style="font-size: var(--text-lg); font-weight: 700; color: var(--color-text-primary); margin: 0.15rem 0 0;">{{ current_template.title }}</h2>
+        </div>
+        <div style="display: flex; gap: var(--space-2);">
+          <a href="{% url 'core:download_resume_template' %}?template={{ current_template.id }}&format=doc" class="btn btn--primary btn--sm" style="text-decoration: none;">
+            Download Word (.doc)
+          </a>
+          <a href="{% url 'core:download_resume_template' %}?template={{ current_template.id }}&format=txt" class="btn btn--outline btn--sm" style="text-decoration: none;">
+            Plain Text (.txt)
+          </a>
+        </div>
+      </div>
+
+      <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin-bottom: var(--space-4);">
+        {{ current_template.description }}
+      </p>
+
+      <div style="margin-bottom: var(--space-4); display: flex; gap: var(--space-2); flex-wrap: wrap;">
+        <span style="font-size: var(--text-xs); color: var(--color-text-muted);">Target Specializations:</span>
+        {% for role in current_template.target_roles %}
+          <span style="display: inline-block; background: var(--color-surface-2); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-sm); padding: 0.15rem 0.5rem; font-size: var(--text-xs); color: var(--color-text-secondary);">
+            {{ role }}
+          </span>
+        {% endfor %}
+      </div>
+
+      <!-- Text Content Container -->
+      <pre style="background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: var(--space-5); font-family: 'Courier New', Courier, monospace; font-size: 0.785rem; line-height: 1.55; color: var(--color-text-primary); overflow-x: auto; white-space: pre-wrap; word-break: break-word; max-height: 520px; overflow-y: auto;">{{ current_template.text_content }}</pre>
+    </div>
+
+    <!-- ATS Guidelines & Best Practices Sidebar -->
+    <div style="display: flex; flex-direction: column; gap: var(--space-5);">
+      
+      <div class="card" style="padding: var(--space-5); background: var(--color-surface-1); border: 1px solid var(--color-border); border-radius: var(--radius-lg);">
+        <h3 style="font-size: var(--text-sm); font-weight: 700; color: var(--color-text-primary); margin-bottom: var(--space-3); display: flex; align-items: center; gap: 0.4rem;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          2026 ATS Golden Rules
+        </h3>
+        <ul style="padding-left: 1.1rem; margin: 0; font-size: var(--text-xs); color: var(--color-text-secondary); line-height: 1.7;">
+          <li><strong>Clean Hierarchy:</strong> Standard headers (Professional Experience, Technical Skills, Education) that machine parsers recognize without ambiguity.</li>
+          <li><strong>No Column Traps:</strong> Multi-column layouts often scramble reading order in Taleo and older ATS engines.</li>
+          <li><strong>Quantifiable Impact:</strong> Frame every accomplishment using the Google formula: <em>Accomplished [X], as measured by [Y], by doing [Z].</em></li>
+          <li><strong>Keyword Precision:</strong> Incorporate key programming languages, cloud stacks, and certifications naturally in context.</li>
+        </ul>
+      </div>
+
+      <div class="card" style="padding: var(--space-5); background: var(--color-surface-1); border: 1px solid var(--color-border); border-radius: var(--radius-lg);">
+        <h3 style="font-size: var(--text-sm); font-weight: 700; color: var(--color-text-primary); margin-bottom: var(--space-3); display: flex; align-items: center; gap: 0.4rem;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Pro Formatting Tip
+        </h3>
+        <p style="font-size: var(--text-xs); color: var(--color-text-secondary); line-height: 1.6; margin: 0 0 var(--space-3);">
+          Need to adapt this template for another specialization? Keep the layout, typography, and section headers identical, and swap out the bullet metrics with your project achievements.
+        </p>
+        <a href="{% url 'core:interview_mastery' %}" style="font-size: var(--text-xs); color: var(--color-primary-500); font-weight: 600; text-decoration: none;">
+          Go to Interview Mastery Handbook &rarr;
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

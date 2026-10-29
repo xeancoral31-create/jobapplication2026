@@ -107,7 +107,7 @@
                 {{ j.title }}
               </div>
               <div style="font-size: var(--text-xs); color: var(--color-text-muted);">
-                {{ j.get_job_type_display }} &middot; ${{ j.salary_min|default:"?" }} – ${{ j.salary_max|default:"?" }}
+                {{ j.get_job_type_display }} &middot; {{ j.salary_currency }} {{ j.salary_min|default:"?" }} – {{ j.salary_max|default:"?" }}
               </div>
             </td>
 

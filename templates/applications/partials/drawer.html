@@ -52,20 +52,123 @@
           <span class="text-xs text-muted" style="display: block; margin-bottom: var(--space-2);">Move candidate to next stage:</span>
           <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
             {% for target in allowed_transitions %}
-            <button type="button"
-                    hx-post="{% url 'applications:transition' application.pk %}"
-                    hx-vals='{"new_status": "{{ target.id }}"}'
-                    hx-target="#pipeline-board"
-                    hx-swap="outerHTML"
-                    class="btn btn--secondary btn--sm"
-                    style="font-size: 0.75rem;">
-              &rarr; {{ target.label }}
-            </button>
+              {% if target.id == 'hired' %}
+                <button type="button"
+                        onclick="const s = document.getElementById('hire-section'); s.style.display = s.style.display === 'none' ? 'block' : 'none'; if(s.style.display === 'block'){ document.getElementById('hire-start-date').focus(); }"
+                        class="btn btn--success btn--sm"
+                        style="font-size: 0.75rem; background: hsl(145, 70%, 38%); color: #fff; font-weight: 600;">
+                  🎉 Hire Candidate &rarr;
+                </button>
+              {% else %}
+                <button type="button"
+                        hx-post="{% url 'applications:transition' application.pk %}"
+                        hx-vals='{"new_status": "{{ target.id }}"}'
+                        hx-target="#pipeline-board"
+                        hx-swap="outerHTML"
+                        hx-on::after-request="if(event.detail.successful){ htmx.ajax('GET', '{% url 'applications:drawer' application.pk %}', {target: '#application-drawer-container', swap: 'innerHTML'}); }"
+                        class="btn btn--secondary btn--sm"
+                        style="font-size: 0.75rem;">
+                  &rarr; {{ target.label }}
+                </button>
+              {% endif %}
             {% endfor %}
           </div>
         </div>
+
+        <!-- Dedicated Official Hire Section (Message & Confirmed Start Date) -->
+        <div id="hire-section" style="display: none; margin-top: var(--space-4); background: hsl(145, 60%, 97%); border: 1.5px solid hsl(145, 55%, 70%); border-radius: var(--radius-md); padding: var(--space-4);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-2);">
+            <h5 style="margin: 0; font-size: 0.875rem; font-weight: 700; color: hsl(145, 80%, 25%);">
+              🎉 Official Hire Offer
+            </h5>
+            <button type="button" onclick="document.getElementById('hire-section').style.display = 'none';" class="btn-text-sm" style="color: var(--color-text-muted);">
+              Cancel
+            </button>
+          </div>
+          <p style="font-size: 0.75rem; color: hsl(145, 50%, 25%); margin-bottom: var(--space-3); line-height: 1.5;">
+            To officially hire this applicant, provide their confirmed work start date and a welcome message. This will be automatically recorded in the system and delivered as an instant notification to the applicant.
+          </p>
+
+          <div id="hire-error-container" style="display: none; padding: var(--space-2) var(--space-3); font-size: 0.75rem; margin-bottom: var(--space-3); background: #fee2e2; border: 1px solid #f87171; color: #991b1b; border-radius: var(--radius-sm);"></div>
+
+          <form method="post"
+                action="{% url 'applications:transition' application.pk %}"
+                hx-post="{% url 'applications:transition' application.pk %}"
+                hx-target="#pipeline-board"
+                hx-swap="outerHTML"
+                hx-on::after-request="if(event.detail.successful){ htmx.ajax('GET', '{% url 'applications:drawer' application.pk %}', {target: '#application-drawer-container', swap: 'innerHTML'}); } else { const err = document.getElementById('hire-error-container'); err.textContent = event.detail.xhr.responseText || 'Error hiring applicant.'; err.style.display = 'block'; }">
+            {% csrf_token %}
+            <input type="hidden" name="new_status" value="hired">
+
+            <div style="margin-bottom: var(--space-3);">
+              <label class="text-xs font-semibold" for="hire-start-date" style="color: hsl(145, 90%, 20%); display: block; margin-bottom: 4px;">
+                Official Work Start Date <span class="text-danger">*</span>
+              </label>
+              <input type="date"
+                     name="start_date"
+                     id="hire-start-date"
+                     required
+                     class="form-control"
+                     style="font-size: 0.75rem; background: #ffffff; border-color: hsl(145, 45%, 70%);">
+            </div>
+
+            <div style="margin-bottom: var(--space-3);">
+              <label class="text-xs font-semibold" for="hire-message-input" style="color: hsl(145, 90%, 20%); display: block; margin-bottom: 4px;">
+                Message to Applicant <span class="text-danger">*</span>
+              </label>
+              <textarea name="hire_message"
+                        id="hire-message-input"
+                        required
+                        rows="3"
+                        class="form-control"
+                        placeholder="Congratulations! We are thrilled to welcome you to the team. Please find details on onboarding, your manager, and first day schedule..."
+                        style="font-size: 0.75rem; background: #ffffff; border-color: hsl(145, 45%, 70%);"></textarea>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: var(--space-2);">
+              <button type="button"
+                      onclick="document.getElementById('hire-section').style.display = 'none';"
+                      class="btn btn--ghost btn--sm">
+                Cancel
+              </button>
+              <button type="submit"
+                      class="btn btn--success btn--sm"
+                      style="background: hsl(145, 70%, 38%); color: #fff; font-weight: 600;">
+                Confirm Hire & Notify Candidate &rarr;
+              </button>
+            </div>
+          </form>
+        </div>
         {% else %}
         <p class="text-xs text-muted" style="margin: 0;">This application is in a terminal stage.</p>
+        {% endif %}
+
+        {% if application.status == 'hired' %}
+        <!-- Confirmed Hired Details Display -->
+        <div style="background: hsl(145, 60%, 97%); border: 1.5px solid hsl(145, 55%, 70%); border-radius: var(--radius-md); padding: var(--space-4); margin-top: var(--space-3);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-2);">
+            <span style="font-weight: 700; font-size: var(--text-sm); color: hsl(145, 80%, 25%);">
+              🎉 Candidate Officially Hired
+            </span>
+            <span class="badge badge--success">Hired</span>
+          </div>
+          {% if application.start_date %}
+          <p style="font-size: 0.75rem; margin: 0 0 var(--space-2); color: hsl(145, 90%, 20%);">
+            <strong>Official Work Start Date:</strong> {{ application.start_date|date:"l, F j, Y" }}
+          </p>
+          {% endif %}
+          {% if application.hired_at %}
+          <p style="font-size: 0.7rem; margin: 0 0 var(--space-2); color: var(--color-text-muted);">
+            Hired on: {{ application.hired_at|date:"M j, Y, g:i A" }}
+          </p>
+          {% endif %}
+          {% if application.hire_message %}
+          <div style="background: #ffffff; border: 1px solid hsl(145, 45%, 75%); border-radius: var(--radius-sm); padding: var(--space-3); font-size: 0.75rem; color: #1e293b; line-height: 1.5; white-space: pre-line;">
+            <strong style="display: block; margin-bottom: 2px; color: hsl(145, 80%, 25%);">Employer Message:</strong>
+            {{ application.hire_message }}
+          </div>
+          {% endif %}
+        </div>
         {% endif %}
       </div>
 

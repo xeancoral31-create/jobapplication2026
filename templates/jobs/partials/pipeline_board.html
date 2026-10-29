@@ -72,6 +72,20 @@
         </div>
         {% endif %}
 
+        <!-- Hired Confirmed Badge -->
+        {% if app.status == 'hired' %}
+        <div style="margin-bottom: var(--space-3); background: hsl(145 63% 42% / 0.12); border: 1px solid hsl(145 63% 42% / 0.25); border-radius: var(--radius-sm); padding: 4px 7px; font-size: 0.7rem; color: hsl(145, 80%, 35%);">
+          <div style="font-weight: 700; display: flex; align-items: center; gap: 4px;">
+            <span>🎉 Hired</span>
+          </div>
+          {% if app.start_date %}
+          <div style="margin-top: 2px; color: hsl(145, 60%, 25%); font-size: 0.68rem;">
+            Starts: <strong>{{ app.start_date|date:"M j, Y" }}</strong>
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+
         <!-- Card Bottom: Drawer Review Trigger & Quick Move -->
         <div style="border-top: 1px solid var(--color-border-subtle); padding-top: var(--space-3); display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); flex-wrap: wrap;">
           <button type="button"
@@ -89,7 +103,9 @@
             <select class="form-control"
                     style="font-size: 0.72rem; padding: 2px 6px; height: 26px; width: auto;"
                     data-url="{% url 'applications:transition' app.pk %}"
-                    onchange="if(this.value){ htmx.ajax('POST', this.dataset.url, {values: {new_status: this.value}, target: '#pipeline-board', swap: 'outerHTML'}); }">
+                    data-app-id="{{ app.pk }}"
+                    data-app-name="{{ app.applicant.get_full_name|default:app.applicant.username }}"
+                    onchange="handlePipelineMove(this)">
               <option value="">Move &rarr;</option>
               {% for target in app.allowed_transitions_list %}
                 <option value="{{ target.id }}">{{ target.label }}</option>

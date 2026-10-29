@@ -1,0 +1,1806 @@
+=== DISASSEMBLY OF core/__pycache__/views.cpython-314.pyc ===
+co_consts:
+  [0]: 'core/views.py — Home, role dashboards, error handlers.'
+  [1]: ('login_required',)
+  [2]: ('PermissionDenied',)
+  [3]: ('render', 'redirect')
+  [4]: ('Job', 'Category')
+  [5]: None
+  [6]: <code object custom_403 at 0x000002016DE45E30, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 11>
+  [7]: <code object custom_404 at 0x000002016E0814D0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 18>
+  [8]: <code object home at 0x000002016E21A2A0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 24>
+  [9]: <code object styleguide at 0x000002016E0813E0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 68>
+  [10]: <code object resume_blueprint at 0x000002016DE01FD0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 75>
+  [11]: <code object download_resume_template at 0x000002016DDFDF10, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 92>
+  [12]: <code object interview_mastery at 0x000002016E420CB0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 105>
+  [13]: <code object download_interview_guide at 0x000002016DE7F800, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 121>
+  [14]: <code object dashboard at 0x000002016E095470, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 134>
+  [15]: <code object applicant_dashboard at 0x000002016DDFDD70, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 142>
+  [16]: <code object employer_dashboard at 0x000002016DDFDBD0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 156>
+  [17]: <code object employer_pending at 0x000002016E0821F0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 168>
+  [18]: <code object admin_panel at 0x000002016E0822E0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 175>
+  [19]: (None,)
+
+co_names:
+  [0]: __doc__
+  [1]: django.contrib.auth.decorators
+  [2]: login_required
+  [3]: django.core.exceptions
+  [4]: PermissionDenied
+  [5]: django.shortcuts
+  [6]: render
+  [7]: redirect
+  [8]: jobs.models
+  [9]: Job
+  [10]: Category
+  [11]: custom_403
+  [12]: custom_404
+  [13]: home
+  [14]: styleguide
+  [15]: resume_blueprint
+  [16]: download_resume_template
+  [17]: interview_mastery
+  [18]: download_interview_guide
+  [19]: dashboard
+  [20]: applicant_dashboard
+  [21]: employer_dashboard
+  [22]: employer_pending
+  [23]: admin_panel
+
+co_varnames:
+
+--- DIS ---
+  0           RESUME                   0
+
+  1           LOAD_CONST               0 ('core/views.py — Home, role dashboards, error handlers.')
+              STORE_NAME               0 (__doc__)
+
+  2           LOAD_SMALL_INT           0
+              LOAD_CONST               1 (('login_required',))
+              IMPORT_NAME              1 (django.contrib.auth.decorators)
+              IMPORT_FROM              2 (login_required)
+              STORE_NAME               2 (login_required)
+              POP_TOP
+
+  3           LOAD_SMALL_INT           0
+              LOAD_CONST               2 (('PermissionDenied',))
+              IMPORT_NAME              3 (django.core.exceptions)
+              IMPORT_FROM              4 (PermissionDenied)
+              STORE_NAME               4 (PermissionDenied)
+              POP_TOP
+
+  4           LOAD_SMALL_INT           0
+              LOAD_CONST               3 (('render', 'redirect'))
+              IMPORT_NAME              5 (django.shortcuts)
+              IMPORT_FROM              6 (render)
+              STORE_NAME               6 (render)
+              IMPORT_FROM              7 (redirect)
+              STORE_NAME               7 (redirect)
+              POP_TOP
+
+  6           LOAD_SMALL_INT           0
+              LOAD_CONST               4 (('Job', 'Category'))
+              IMPORT_NAME              8 (jobs.models)
+              IMPORT_FROM              9 (Job)
+              STORE_NAME               9 (Job)
+              IMPORT_FROM             10 (Category)
+              STORE_NAME              10 (Category)
+              POP_TOP
+
+ 11           LOAD_CONST              19 ((None,))
+              LOAD_CONST               6 (<code object custom_403 at 0x000002016DE45E30, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 11>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   1 (defaults)
+              STORE_NAME              11 (custom_403)
+
+ 18           LOAD_CONST              19 ((None,))
+              LOAD_CONST               7 (<code object custom_404 at 0x000002016E0814D0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 18>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   1 (defaults)
+              STORE_NAME              12 (custom_404)
+
+ 24           LOAD_CONST               8 (<code object home at 0x000002016E21A2A0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 24>)
+              MAKE_FUNCTION
+              STORE_NAME              13 (home)
+
+ 68           LOAD_CONST               9 (<code object styleguide at 0x000002016E0813E0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 68>)
+              MAKE_FUNCTION
+              STORE_NAME              14 (styleguide)
+
+ 75           LOAD_CONST              10 (<code object resume_blueprint at 0x000002016DE01FD0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 75>)
+              MAKE_FUNCTION
+              STORE_NAME              15 (resume_blueprint)
+
+ 92           LOAD_CONST              11 (<code object download_resume_template at 0x000002016DDFDF10, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 92>)
+              MAKE_FUNCTION
+              STORE_NAME              16 (download_resume_template)
+
+105           LOAD_CONST              12 (<code object interview_mastery at 0x000002016E420CB0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 105>)
+              MAKE_FUNCTION
+              STORE_NAME              17 (interview_mastery)
+
+121           LOAD_CONST              13 (<code object download_interview_guide at 0x000002016DE7F800, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 121>)
+              MAKE_FUNCTION
+              STORE_NAME              18 (download_interview_guide)
+
+134           LOAD_NAME                2 (login_required)
+
+135           LOAD_CONST              14 (<code object dashboard at 0x000002016E095470, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 134>)
+              MAKE_FUNCTION
+
+134           CALL                     0
+
+135           STORE_NAME              19 (dashboard)
+
+142           LOAD_NAME                2 (login_required)
+
+143           LOAD_CONST              15 (<code object applicant_dashboard at 0x000002016DDFDD70, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 142>)
+              MAKE_FUNCTION
+
+142           CALL                     0
+
+143           STORE_NAME              20 (applicant_dashboard)
+
+156           LOAD_NAME                2 (login_required)
+
+157           LOAD_CONST              16 (<code object employer_dashboard at 0x000002016DDFDBD0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 156>)
+              MAKE_FUNCTION
+
+156           CALL                     0
+
+157           STORE_NAME              21 (employer_dashboard)
+
+168           LOAD_CONST              17 (<code object employer_pending at 0x000002016E0821F0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 168>)
+              MAKE_FUNCTION
+              STORE_NAME              22 (employer_pending)
+
+175           LOAD_NAME                2 (login_required)
+
+176           LOAD_CONST              18 (<code object admin_panel at 0x000002016E0822E0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 175>)
+              MAKE_FUNCTION
+
+175           CALL                     0
+
+176           STORE_NAME              23 (admin_panel)
+              LOAD_CONST               5 (None)
+              RETURN_VALUE
+
+Disassembly of <code object custom_403 at 0x000002016DE45E30, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 11>:
+ 11           RESUME                   0
+
+ 12           BUILD_MAP                0
+              STORE_FAST               2 (ctx)
+
+ 13           LOAD_GLOBAL              1 (hasattr + NULL)
+              LOAD_FAST_BORROW         1 (exception)
+              LOAD_CONST               0 ('args')
+              CALL                     2
+              TO_BOOL
+              POP_JUMP_IF_FALSE       50 (to L1)
+              NOT_TAKEN
+              LOAD_FAST_BORROW         1 (exception)
+              LOAD_ATTR                2 (args)
+              TO_BOOL
+              POP_JUMP_IF_FALSE       32 (to L1)
+              NOT_TAKEN
+
+ 14           LOAD_GLOBAL              5 (str + NULL)
+              LOAD_FAST_BORROW         1 (exception)
+              LOAD_ATTR                2 (args)
+              LOAD_SMALL_INT           0
+              BINARY_OP               26 ([])
+              CALL                     1
+              LOAD_FAST_BORROW         2 (ctx)
+              LOAD_CONST               1 ('message')
+              STORE_SUBSCR
+
+ 15   L1:     LOAD_GLOBAL              7 (render + NULL)
+              LOAD_FAST_BORROW         0 (request)
+              LOAD_CONST               2 ('403.html')
+              LOAD_FAST_BORROW         2 (ctx)
+              LOAD_CONST               3 (403)
+              LOAD_CONST               4 (('status',))
+              CALL_KW                  4
+              RETURN_VALUE
+
+Disassembly of <code object custom_404 at 0x000002016E0814D0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 18>:
+ 18           RESUME                   0
+
+ 19           LOAD_GLOBAL              1 (render + NULL)
+              LOAD_FAST_BORROW         0 (request)
+              LOAD_CONST               0 ('404.html')
+              BUILD_MAP                0
+              LOAD_CONST               1 (404)
+              LOAD_CONST               2 (('status',))
+              CALL_KW                  4
+              RETURN_VALUE
+
+Disassembly of <code object home at 0x000002016E21A2A0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 24>:
+ 24           RESUME                   0
+
+ 25           LOAD_GLOBAL              1 (list + NULL)
+
+ 26           LOAD_GLOBAL              2 (Job)
+              LOAD_ATTR                4 (objects)
+              LOAD_ATTR                7 (filter + NULL|self)
+              LOAD_GLOBAL              2 (Job)
+              LOAD_ATTR                8 (Status)
+              LOAD_ATTR               10 (OPEN)
+              LOAD_CONST               0 (('status',))
+              CALL_KW                  1
+
+ 27           LOAD_ATTR               13 (select_related + NULL|self)
+              LOAD_CONST               1 ('employer')
+              LOAD_CONST               2 ('employer__employer_profile')
+              LOAD_CONST               3 ('category')
+              CALL                     3
+
+ 28           LOAD_ATTR               15 (prefetch_related + NULL|self)
+              LOAD_CONST               4 ('tags')
+              CALL                     1
+
+ 29           LOAD_ATTR               17 (order_by + NULL|self)
+              LOAD_CONST               5 ('-created_at')
+              CALL                     1
+              LOAD_CONST               6 (slice(None, 6, None))
+
+ 26           BINARY_OP               26 ([])
+
+ 25           CALL                     1
+              STORE_FAST               1 (featured_jobs)
+
+ 32           LOAD_GLOBAL              1 (list + NULL)
+              LOAD_GLOBAL             18 (Category)
+              LOAD_ATTR                4 (objects)
+              LOAD_ATTR               21 (all + NULL|self)
+              CALL                     0
+              LOAD_ATTR               17 (order_by + NULL|self)
+              LOAD_CONST               7 ('name')
+              CALL                     1
+              CALL                     1
+              STORE_FAST               2 (categories)
+
+ 35           LOAD_CONST               8 ('slug')
+              LOAD_CONST               9 ('information-technology')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              10 ('Information Technology')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              12 ('💻')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              14 ('Software, Cloud, Cybersecurity & Systems')
+              LOAD_CONST              15 ('color')
+              LOAD_CONST              16 ('#3b82f6')
+              BUILD_MAP                5
+
+ 36           LOAD_CONST               8 ('slug')
+              LOAD_CONST              17 ('nursing-and-healthcare')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              18 ('Nursing & Healthcare')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              19 ('🩺')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              20 ('Clinical Nursing, ICU, Diagnostics & Healthcare')
+              LOAD_CONST              15 ('color')
+              LOAD_CONST              21 ('#06b6d4')
+              BUILD_MAP                5
+
+ 37           LOAD_CONST               8 ('slug')
+              LOAD_CONST              22 ('education')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              23 ('Education')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              24 ('📚')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              25 ('Teaching, Higher Education, Academic & Special Ed')
+              LOAD_CONST              15 ('color')
+              LOAD_CONST              26 ('#8b5cf6')
+              BUILD_MAP                5
+
+ 38           LOAD_CONST               8 ('slug')
+              LOAD_CONST              27 ('engineering')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              28 ('Engineering')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              29 ('⚙️')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              30 ('Civil, Mechanical, Electrical & Structural')
+              LOAD_CONST              15 ('color')
+              LOAD_CONST              31 ('#f59e0b')
+              BUILD_MAP                5
+
+ 39           LOAD_CONST               8 ('slug')
+              LOAD_CONST              32 ('business-and-finance')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              33 ('Business & Finance')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              34 ('💼')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              35 ('Finance, Accounting, Operations, HR & Strategy')
+              LOAD_CONST              15 ('color')
+              LOAD_CONST              36 ('#10b981')
+              BUILD_MAP                5
+
+ 40           LOAD_CONST               8 ('slug')
+              LOAD_CONST              37 ('hospitality-and-tourism')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              38 ('Hospitality & Tourism')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              39 ('🏨')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              40 ('Hotel Operations, Culinary Arts & Tourism')
+              LOAD_CONST              15 ('color')
+              LOAD_CONST              41 ('#ec4899')
+              BUILD_MAP                5
+
+ 41           LOAD_CONST               8 ('slug')
+              LOAD_CONST              42 ('government-and-public-service')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              43 ('Government & Public Service')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              44 ('🏛️')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              45 ('Public Administration, Civic Policy & Social Work')
+              LOAD_CONST              15 ('color')
+              LOAD_CONST              46 ('#6366f1')
+              BUILD_MAP                5
+
+ 42           LOAD_CONST               8 ('slug')
+              LOAD_CONST              47 ('uniformed-personnel')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              48 ('Uniformed Personnel')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              49 ('🎖️')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              50 ('Army, Navy, Coast Guard & Police Services')
+              LOAD_CONST              15 ('color')
+              LOAD_CONST              51 ('#14b8a6')
+              BUILD_MAP                5
+
+ 43           LOAD_CONST               8 ('slug')
+              LOAD_CONST              52 ('other-professional-fields')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              53 ('Other Professional Fields')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              54 ('🌐')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              55 ('Legal, Architecture, Design & Specialized Fields')
+              LOAD_CONST              15 ('color')
+              LOAD_CONST              56 ('#64748b')
+              BUILD_MAP                5
+
+ 34           BUILD_LIST               9
+              STORE_FAST               3 (career_fields)
+
+ 47           LOAD_CONST               8 ('slug')
+              LOAD_CONST              57 ('army')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              58 ('Army')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              59 ('🪖')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              60 ('Tactical defense, combat medicine & military logistics')
+              BUILD_MAP                4
+
+ 48           LOAD_CONST               8 ('slug')
+              LOAD_CONST              61 ('navy')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              62 ('Navy')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              63 ('⚓')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              64 ('Fleet operations, marine engineering & navigation')
+              BUILD_MAP                4
+
+ 49           LOAD_CONST               8 ('slug')
+              LOAD_CONST              65 ('coast_guard')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              66 ('Coast Guard')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              67 ('🚢')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              68 ('Maritime safety, search and rescue & coastal protection')
+              BUILD_MAP                4
+
+ 50           LOAD_CONST               8 ('slug')
+              LOAD_CONST              69 ('police')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              70 ('Police')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              71 ('👮')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              72 ('Public safety, community policing & criminal investigation')
+              BUILD_MAP                4
+
+ 46           BUILD_LIST               4
+              STORE_FAST               4 (uniformed_branches)
+
+ 53           LOAD_GLOBAL              2 (Job)
+              LOAD_ATTR                4 (objects)
+              LOAD_ATTR                7 (filter + NULL|self)
+              LOAD_GLOBAL              2 (Job)
+              LOAD_ATTR                8 (Status)
+              LOAD_ATTR               10 (OPEN)
+              LOAD_CONST               0 (('status',))
+              CALL_KW                  1
+              LOAD_ATTR               23 (count + NULL|self)
+              CALL                     0
+              STORE_FAST               5 (total_jobs)
+
+ 55           LOAD_GLOBAL             25 (render + NULL)
+
+ 56           LOAD_FAST_BORROW         0 (request)
+
+ 57           LOAD_CONST              73 ('core/home.html')
+
+ 59           LOAD_CONST              74 ('featured_jobs')
+              LOAD_FAST_BORROW         1 (featured_jobs)
+
+ 60           LOAD_CONST              75 ('categories')
+              LOAD_FAST_BORROW         2 (categories)
+
+ 61           LOAD_CONST              76 ('career_fields')
+              LOAD_FAST_BORROW         3 (career_fields)
+
+ 62           LOAD_CONST              77 ('uniformed_branches')
+              LOAD_FAST_BORROW         4 (uniformed_branches)
+
+ 63           LOAD_CONST              78 ('total_jobs')
+              LOAD_FAST_BORROW         5 (total_jobs)
+
+ 58           BUILD_MAP                5
+
+ 55           CALL                     3
+              RETURN_VALUE
+
+Disassembly of <code object styleguide at 0x000002016E0813E0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 68>:
+ 68           RESUME                   0
+
+ 70           LOAD_GLOBAL              1 (render + NULL)
+              LOAD_FAST_BORROW         0 (request)
+              LOAD_CONST               1 ('core/styleguide.html')
+              BUILD_MAP                0
+              CALL                     3
+              RETURN_VALUE
+
+Disassembly of <code object resume_blueprint at 0x000002016DE01FD0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 75>:
+ 75           RESUME                   0
+
+ 77           LOAD_SMALL_INT           1
+              LOAD_CONST               1 (('RESUME_TEMPLATES',))
+              IMPORT_NAME              0 (career_resources)
+              IMPORT_FROM              1 (RESUME_TEMPLATES)
+              STORE_FAST               1 (RESUME_TEMPLATES)
+              POP_TOP
+
+ 78           LOAD_FAST_BORROW         0 (request)
+              LOAD_ATTR                4 (GET)
+              LOAD_ATTR                7 (get + NULL|self)
+              LOAD_CONST               2 ('tab')
+              LOAD_CONST               3 ('tech')
+              CALL                     2
+              STORE_FAST               2 (active_tab)
+
+ 79           LOAD_FAST_BORROW_LOAD_FAST_BORROW 33 (active_tab, RESUME_TEMPLATES)
+              CONTAINS_OP              1 (not in)
+              POP_JUMP_IF_FALSE        3 (to L1)
+              NOT_TAKEN
+
+ 80           LOAD_CONST               3 ('tech')
+              STORE_FAST               2 (active_tab)
+
+ 81   L1:     LOAD_GLOBAL              9 (render + NULL)
+
+ 82           LOAD_FAST_BORROW         0 (request)
+
+ 83           LOAD_CONST               4 ('core/resume_blueprint.html')
+
+ 85           LOAD_CONST               5 ('templates')
+              LOAD_FAST_BORROW         1 (RESUME_TEMPLATES)
+
+ 86           LOAD_CONST               6 ('active_tab')
+              LOAD_FAST_BORROW         2 (active_tab)
+
+ 87           LOAD_CONST               7 ('current_template')
+              LOAD_FAST_BORROW_LOAD_FAST_BORROW 18 (RESUME_TEMPLATES, active_tab)
+              BINARY_OP               26 ([])
+
+ 84           BUILD_MAP                3
+
+ 81           CALL                     3
+              RETURN_VALUE
+
+Disassembly of <code object download_resume_template at 0x000002016DDFDF10, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 92>:
+ 92           RESUME                   0
+
+ 94           LOAD_SMALL_INT           0
+              LOAD_CONST               1 (('HttpResponse',))
+              IMPORT_NAME              0 (django.http)
+              IMPORT_FROM              1 (HttpResponse)
+              STORE_FAST               1 (HttpResponse)
+              POP_TOP
+
+ 95           LOAD_SMALL_INT           1
+              LOAD_CONST               2 (('get_resume_download',))
+              IMPORT_NAME              2 (career_resources)
+              IMPORT_FROM              3 (get_resume_download)
+              STORE_FAST               2 (get_resume_download)
+              POP_TOP
+
+ 97           LOAD_FAST_BORROW         0 (request)
+              LOAD_ATTR                8 (GET)
+              LOAD_ATTR               11 (get + NULL|self)
+              LOAD_CONST               3 ('template')
+              LOAD_CONST               4 ('bundle')
+              CALL                     2
+              STORE_FAST               3 (template_id)
+
+ 98           LOAD_FAST_BORROW         0 (request)
+              LOAD_ATTR                8 (GET)
+              LOAD_ATTR               11 (get + NULL|self)
+              LOAD_CONST               5 ('format')
+              LOAD_CONST               6 ('doc')
+              CALL                     2
+              STORE_FAST               4 (file_format)
+
+ 99           LOAD_FAST_BORROW         2 (get_resume_download)
+              PUSH_NULL
+              LOAD_FAST_BORROW_LOAD_FAST_BORROW 52 (template_id, file_format)
+              CALL                     2
+              UNPACK_SEQUENCE          3
+              STORE_FAST_STORE_FAST   86 (content, filename)
+              STORE_FAST               7 (content_type)
+
+100           LOAD_FAST_BORROW         1 (HttpResponse)
+              PUSH_NULL
+              LOAD_FAST_BORROW_LOAD_FAST_BORROW 87 (content, content_type)
+              LOAD_CONST               7 (('content_type',))
+              CALL_KW                  2
+              STORE_FAST               8 (response)
+
+101           LOAD_CONST               8 ('attachment; filename="')
+              LOAD_FAST_BORROW         6 (filename)
+              FORMAT_SIMPLE
+              LOAD_CONST               9 ('"')
+              BUILD_STRING             3
+              LOAD_FAST_BORROW         8 (response)
+              LOAD_CONST              10 ('Content-Disposition')
+              STORE_SUBSCR
+
+102           LOAD_FAST_BORROW         8 (response)
+              RETURN_VALUE
+
+Disassembly of <code object interview_mastery at 0x000002016E420CB0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 105>:
+  --           MAKE_CELL                3 (active_category)
+
+ 105           RESUME                   0
+
+ 107           LOAD_SMALL_INT           1
+               LOAD_CONST               1 (('INTERVIEW_CATEGORIES',))
+               IMPORT_NAME              0 (career_resources)
+               IMPORT_FROM              1 (INTERVIEW_CATEGORIES)
+               STORE_FAST               1 (INTERVIEW_CATEGORIES)
+               POP_TOP
+
+ 108           LOAD_FAST_BORROW         0 (request)
+               LOAD_ATTR                4 (GET)
+               LOAD_ATTR                7 (get + NULL|self)
+               LOAD_CONST               2 ('category')
+               LOAD_CONST               3 ('behavioral')
+               CALL                     2
+               STORE_DEREF              3 (active_category)
+
+ 109           LOAD_GLOBAL              9 (next + NULL)
+               LOAD_FAST_BORROW         3 (active_category)
+               BUILD_TUPLE              1
+               LOAD_CONST               4 (<code object <genexpr> at 0x000002016E094B70, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 109>)
+               MAKE_FUNCTION
+               SET_FUNCTION_ATTRIBUTE   8 (closure)
+               LOAD_FAST_BORROW         1 (INTERVIEW_CATEGORIES)
+               GET_ITER
+               CALL                     0
+               LOAD_FAST_BORROW         1 (INTERVIEW_CATEGORIES)
+               LOAD_SMALL_INT           0
+               BINARY_OP               26 ([])
+               CALL                     2
+               STORE_FAST               2 (selected_cat)
+
+ 110           LOAD_GLOBAL             11 (render + NULL)
+
+ 111           LOAD_FAST_BORROW         0 (request)
+
+ 112           LOAD_CONST               5 ('core/interview_mastery.html')
+
+ 114           LOAD_CONST               6 ('categories')
+               LOAD_FAST_BORROW         1 (INTERVIEW_CATEGORIES)
+
+ 115           LOAD_CONST               7 ('active_category')
+               LOAD_FAST_BORROW         2 (selected_cat)
+               LOAD_CONST               8 ('id')
+               BINARY_OP               26 ([])
+
+ 116           LOAD_CONST               9 ('current_category')
+               LOAD_FAST_BORROW         2 (selected_cat)
+
+ 113           BUILD_MAP                3
+
+ 110           CALL                     3
+               RETURN_VALUE
+
+Disassembly of <code object <genexpr> at 0x000002016E094B70, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 109>:
+  --           COPY_FREE_VARS           1
+
+ 109           RETURN_GENERATOR
+               POP_TOP
+       L1:     RESUME                   0
+               LOAD_FAST                0 (.0)
+       L2:     FOR_ITER                22 (to L5)
+               STORE_FAST_LOAD_FAST    17 (c, c)
+               LOAD_CONST               0 ('id')
+               BINARY_OP               26 ([])
+               LOAD_DEREF               2 (active_category)
+               COMPARE_OP              88 (bool(==))
+       L3:     POP_JUMP_IF_TRUE         3 (to L4)
+               NOT_TAKEN
+               JUMP_BACKWARD           18 (to L2)
+       L4:     LOAD_FAST_BORROW         1 (c)
+               YIELD_VALUE              0
+               RESUME                   5
+               POP_TOP
+               JUMP_BACKWARD           24 (to L2)
+       L5:     END_FOR
+               POP_ITER
+               LOAD_CONST               1 (None)
+               RETURN_VALUE
+
+  --   L6:     CALL_INTRINSIC_1         3 (INTRINSIC_STOPITERATION_ERROR)
+               RERAISE                  1
+ExceptionTable:
+  L1 to L3 -> L6 [0] lasti
+  L4 to L6 -> L6 [0] lasti
+
+Disassembly of <code object download_interview_guide at 0x000002016DE7F800, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 121>:
+121           RESUME                   0
+
+123           LOAD_SMALL_INT           0
+              LOAD_CONST               1 (('HttpResponse',))
+              IMPORT_NAME              0 (django.http)
+              IMPORT_FROM              1 (HttpResponse)
+              STORE_FAST               1 (HttpResponse)
+              POP_TOP
+
+124           LOAD_SMALL_INT           1
+              LOAD_CONST               2 (('get_interview_guide_download',))
+              IMPORT_NAME              2 (career_resources)
+              IMPORT_FROM              3 (get_interview_guide_download)
+              STORE_FAST               2 (get_interview_guide_download)
+              POP_TOP
+
+126           LOAD_FAST_BORROW         2 (get_interview_guide_download)
+              PUSH_NULL
+              CALL                     0
+              UNPACK_SEQUENCE          3
+              STORE_FAST_STORE_FAST   52 (content, filename)
+              STORE_FAST               5 (content_type)
+
+127           LOAD_FAST_BORROW         1 (HttpResponse)
+              PUSH_NULL
+              LOAD_FAST_BORROW_LOAD_FAST_BORROW 53 (content, content_type)
+              LOAD_CONST               3 (('content_type',))
+              CALL_KW                  2
+              STORE_FAST               6 (response)
+
+128           LOAD_CONST               4 ('attachment; filename="')
+              LOAD_FAST_BORROW         4 (filename)
+              FORMAT_SIMPLE
+              LOAD_CONST               5 ('"')
+              BUILD_STRING             3
+              LOAD_FAST_BORROW         6 (response)
+              LOAD_CONST               6 ('Content-Disposition')
+              STORE_SUBSCR
+
+129           LOAD_FAST_BORROW         6 (response)
+              RETURN_VALUE
+
+Disassembly of <code object dashboard at 0x000002016E095470, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 134>:
+134           RESUME                   0
+
+136           LOAD_SMALL_INT           0
+              LOAD_CONST               1 (('_role_redirect_url',))
+              IMPORT_NAME              0 (accounts.views)
+              IMPORT_FROM              1 (_role_redirect_url)
+              STORE_FAST               1 (_role_redirect_url)
+              POP_TOP
+
+137           LOAD_GLOBAL              5 (redirect + NULL)
+              LOAD_FAST_BORROW         1 (_role_redirect_url)
+              PUSH_NULL
+              LOAD_FAST_BORROW         0 (request)
+              LOAD_ATTR                6 (user)
+              CALL                     1
+              CALL                     1
+              RETURN_VALUE
+
+Disassembly of <code object applicant_dashboard at 0x000002016DDFDD70, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 142>:
+142           RESUME                   0
+
+144           LOAD_SMALL_INT           0
+              LOAD_CONST               1 (('User',))
+              IMPORT_NAME              0 (accounts.models)
+              IMPORT_FROM              1 (User)
+              STORE_FAST               1 (User)
+              POP_TOP
+
+145           LOAD_SMALL_INT           1
+              LOAD_CONST               2 (('get_applicant_dashboard_data',))
+              IMPORT_NAME              2 (services)
+              IMPORT_FROM              3 (get_applicant_dashboard_data)
+              STORE_FAST               2 (get_applicant_dashboard_data)
+              POP_TOP
+
+147           LOAD_FAST_BORROW         0 (request)
+              LOAD_ATTR                8 (user)
+              LOAD_ATTR               10 (role)
+              LOAD_FAST_BORROW         1 (User)
+              LOAD_ATTR               12 (Role)
+              LOAD_ATTR               14 (APPLICANT)
+              COMPARE_OP             119 (bool(!=))
+              POP_JUMP_IF_FALSE       12 (to L1)
+              NOT_TAKEN
+
+148           LOAD_GLOBAL             17 (PermissionDenied + NULL)
+              LOAD_CONST               3 ('Applicant access only.')
+              CALL                     1
+              RAISE_VARARGS            1
+
+150   L1:     LOAD_FAST_BORROW         2 (get_applicant_dashboard_data)
+              PUSH_NULL
+              LOAD_FAST_BORROW         0 (request)
+              LOAD_ATTR                8 (user)
+              CALL                     1
+              STORE_FAST               3 (ctx)
+
+151           LOAD_GLOBAL             19 (render + NULL)
+              LOAD_FAST_BORROW         0 (request)
+              LOAD_CONST               4 ('applicant/dashboard.html')
+              LOAD_FAST_BORROW         3 (ctx)
+              CALL                     3
+              RETURN_VALUE
+
+Disassembly of <code object employer_dashboard at 0x000002016DDFDBD0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 156>:
+156           RESUME                   0
+
+158           LOAD_SMALL_INT           0
+              LOAD_CONST               1 (('User',))
+              IMPORT_NAME              0 (accounts.models)
+              IMPORT_FROM              1 (User)
+              STORE_FAST               1 (User)
+              POP_TOP
+
+159           LOAD_SMALL_INT           1
+              LOAD_CONST               2 (('get_employer_dashboard_data',))
+              IMPORT_NAME              2 (services)
+              IMPORT_FROM              3 (get_employer_dashboard_data)
+              STORE_FAST               2 (get_employer_dashboard_data)
+              POP_TOP
+
+161           LOAD_FAST_BORROW         0 (request)
+              LOAD_ATTR                8 (user)
+              LOAD_ATTR               10 (role)
+              LOAD_FAST_BORROW         1 (User)
+              LOAD_ATTR               12 (Role)
+              LOAD_ATTR               14 (EMPLOYER)
+              COMPARE_OP             119 (bool(!=))
+              POP_JUMP_IF_FALSE       12 (to L1)
+              NOT_TAKEN
+
+162           LOAD_GLOBAL             17 (PermissionDenied + NULL)
+              LOAD_CONST               3 ('Employer access only.')
+              CALL                     1
+              RAISE_VARARGS            1
+
+164   L1:     LOAD_FAST_BORROW         2 (get_employer_dashboard_data)
+              PUSH_NULL
+              LOAD_FAST_BORROW         0 (request)
+              LOAD_ATTR                8 (user)
+              CALL                     1
+              STORE_FAST               3 (ctx)
+
+165           LOAD_GLOBAL             19 (render + NULL)
+              LOAD_FAST_BORROW         0 (request)
+              LOAD_CONST               4 ('employer/dashboard.html')
+              LOAD_FAST_BORROW         3 (ctx)
+              CALL                     3
+              RETURN_VALUE
+
+Disassembly of <code object employer_pending at 0x000002016E0821F0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 168>:
+168           RESUME                   0
+
+170           LOAD_GLOBAL              1 (render + NULL)
+              LOAD_FAST_BORROW         0 (request)
+              LOAD_CONST               1 ('employer/pending.html')
+              BUILD_MAP                0
+              CALL                     3
+              RETURN_VALUE
+
+Disassembly of <code object admin_panel at 0x000002016E0822E0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 175>:
+175           RESUME                   0
+
+177           LOAD_SMALL_INT           1
+              LOAD_CONST               1 (('admin_panel_dashboard',))
+              IMPORT_NAME              0 (admin_panel_views)
+              IMPORT_FROM              1 (admin_panel_dashboard)
+              STORE_FAST               1 (admin_panel_dashboard)
+              POP_TOP
+
+178           LOAD_FAST_BORROW         1 (admin_panel_dashboard)
+              PUSH_NULL
+              LOAD_FAST_BORROW         0 (request)
+              CALL                     1
+              RETURN_VALUE
+
+=== CHILD CODE OBJECT: custom_403 ===
+co_consts:
+  [0]: 'args'
+  [1]: 'message'
+  [2]: '403.html'
+  [3]: 403
+  [4]: ('status',)
+co_names:
+  [0]: hasattr
+  [1]: args
+  [2]: str
+  [3]: render
+co_varnames:
+  [0]: request
+  [1]: exception
+  [2]: ctx
+ 11           RESUME                   0
+
+ 12           BUILD_MAP                0
+              STORE_FAST               2 (ctx)
+
+ 13           LOAD_GLOBAL              1 (hasattr + NULL)
+              LOAD_FAST_BORROW         1 (exception)
+              LOAD_CONST               0 ('args')
+              CALL                     2
+              TO_BOOL
+              POP_JUMP_IF_FALSE       50 (to L1)
+              NOT_TAKEN
+              LOAD_FAST_BORROW         1 (exception)
+              LOAD_ATTR                2 (args)
+              TO_BOOL
+              POP_JUMP_IF_FALSE       32 (to L1)
+              NOT_TAKEN
+
+ 14           LOAD_GLOBAL              5 (str + NULL)
+              LOAD_FAST_BORROW         1 (exception)
+              LOAD_ATTR                2 (args)
+              LOAD_SMALL_INT           0
+              BINARY_OP               26 ([])
+              CALL                     1
+              LOAD_FAST_BORROW         2 (ctx)
+              LOAD_CONST               1 ('message')
+              STORE_SUBSCR
+
+ 15   L1:     LOAD_GLOBAL              7 (render + NULL)
+              LOAD_FAST_BORROW         0 (request)
+              LOAD_CONST               2 ('403.html')
+              LOAD_FAST_BORROW         2 (ctx)
+              LOAD_CONST               3 (403)
+              LOAD_CONST               4 (('status',))
+              CALL_KW                  4
+              RETURN_VALUE
+
+=== CHILD CODE OBJECT: custom_404 ===
+co_consts:
+  [0]: '404.html'
+  [1]: 404
+  [2]: ('status',)
+co_names:
+  [0]: render
+co_varnames:
+  [0]: request
+  [1]: exception
+ 18           RESUME                   0
+
+ 19           LOAD_GLOBAL              1 (render + NULL)
+              LOAD_FAST_BORROW         0 (request)
+              LOAD_CONST               0 ('404.html')
+              BUILD_MAP                0
+              LOAD_CONST               1 (404)
+              LOAD_CONST               2 (('status',))
+              CALL_KW                  4
+              RETURN_VALUE
+
+=== CHILD CODE OBJECT: home ===
+co_consts:
+  [0]: ('status',)
+  [1]: 'employer'
+  [2]: 'employer__employer_profile'
+  [3]: 'category'
+  [4]: 'tags'
+  [5]: '-created_at'
+  [6]: slice(None, 6, None)
+  [7]: 'name'
+  [8]: 'slug'
+  [9]: 'information-technology'
+  [10]: 'Information Technology'
+  [11]: 'icon'
+  [12]: '💻'
+  [13]: 'desc'
+  [14]: 'Software, Cloud, Cybersecurity & Systems'
+  [15]: 'color'
+  [16]: '#3b82f6'
+  [17]: 'nursing-and-healthcare'
+  [18]: 'Nursing & Healthcare'
+  [19]: '🩺'
+  [20]: 'Clinical Nursing, ICU, Diagnostics & Healthcare'
+  [21]: '#06b6d4'
+  [22]: 'education'
+  [23]: 'Education'
+  [24]: '📚'
+  [25]: 'Teaching, Higher Education, Academic & Special Ed'
+  [26]: '#8b5cf6'
+  [27]: 'engineering'
+  [28]: 'Engineering'
+  [29]: '⚙️'
+  [30]: 'Civil, Mechanical, Electrical & Structural'
+  [31]: '#f59e0b'
+  [32]: 'business-and-finance'
+  [33]: 'Business & Finance'
+  [34]: '💼'
+  [35]: 'Finance, Accounting, Operations, HR & Strategy'
+  [36]: '#10b981'
+  [37]: 'hospitality-and-tourism'
+  [38]: 'Hospitality & Tourism'
+  [39]: '🏨'
+  [40]: 'Hotel Operations, Culinary Arts & Tourism'
+  [41]: '#ec4899'
+  [42]: 'government-and-public-service'
+  [43]: 'Government & Public Service'
+  [44]: '🏛️'
+  [45]: 'Public Administration, Civic Policy & Social Work'
+  [46]: '#6366f1'
+  [47]: 'uniformed-personnel'
+  [48]: 'Uniformed Personnel'
+  [49]: '🎖️'
+  [50]: 'Army, Navy, Coast Guard & Police Services'
+  [51]: '#14b8a6'
+  [52]: 'other-professional-fields'
+  [53]: 'Other Professional Fields'
+  [54]: '🌐'
+  [55]: 'Legal, Architecture, Design & Specialized Fields'
+  [56]: '#64748b'
+  [57]: 'army'
+  [58]: 'Army'
+  [59]: '🪖'
+  [60]: 'Tactical defense, combat medicine & military logistics'
+  [61]: 'navy'
+  [62]: 'Navy'
+  [63]: '⚓'
+  [64]: 'Fleet operations, marine engineering & navigation'
+  [65]: 'coast_guard'
+  [66]: 'Coast Guard'
+  [67]: '🚢'
+  [68]: 'Maritime safety, search and rescue & coastal protection'
+  [69]: 'police'
+  [70]: 'Police'
+  [71]: '👮'
+  [72]: 'Public safety, community policing & criminal investigation'
+  [73]: 'core/home.html'
+  [74]: 'featured_jobs'
+  [75]: 'categories'
+  [76]: 'career_fields'
+  [77]: 'uniformed_branches'
+  [78]: 'total_jobs'
+co_names:
+  [0]: list
+  [1]: Job
+  [2]: objects
+  [3]: filter
+  [4]: Status
+  [5]: OPEN
+  [6]: select_related
+  [7]: prefetch_related
+  [8]: order_by
+  [9]: Category
+  [10]: all
+  [11]: count
+  [12]: render
+co_varnames:
+  [0]: request
+  [1]: featured_jobs
+  [2]: categories
+  [3]: career_fields
+  [4]: uniformed_branches
+  [5]: total_jobs
+ 24           RESUME                   0
+
+ 25           LOAD_GLOBAL              1 (list + NULL)
+
+ 26           LOAD_GLOBAL              2 (Job)
+              LOAD_ATTR                4 (objects)
+              LOAD_ATTR                7 (filter + NULL|self)
+              LOAD_GLOBAL              2 (Job)
+              LOAD_ATTR                8 (Status)
+              LOAD_ATTR               10 (OPEN)
+              LOAD_CONST               0 (('status',))
+              CALL_KW                  1
+
+ 27           LOAD_ATTR               13 (select_related + NULL|self)
+              LOAD_CONST               1 ('employer')
+              LOAD_CONST               2 ('employer__employer_profile')
+              LOAD_CONST               3 ('category')
+              CALL                     3
+
+ 28           LOAD_ATTR               15 (prefetch_related + NULL|self)
+              LOAD_CONST               4 ('tags')
+              CALL                     1
+
+ 29           LOAD_ATTR               17 (order_by + NULL|self)
+              LOAD_CONST               5 ('-created_at')
+              CALL                     1
+              LOAD_CONST               6 (slice(None, 6, None))
+
+ 26           BINARY_OP               26 ([])
+
+ 25           CALL                     1
+              STORE_FAST               1 (featured_jobs)
+
+ 32           LOAD_GLOBAL              1 (list + NULL)
+              LOAD_GLOBAL             18 (Category)
+              LOAD_ATTR                4 (objects)
+              LOAD_ATTR               21 (all + NULL|self)
+              CALL                     0
+              LOAD_ATTR               17 (order_by + NULL|self)
+              LOAD_CONST               7 ('name')
+              CALL                     1
+              CALL                     1
+              STORE_FAST               2 (categories)
+
+ 35           LOAD_CONST               8 ('slug')
+              LOAD_CONST               9 ('information-technology')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              10 ('Information Technology')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              12 ('💻')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              14 ('Software, Cloud, Cybersecurity & Systems')
+              LOAD_CONST              15 ('color')
+              LOAD_CONST              16 ('#3b82f6')
+              BUILD_MAP                5
+
+ 36           LOAD_CONST               8 ('slug')
+              LOAD_CONST              17 ('nursing-and-healthcare')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              18 ('Nursing & Healthcare')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              19 ('🩺')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              20 ('Clinical Nursing, ICU, Diagnostics & Healthcare')
+              LOAD_CONST              15 ('color')
+              LOAD_CONST              21 ('#06b6d4')
+              BUILD_MAP                5
+
+ 37           LOAD_CONST               8 ('slug')
+              LOAD_CONST              22 ('education')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              23 ('Education')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              24 ('📚')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              25 ('Teaching, Higher Education, Academic & Special Ed')
+              LOAD_CONST              15 ('color')
+              LOAD_CONST              26 ('#8b5cf6')
+              BUILD_MAP                5
+
+ 38           LOAD_CONST               8 ('slug')
+              LOAD_CONST              27 ('engineering')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              28 ('Engineering')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              29 ('⚙️')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              30 ('Civil, Mechanical, Electrical & Structural')
+              LOAD_CONST              15 ('color')
+              LOAD_CONST              31 ('#f59e0b')
+              BUILD_MAP                5
+
+ 39           LOAD_CONST               8 ('slug')
+              LOAD_CONST              32 ('business-and-finance')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              33 ('Business & Finance')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              34 ('💼')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              35 ('Finance, Accounting, Operations, HR & Strategy')
+              LOAD_CONST              15 ('color')
+              LOAD_CONST              36 ('#10b981')
+              BUILD_MAP                5
+
+ 40           LOAD_CONST               8 ('slug')
+              LOAD_CONST              37 ('hospitality-and-tourism')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              38 ('Hospitality & Tourism')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              39 ('🏨')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              40 ('Hotel Operations, Culinary Arts & Tourism')
+              LOAD_CONST              15 ('color')
+              LOAD_CONST              41 ('#ec4899')
+              BUILD_MAP                5
+
+ 41           LOAD_CONST               8 ('slug')
+              LOAD_CONST              42 ('government-and-public-service')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              43 ('Government & Public Service')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              44 ('🏛️')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              45 ('Public Administration, Civic Policy & Social Work')
+              LOAD_CONST              15 ('color')
+              LOAD_CONST              46 ('#6366f1')
+              BUILD_MAP                5
+
+ 42           LOAD_CONST               8 ('slug')
+              LOAD_CONST              47 ('uniformed-personnel')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              48 ('Uniformed Personnel')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              49 ('🎖️')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              50 ('Army, Navy, Coast Guard & Police Services')
+              LOAD_CONST              15 ('color')
+              LOAD_CONST              51 ('#14b8a6')
+              BUILD_MAP                5
+
+ 43           LOAD_CONST               8 ('slug')
+              LOAD_CONST              52 ('other-professional-fields')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              53 ('Other Professional Fields')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              54 ('🌐')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              55 ('Legal, Architecture, Design & Specialized Fields')
+              LOAD_CONST              15 ('color')
+              LOAD_CONST              56 ('#64748b')
+              BUILD_MAP                5
+
+ 34           BUILD_LIST               9
+              STORE_FAST               3 (career_fields)
+
+ 47           LOAD_CONST               8 ('slug')
+              LOAD_CONST              57 ('army')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              58 ('Army')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              59 ('🪖')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              60 ('Tactical defense, combat medicine & military logistics')
+              BUILD_MAP                4
+
+ 48           LOAD_CONST               8 ('slug')
+              LOAD_CONST              61 ('navy')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              62 ('Navy')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              63 ('⚓')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              64 ('Fleet operations, marine engineering & navigation')
+              BUILD_MAP                4
+
+ 49           LOAD_CONST               8 ('slug')
+              LOAD_CONST              65 ('coast_guard')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              66 ('Coast Guard')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              67 ('🚢')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              68 ('Maritime safety, search and rescue & coastal protection')
+              BUILD_MAP                4
+
+ 50           LOAD_CONST               8 ('slug')
+              LOAD_CONST              69 ('police')
+              LOAD_CONST               7 ('name')
+              LOAD_CONST              70 ('Police')
+              LOAD_CONST              11 ('icon')
+              LOAD_CONST              71 ('👮')
+              LOAD_CONST              13 ('desc')
+              LOAD_CONST              72 ('Public safety, community policing & criminal investigation')
+              BUILD_MAP                4
+
+ 46           BUILD_LIST               4
+              STORE_FAST               4 (uniformed_branches)
+
+ 53           LOAD_GLOBAL              2 (Job)
+              LOAD_ATTR                4 (objects)
+              LOAD_ATTR                7 (filter + NULL|self)
+              LOAD_GLOBAL              2 (Job)
+              LOAD_ATTR                8 (Status)
+              LOAD_ATTR               10 (OPEN)
+              LOAD_CONST               0 (('status',))
+              CALL_KW                  1
+              LOAD_ATTR               23 (count + NULL|self)
+              CALL                     0
+              STORE_FAST               5 (total_jobs)
+
+ 55           LOAD_GLOBAL             25 (render + NULL)
+
+ 56           LOAD_FAST_BORROW         0 (request)
+
+ 57           LOAD_CONST              73 ('core/home.html')
+
+ 59           LOAD_CONST              74 ('featured_jobs')
+              LOAD_FAST_BORROW         1 (featured_jobs)
+
+ 60           LOAD_CONST              75 ('categories')
+              LOAD_FAST_BORROW         2 (categories)
+
+ 61           LOAD_CONST              76 ('career_fields')
+              LOAD_FAST_BORROW         3 (career_fields)
+
+ 62           LOAD_CONST              77 ('uniformed_branches')
+              LOAD_FAST_BORROW         4 (uniformed_branches)
+
+ 63           LOAD_CONST              78 ('total_jobs')
+              LOAD_FAST_BORROW         5 (total_jobs)
+
+ 58           BUILD_MAP                5
+
+ 55           CALL                     3
+              RETURN_VALUE
+
+=== CHILD CODE OBJECT: styleguide ===
+co_consts:
+  [0]: 'Living style guide — shows all design tokens and components.'
+  [1]: 'core/styleguide.html'
+co_names:
+  [0]: render
+co_varnames:
+  [0]: request
+ 68           RESUME                   0
+
+ 70           LOAD_GLOBAL              1 (render + NULL)
+              LOAD_FAST_BORROW         0 (request)
+              LOAD_CONST               1 ('core/styleguide.html')
+              BUILD_MAP                0
+              CALL                     3
+              RETURN_VALUE
+
+=== CHILD CODE OBJECT: resume_blueprint ===
+co_consts:
+  [0]: 'ATS Resume Blueprint templates and downloads.'
+  [1]: ('RESUME_TEMPLATES',)
+  [2]: 'tab'
+  [3]: 'tech'
+  [4]: 'core/resume_blueprint.html'
+  [5]: 'templates'
+  [6]: 'active_tab'
+  [7]: 'current_template'
+co_names:
+  [0]: career_resources
+  [1]: RESUME_TEMPLATES
+  [2]: GET
+  [3]: get
+  [4]: render
+co_varnames:
+  [0]: request
+  [1]: RESUME_TEMPLATES
+  [2]: active_tab
+ 75           RESUME                   0
+
+ 77           LOAD_SMALL_INT           1
+              LOAD_CONST               1 (('RESUME_TEMPLATES',))
+              IMPORT_NAME              0 (career_resources)
+              IMPORT_FROM              1 (RESUME_TEMPLATES)
+              STORE_FAST               1 (RESUME_TEMPLATES)
+              POP_TOP
+
+ 78           LOAD_FAST_BORROW         0 (request)
+              LOAD_ATTR                4 (GET)
+              LOAD_ATTR                7 (get + NULL|self)
+              LOAD_CONST               2 ('tab')
+              LOAD_CONST               3 ('tech')
+              CALL                     2
+              STORE_FAST               2 (active_tab)
+
+ 79           LOAD_FAST_BORROW_LOAD_FAST_BORROW 33 (active_tab, RESUME_TEMPLATES)
+              CONTAINS_OP              1 (not in)
+              POP_JUMP_IF_FALSE        3 (to L1)
+              NOT_TAKEN
+
+ 80           LOAD_CONST               3 ('tech')
+              STORE_FAST               2 (active_tab)
+
+ 81   L1:     LOAD_GLOBAL              9 (render + NULL)
+
+ 82           LOAD_FAST_BORROW         0 (request)
+
+ 83           LOAD_CONST               4 ('core/resume_blueprint.html')
+
+ 85           LOAD_CONST               5 ('templates')
+              LOAD_FAST_BORROW         1 (RESUME_TEMPLATES)
+
+ 86           LOAD_CONST               6 ('active_tab')
+              LOAD_FAST_BORROW         2 (active_tab)
+
+ 87           LOAD_CONST               7 ('current_template')
+              LOAD_FAST_BORROW_LOAD_FAST_BORROW 18 (RESUME_TEMPLATES, active_tab)
+              BINARY_OP               26 ([])
+
+ 84           BUILD_MAP                3
+
+ 81           CALL                     3
+              RETURN_VALUE
+
+=== CHILD CODE OBJECT: download_resume_template ===
+co_consts:
+  [0]: 'Download individual resume template (.doc/.txt) or all templates (.zip).'
+  [1]: ('HttpResponse',)
+  [2]: ('get_resume_download',)
+  [3]: 'template'
+  [4]: 'bundle'
+  [5]: 'format'
+  [6]: 'doc'
+  [7]: ('content_type',)
+  [8]: 'attachment; filename="'
+  [9]: '"'
+  [10]: 'Content-Disposition'
+co_names:
+  [0]: django.http
+  [1]: HttpResponse
+  [2]: career_resources
+  [3]: get_resume_download
+  [4]: GET
+  [5]: get
+co_varnames:
+  [0]: request
+  [1]: HttpResponse
+  [2]: get_resume_download
+  [3]: template_id
+  [4]: file_format
+  [5]: content
+  [6]: filename
+  [7]: content_type
+  [8]: response
+ 92           RESUME                   0
+
+ 94           LOAD_SMALL_INT           0
+              LOAD_CONST               1 (('HttpResponse',))
+              IMPORT_NAME              0 (django.http)
+              IMPORT_FROM              1 (HttpResponse)
+              STORE_FAST               1 (HttpResponse)
+              POP_TOP
+
+ 95           LOAD_SMALL_INT           1
+              LOAD_CONST               2 (('get_resume_download',))
+              IMPORT_NAME              2 (career_resources)
+              IMPORT_FROM              3 (get_resume_download)
+              STORE_FAST               2 (get_resume_download)
+              POP_TOP
+
+ 97           LOAD_FAST_BORROW         0 (request)
+              LOAD_ATTR                8 (GET)
+              LOAD_ATTR               11 (get + NULL|self)
+              LOAD_CONST               3 ('template')
+              LOAD_CONST               4 ('bundle')
+              CALL                     2
+              STORE_FAST               3 (template_id)
+
+ 98           LOAD_FAST_BORROW         0 (request)
+              LOAD_ATTR                8 (GET)
+              LOAD_ATTR               11 (get + NULL|self)
+              LOAD_CONST               5 ('format')
+              LOAD_CONST               6 ('doc')
+              CALL                     2
+              STORE_FAST               4 (file_format)
+
+ 99           LOAD_FAST_BORROW         2 (get_resume_download)
+              PUSH_NULL
+              LOAD_FAST_BORROW_LOAD_FAST_BORROW 52 (template_id, file_format)
+              CALL                     2
+              UNPACK_SEQUENCE          3
+              STORE_FAST_STORE_FAST   86 (content, filename)
+              STORE_FAST               7 (content_type)
+
+100           LOAD_FAST_BORROW         1 (HttpResponse)
+              PUSH_NULL
+              LOAD_FAST_BORROW_LOAD_FAST_BORROW 87 (content, content_type)
+              LOAD_CONST               7 (('content_type',))
+              CALL_KW                  2
+              STORE_FAST               8 (response)
+
+101           LOAD_CONST               8 ('attachment; filename="')
+              LOAD_FAST_BORROW         6 (filename)
+              FORMAT_SIMPLE
+              LOAD_CONST               9 ('"')
+              BUILD_STRING             3
+              LOAD_FAST_BORROW         8 (response)
+              LOAD_CONST              10 ('Content-Disposition')
+              STORE_SUBSCR
+
+102           LOAD_FAST_BORROW         8 (response)
+              RETURN_VALUE
+
+=== CHILD CODE OBJECT: interview_mastery ===
+co_consts:
+  [0]: 'Comprehensive interview preparation guide with STAR and technical models.'
+  [1]: ('INTERVIEW_CATEGORIES',)
+  [2]: 'category'
+  [3]: 'behavioral'
+  [4]: <code object <genexpr> at 0x000002016E094B70, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 109>
+  [5]: 'core/interview_mastery.html'
+  [6]: 'categories'
+  [7]: 'active_category'
+  [8]: 'id'
+  [9]: 'current_category'
+co_names:
+  [0]: career_resources
+  [1]: INTERVIEW_CATEGORIES
+  [2]: GET
+  [3]: get
+  [4]: next
+  [5]: render
+co_varnames:
+  [0]: request
+  [1]: INTERVIEW_CATEGORIES
+  [2]: selected_cat
+  --           MAKE_CELL                3 (active_category)
+
+ 105           RESUME                   0
+
+ 107           LOAD_SMALL_INT           1
+               LOAD_CONST               1 (('INTERVIEW_CATEGORIES',))
+               IMPORT_NAME              0 (career_resources)
+               IMPORT_FROM              1 (INTERVIEW_CATEGORIES)
+               STORE_FAST               1 (INTERVIEW_CATEGORIES)
+               POP_TOP
+
+ 108           LOAD_FAST_BORROW         0 (request)
+               LOAD_ATTR                4 (GET)
+               LOAD_ATTR                7 (get + NULL|self)
+               LOAD_CONST               2 ('category')
+               LOAD_CONST               3 ('behavioral')
+               CALL                     2
+               STORE_DEREF              3 (active_category)
+
+ 109           LOAD_GLOBAL              9 (next + NULL)
+               LOAD_FAST_BORROW         3 (active_category)
+               BUILD_TUPLE              1
+               LOAD_CONST               4 (<code object <genexpr> at 0x000002016E094B70, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 109>)
+               MAKE_FUNCTION
+               SET_FUNCTION_ATTRIBUTE   8 (closure)
+               LOAD_FAST_BORROW         1 (INTERVIEW_CATEGORIES)
+               GET_ITER
+               CALL                     0
+               LOAD_FAST_BORROW         1 (INTERVIEW_CATEGORIES)
+               LOAD_SMALL_INT           0
+               BINARY_OP               26 ([])
+               CALL                     2
+               STORE_FAST               2 (selected_cat)
+
+ 110           LOAD_GLOBAL             11 (render + NULL)
+
+ 111           LOAD_FAST_BORROW         0 (request)
+
+ 112           LOAD_CONST               5 ('core/interview_mastery.html')
+
+ 114           LOAD_CONST               6 ('categories')
+               LOAD_FAST_BORROW         1 (INTERVIEW_CATEGORIES)
+
+ 115           LOAD_CONST               7 ('active_category')
+               LOAD_FAST_BORROW         2 (selected_cat)
+               LOAD_CONST               8 ('id')
+               BINARY_OP               26 ([])
+
+ 116           LOAD_CONST               9 ('current_category')
+               LOAD_FAST_BORROW         2 (selected_cat)
+
+ 113           BUILD_MAP                3
+
+ 110           CALL                     3
+               RETURN_VALUE
+
+Disassembly of <code object <genexpr> at 0x000002016E094B70, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\views.py", line 109>:
+  --           COPY_FREE_VARS           1
+
+ 109           RETURN_GENERATOR
+               POP_TOP
+       L1:     RESUME                   0
+               LOAD_FAST                0 (.0)
+       L2:     FOR_ITER                22 (to L5)
+               STORE_FAST_LOAD_FAST    17 (c, c)
+               LOAD_CONST               0 ('id')
+               BINARY_OP               26 ([])
+               LOAD_DEREF               2 (active_category)
+               COMPARE_OP              88 (bool(==))
+       L3:     POP_JUMP_IF_TRUE         3 (to L4)
+               NOT_TAKEN
+               JUMP_BACKWARD           18 (to L2)
+       L4:     LOAD_FAST_BORROW         1 (c)
+               YIELD_VALUE              0
+               RESUME                   5
+               POP_TOP
+               JUMP_BACKWARD           24 (to L2)
+       L5:     END_FOR
+               POP_ITER
+               LOAD_CONST               1 (None)
+               RETURN_VALUE
+
+  --   L6:     CALL_INTRINSIC_1         3 (INTRINSIC_STOPITERATION_ERROR)
+               RERAISE                  1
+ExceptionTable:
+  L1 to L3 -> L6 [0] lasti
+  L4 to L6 -> L6 [0] lasti
+
+=== CHILD CODE OBJECT: download_interview_guide ===
+co_consts:
+  [0]: 'Download the complete interview preparation handbook as a text guide.'
+  [1]: ('HttpResponse',)
+  [2]: ('get_interview_guide_download',)
+  [3]: ('content_type',)
+  [4]: 'attachment; filename="'
+  [5]: '"'
+  [6]: 'Content-Disposition'
+co_names:
+  [0]: django.http
+  [1]: HttpResponse
+  [2]: career_resources
+  [3]: get_interview_guide_download
+co_varnames:
+  [0]: request
+  [1]: HttpResponse
+  [2]: get_interview_guide_download
+  [3]: content
+  [4]: filename
+  [5]: content_type
+  [6]: response
+121           RESUME                   0
+
+123           LOAD_SMALL_INT           0
+              LOAD_CONST               1 (('HttpResponse',))
+              IMPORT_NAME              0 (django.http)
+              IMPORT_FROM              1 (HttpResponse)
+              STORE_FAST               1 (HttpResponse)
+              POP_TOP
+
+124           LOAD_SMALL_INT           1
+              LOAD_CONST               2 (('get_interview_guide_download',))
+              IMPORT_NAME              2 (career_resources)
+              IMPORT_FROM              3 (get_interview_guide_download)
+              STORE_FAST               2 (get_interview_guide_download)
+              POP_TOP
+
+126           LOAD_FAST_BORROW         2 (get_interview_guide_download)
+              PUSH_NULL
+              CALL                     0
+              UNPACK_SEQUENCE          3
+              STORE_FAST_STORE_FAST   52 (content, filename)
+              STORE_FAST               5 (content_type)
+
+127           LOAD_FAST_BORROW         1 (HttpResponse)
+              PUSH_NULL
+              LOAD_FAST_BORROW_LOAD_FAST_BORROW 53 (content, content_type)
+              LOAD_CONST               3 (('content_type',))
+              CALL_KW                  2
+              STORE_FAST               6 (response)
+
+128           LOAD_CONST               4 ('attachment; filename="')
+              LOAD_FAST_BORROW         4 (filename)
+              FORMAT_SIMPLE
+              LOAD_CONST               5 ('"')
+              BUILD_STRING             3
+              LOAD_FAST_BORROW         6 (response)
+              LOAD_CONST               6 ('Content-Disposition')
+              STORE_SUBSCR
+
+129           LOAD_FAST_BORROW         6 (response)
+              RETURN_VALUE
+
+=== CHILD CODE OBJECT: dashboard ===
+co_consts:
+  [0]: 0
+  [1]: ('_role_redirect_url',)
+co_names:
+  [0]: accounts.views
+  [1]: _role_redirect_url
+  [2]: redirect
+  [3]: user
+co_varnames:
+  [0]: request
+  [1]: _role_redirect_url
+134           RESUME                   0
+
+136           LOAD_SMALL_INT           0
+              LOAD_CONST               1 (('_role_redirect_url',))
+              IMPORT_NAME              0 (accounts.views)
+              IMPORT_FROM              1 (_role_redirect_url)
+              STORE_FAST               1 (_role_redirect_url)
+              POP_TOP
+
+137           LOAD_GLOBAL              5 (redirect + NULL)
+              LOAD_FAST_BORROW         1 (_role_redirect_url)
+              PUSH_NULL
+              LOAD_FAST_BORROW         0 (request)
+              LOAD_ATTR                6 (user)
+              CALL                     1
+              CALL                     1
+              RETURN_VALUE
+
+=== CHILD CODE OBJECT: applicant_dashboard ===
+co_consts:
+  [0]: 0
+  [1]: ('User',)
+  [2]: ('get_applicant_dashboard_data',)
+  [3]: 'Applicant access only.'
+  [4]: 'applicant/dashboard.html'
+co_names:
+  [0]: accounts.models
+  [1]: User
+  [2]: services
+  [3]: get_applicant_dashboard_data
+  [4]: user
+  [5]: role
+  [6]: Role
+  [7]: APPLICANT
+  [8]: PermissionDenied
+  [9]: render
+co_varnames:
+  [0]: request
+  [1]: User
+  [2]: get_applicant_dashboard_data
+  [3]: ctx
+142           RESUME                   0
+
+144           LOAD_SMALL_INT           0
+              LOAD_CONST               1 (('User',))
+              IMPORT_NAME              0 (accounts.models)
+              IMPORT_FROM              1 (User)
+              STORE_FAST               1 (User)
+              POP_TOP
+
+145           LOAD_SMALL_INT           1
+              LOAD_CONST               2 (('get_applicant_dashboard_data',))
+              IMPORT_NAME              2 (services)
+              IMPORT_FROM              3 (get_applicant_dashboard_data)
+              STORE_FAST               2 (get_applicant_dashboard_data)
+              POP_TOP
+
+147           LOAD_FAST_BORROW         0 (request)
+              LOAD_ATTR                8 (user)
+              LOAD_ATTR               10 (role)
+              LOAD_FAST_BORROW         1 (User)
+              LOAD_ATTR               12 (Role)
+              LOAD_ATTR               14 (APPLICANT)
+              COMPARE_OP             119 (bool(!=))
+              POP_JUMP_IF_FALSE       12 (to L1)
+              NOT_TAKEN
+
+148           LOAD_GLOBAL             17 (PermissionDenied + NULL)
+              LOAD_CONST               3 ('Applicant access only.')
+              CALL                     1
+              RAISE_VARARGS            1
+
+150   L1:     LOAD_FAST_BORROW         2 (get_applicant_dashboard_data)
+              PUSH_NULL
+              LOAD_FAST_BORROW         0 (request)
+              LOAD_ATTR                8 (user)
+              CALL                     1
+              STORE_FAST               3 (ctx)
+
+151           LOAD_GLOBAL             19 (render + NULL)
+              LOAD_FAST_BORROW         0 (request)
+              LOAD_CONST               4 ('applicant/dashboard.html')
+              LOAD_FAST_BORROW         3 (ctx)
+              CALL                     3
+              RETURN_VALUE
+
+=== CHILD CODE OBJECT: employer_dashboard ===
+co_consts:
+  [0]: 0
+  [1]: ('User',)
+  [2]: ('get_employer_dashboard_data',)
+  [3]: 'Employer access only.'
+  [4]: 'employer/dashboard.html'
+co_names:
+  [0]: accounts.models
+  [1]: User
+  [2]: services
+  [3]: get_employer_dashboard_data
+  [4]: user
+  [5]: role
+  [6]: Role
+  [7]: EMPLOYER
+  [8]: PermissionDenied
+  [9]: render
+co_varnames:
+  [0]: request
+  [1]: User
+  [2]: get_employer_dashboard_data
+  [3]: ctx
+156           RESUME                   0
+
+158           LOAD_SMALL_INT           0
+              LOAD_CONST               1 (('User',))
+              IMPORT_NAME              0 (accounts.models)
+              IMPORT_FROM              1 (User)
+              STORE_FAST               1 (User)
+              POP_TOP
+
+159           LOAD_SMALL_INT           1
+              LOAD_CONST               2 (('get_employer_dashboard_data',))
+              IMPORT_NAME              2 (services)
+              IMPORT_FROM              3 (get_employer_dashboard_data)
+              STORE_FAST               2 (get_employer_dashboard_data)
+              POP_TOP
+
+161           LOAD_FAST_BORROW         0 (request)
+              LOAD_ATTR                8 (user)
+              LOAD_ATTR               10 (role)
+              LOAD_FAST_BORROW         1 (User)
+              LOAD_ATTR               12 (Role)
+              LOAD_ATTR               14 (EMPLOYER)
+              COMPARE_OP             119 (bool(!=))
+              POP_JUMP_IF_FALSE       12 (to L1)
+              NOT_TAKEN
+
+162           LOAD_GLOBAL             17 (PermissionDenied + NULL)
+              LOAD_CONST               3 ('Employer access only.')
+              CALL                     1
+              RAISE_VARARGS            1
+
+164   L1:     LOAD_FAST_BORROW         2 (get_employer_dashboard_data)
+              PUSH_NULL
+              LOAD_FAST_BORROW         0 (request)
+              LOAD_ATTR                8 (user)
+              CALL                     1
+              STORE_FAST               3 (ctx)
+
+165           LOAD_GLOBAL             19 (render + NULL)
+              LOAD_FAST_BORROW         0 (request)
+              LOAD_CONST               4 ('employer/dashboard.html')
+              LOAD_FAST_BORROW         3 (ctx)
+              CALL                     3
+              RETURN_VALUE
+
+=== CHILD CODE OBJECT: employer_pending ===
+co_consts:
+  [0]: 'Landing page for newly-registered employers awaiting approval.'
+  [1]: 'employer/pending.html'
+co_names:
+  [0]: render
+co_varnames:
+  [0]: request
+168           RESUME                   0
+
+170           LOAD_GLOBAL              1 (render + NULL)
+              LOAD_FAST_BORROW         0 (request)
+              LOAD_CONST               1 ('employer/pending.html')
+              BUILD_MAP                0
+              CALL                     3
+              RETURN_VALUE
+
+=== CHILD CODE OBJECT: admin_panel ===
+co_consts:
+  [0]: 1
+  [1]: ('admin_panel_dashboard',)
+co_names:
+  [0]: admin_panel_views
+  [1]: admin_panel_dashboard
+co_varnames:
+  [0]: request
+  [1]: admin_panel_dashboard
+175           RESUME                   0
+
+177           LOAD_SMALL_INT           1
+              LOAD_CONST               1 (('admin_panel_dashboard',))
+              IMPORT_NAME              0 (admin_panel_views)
+              IMPORT_FROM              1 (admin_panel_dashboard)
+              STORE_FAST               1 (admin_panel_dashboard)
+              POP_TOP
+
+178           LOAD_FAST_BORROW         1 (admin_panel_dashboard)
+              PUSH_NULL
+              LOAD_FAST_BORROW         0 (request)
+              CALL                     1
+              RETURN_VALUE

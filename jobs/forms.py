@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from .models import Job, Category
+from core.currencies import CURRENCY_CHOICES, VALID_CURRENCY_CODES
 
 
 class JobForm(forms.ModelForm):
@@ -18,15 +19,11 @@ class JobForm(forms.ModelForm):
         initial=Job.Status.OPEN,
         required=True,
     )
-    salary_currency = forms.CharField(
-        max_length=5,
+    salary_currency = forms.ChoiceField(
+        choices=CURRENCY_CHOICES,
         required=False,
         initial="USD",
-        widget=forms.TextInput(attrs={
-            "class": "form-control",
-            "placeholder": "USD",
-            "maxlength": "5",
-        }),
+        widget=forms.Select(attrs={"class": "form-control"}),
     )
 
     class Meta:
@@ -67,19 +64,17 @@ class JobForm(forms.ModelForm):
             "salary_min": forms.NumberInput(attrs={
                 "class": "form-control",
                 "placeholder": "Minimum (e.g. 90000)",
-                "step": "1000",
+                "step": "any",
+                "min": "0",
             }),
             "salary_max": forms.NumberInput(attrs={
                 "class": "form-control",
                 "placeholder": "Maximum (e.g. 130000)",
-                "step": "1000",
+                "step": "any",
+                "min": "0",
             }),
             "salary_period": forms.Select(attrs={"class": "form-control"}),
-            "salary_currency": forms.TextInput(attrs={
-                "class": "form-control",
-                "placeholder": "USD",
-                "maxlength": "5",
-            }),
+            "salary_currency": forms.Select(attrs={"class": "form-control"}),
             "deadline": forms.DateInput(attrs={
                 "class": "form-control",
                 "type": "date",
@@ -152,5 +147,8 @@ class JobForm(forms.ModelForm):
         return cleaned_data
 
     def clean_salary_currency(self):
-        return self.cleaned_data.get("salary_currency") or "USD"
+        val = (self.cleaned_data.get("salary_currency") or "USD").strip().upper()
+        if val in VALID_CURRENCY_CODES:
+            return val
+        return "USD"
 

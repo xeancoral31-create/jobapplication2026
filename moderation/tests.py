@@ -358,8 +358,8 @@ class AdminPanelAndModerationTest(TestCase):
         self.assertEqual(resp.status_code, 200)
         logs = resp.context["logs"]
         self.assertEqual(len(logs), 2)
-        for l in logs:
-            self.assertEqual(l.admin, self.moderator)
+        for log_entry in logs:
+            self.assertEqual(log_entry.admin, self.moderator)
 
         # 2. Filter by target_type
         resp = self.client.get(f"{base_url}?target_type=job")

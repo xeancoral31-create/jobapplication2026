@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Navy Blueprint ATS Resume Template</title>
+  <style>
+    /* ─────────────────────────────────────────────────────────────
+       Modern Navy-Blue & White ATS Blueprint Stylesheet
+       Optimized for: Screen viewing, In-Browser Editing, and Print-to-PDF
+       ───────────────────────────────────────────────────────────── */
+    :root {
+      --navy-dark: #0f2b48;
+      --navy-primary: #1e3a8a;
+      --navy-accent: #2563eb;
+      --navy-light-bg: #f0f7ff;
+      --navy-border: #bfdbfe;
+      --text-main: #1e293b;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      --divider-color: #cbd5e1;
+      --bg-canvas: #f8fafc;
+      --bg-paper: #ffffff;
+      --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-stack);
+      background-color: var(--bg-canvas);
+      color: var(--text-main);
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Floating Controls Toolbar (Screen only) ── */
+    .toolbar-container {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border-bottom: 2px solid #38bdf8;
+    }
+
+    .toolbar-info h1 {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toolbar-info p {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      appearance: none;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease-in-out;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: #ffffff;
+    }
+    .btn-primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #334155;
+      color: #e2e8f0;
+    }
+    .btn-secondary:hover {
+      background: #475569;
+      color: #ffffff;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #93c5fd;
+      border: 1px solid #3b82f6;
+    }
+    .btn-outline:hover {
+      background: rgba(59, 130, 246, 0.15);
+    }
+
+    .edit-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ef4444;
+      margin-right: 4px;
+    }
+    .edit-indicator.active {
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    /* ── Resume Paper Container ── */
+    .resume-wrapper {
+      max-width: 8.5in;
+      margin: 28px auto 48px auto;
+      background: var(--bg-paper);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.05);
+      border-radius: 4px;
+      padding: 0.65in 0.75in;
+      position: relative;
+    }
+
+    /* In edit mode, subtle visual feedback */
+    [contenteditable="true"] .editable-zone:hover {
+      outline: 1px dashed #93c5fd;
+      background-color: #f8fbff;
+      border-radius: 2px;
+    }
+    [contenteditable="true"] .editable-zone:focus {
+      outline: 2px solid #2563eb;
+      background-color: #f0f7ff;
+      border-radius: 2px;
+    }
+
+    /* ── Header Section ── */
+    header.resume-header {
+      text-align: center;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 2.5px solid var(--navy-dark);
+    }
+
+    .applicant-name {
+      font-size: 26pt;
+      font-weight: 800;
+      color: var(--navy-dark);
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+      line-height: 1.15;
+    }
+
+    .target-title {
+      font-size: 13pt;
+      font-weight: 700;
+      color: var(--navy-accent);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .contact-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 6px 14px;
+      font-size: 9.5pt;
+      color: var(--text-muted);
+    }
+
+    .contact-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .contact-item a {
+      color: var(--navy-accent);
+      text-decoration: none;
+    }
+    .contact-item a:hover {
+      text-decoration: underline;
+    }
+
+    .contact-sep {
+      color: var(--divider-color);
+      font-weight: bold;
+    }
+
+    /* ── Section Structure ── */
+    section.resume-section {
+      margin-bottom: 15px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .section-title {
+      font-size: 11pt;
+      font-weight: 750;
+      color: var(--navy-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      padding-bottom: 3px;
+      border-bottom: 1.5px solid var(--navy-border);
+    }
+
+    .section-title::before {
+      content: "";
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background-color: var(--navy-accent);
+      border-radius: 1px;
+    }
+
+    /* ── Professional Summary ── */
+    .summary-text {
+      font-size: 9.5pt;
+      color: var(--text-main);
+      text-align: justify;
+      line-height: 1.5;
+    }
+
+    /* ── Skills Grid ── */
+    .skills-category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 9.5pt;
+      line-height: 1.45;
+    }
+
+    .skill-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .skill-label {
+      font-weight: 700;
+      color: var(--navy-primary);
+      min-width: 145px;
+      flex-shrink: 0;
+    }
+
+    .skill-items {
+      color: var(--text-main);
+      flex: 1;
+    }
+
+    /* ── Work Experience & Projects ── */
+    .timeline-item {
+      margin-bottom: 11px;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 2px;
+    }
+
+    .item-role-title {
+      font-size: 10.5pt;
+      font-weight: 700;
+      color: var(--navy-dark);
+    }
+
+    .item-date {
+      font-size: 9pt;
+      font-weight: 600;
+      color: var(--text-subtle);
+      white-space: nowrap;
+    }
+
+    .timeline-sub {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 9.5pt;
+      margin-bottom: 4px;
+    }
+
+    .item-company {
+      font-weight: 600;
+      color: var(--navy-primary);
+    }
+
+    .item-location {
+      font-size: 9pt;
+      color: var(--text-subtle);
+      font-style: italic;
+    }
+
+    /* ── Bullet Lists (High ATS Parseability) ── */
+    ul.bullet-list {
+      list-style-type: disc;
+      padding-left: 17px;
+      margin: 0;
+    }
+
+    ul.bullet-list li {
+      font-size: 9.3pt;
+      color: var(--text-main);
+      line-height: 1.45;
+      margin-bottom: 3.5px;
+    }
+
+    ul.bullet-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .metric-highlight {
+      font-weight: 600;
+      color: var(--navy-dark);
+    }
+
+    /* ── Education & Certifications ── */
+    .edu-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .cert-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 9.3pt;
+    }
+
+    .cert-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .cert-name {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .cert-issuer {
+      color: var(--navy-primary);
+    }
+
+    .cert-date {
+      font-size: 9pt;
+      color: var(--text-subtle);
+    }
+
+    /* ── ATS Guide Box (Screen only) ── */
+    .screen-guide {
+      max-width: 8.5in;
+      margin: 0 auto 50px auto;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 20px 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    .screen-guide h3 {
+      font-size: 14px;
+      color: var(--navy-dark);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .screen-guide ul {
+      padding-left: 20px;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ─────────────────────────────────────────────────────────────
+       PRINT & PDF EXPORT OPTIMIZATIONS
+       Standard 8.5in x 11in (US Letter) / A4 Single Page Budgeting
+       ───────────────────────────────────────────────────────────── */
+    @page {
+      size: letter portrait;
+      margin: 0.5in 0.6in 0.5in 0.6in;
+    }
+
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 9.5pt;
+      }
+
+      .no-print,
+      .toolbar-container,
+      .screen-guide {
+        display: none !important;
+      }
+
+      .resume-wrapper {
+        margin: 0 !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+      }
+
+      /* Force exact color reproduction on PDF */
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      header.resume-header {
+        border-bottom-color: #0f2b48 !important;
+      }
+
+      .section-title {
+        border-bottom-color: #bfdbfe !important;
+      }
+
+      a {
+        text-decoration: none !important;
+        color: inherit !important;
+      }
+
+      .timeline-item {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Screen-Only Toolbar for Customization & One-Click PDF Export -->
+  <aside class="toolbar-container no-print" aria-label="Resume Actions Toolbar">
+    <div class="toolbar-info">
+      <h1>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Modern Navy Blueprint Resume
+      </h1>
+      <p>100% ATS-Compliant Single-Column Architecture • Workday, Greenhouse, Taleo & Lever Optimized</p>
+    </div>
+    <div class="toolbar-actions">
+      <button class="btn btn-secondary" id="btnToggleEdit" onclick="toggleEditMode()" title="Click to edit placeholders right on the page">
+        <span class="edit-indicator" id="editIndicator"></span>
+        <span id="btnEditText">Enable Quick In-Page Editing</span>
+      </button>
+      <button class="btn btn-primary" onclick="exportToPdf()" title="Export as clean vector PDF">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Export as PDF / Print
+      </button>
+    </div>
+  </aside>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       MAIN RESUME CANVAS (ATS Machine Readable & Print Ready)
+       ══════════════════════════════════════════════════════════════ -->
+  <main class="resume-wrapper" id="resumePaper" role="document">
+
+    <!-- 1. HEADER: Identification & Contact Links -->
+    <header class="resume-header editable-zone">
+      <h1 class="applicant-name" id="userName">[FIRST_NAME] [LAST_NAME]</h1>
+      <div class="target-title">[TARGET PROFESSIONAL JOB TITLE / SPECIALIZATION]</div>
+      <div class="contact-bar">
+        <span class="contact-item">[City, State / Region]</span>
+        <span class="contact-sep">•</span>
+        <span class="contact-item">[+1 (555) 012-3456]</span>
+        <span class="contact-sep">•</span>
+        <span class="contact-item"><a href="mailto:name.professional@email.com">[professional.email@domain.com]</a></span>
+        <span class="contact-sep">•</span>
+        <span class="contact-item"><a href="https://linkedin.com/in/username" target="_blank">[linkedin.com/in/profile]</a></span>
+        <span class="contact-sep">•</span>
+        <span class="contact-item"><a href="https://portfolio-or-github.com" target="_blank">[portfolio-or-github.com]</a></span>
+      </div>
+    </header>
+
+    <!-- 2. PROFESSIONAL SUMMARY -->
+    <section class="resume-section editable-zone" aria-labelledby="sec-summary">
+      <h2 class="section-title" id="sec-summary">Professional Summary</h2>
+      <p class="summary-text">
+        Proactive and detail-driven <strong>[Target Job Title / Field Specialist]</strong> with <strong>[Number]</strong>+ years of experience delivering robust solutions across <strong>[Industry / Domain Area]</strong>. Proven track record of spearheading high-impact initiatives, cutting operational bottlenecks by <strong>[X]%</strong>, and delivering measurable business outcomes within agile cross-functional teams. Recognized for solid proficiency in <strong>[Core Skill 1]</strong>, <strong>[Core Skill 2]</strong>, and <strong>[Core Skill 3]</strong>, combined with strong problem-solving, stakeholder communication, and continuous learning aptitude.
+      </p>
+    </section>
+
+    <!-- 3. KEY SKILLS -->
+    <section class="resume-section editable-zone" aria-labelledby="sec-skills">
+      <h2 class="section-title" id="sec-skills">Key Skills</h2>
+      <div class="skills-category-list">
+        <div class="skill-row">
+          <span class="skill-label">Hard & Technical Skills:</span>
+          <span class="skill-items">[Core Skill A], [Core Skill B], [Core Skill C], [System Architecture], [Data Analysis], [Quality Assurance]</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-label">Tools & Platforms:</span>
+          <span class="skill-items">[Primary Software / Framework], [Secondary Tool], [Git/Version Control], [Database / ERP], [Cloud / SaaS Platform]</span>
+        </div>
+        <div class="skill-row">
+          <span class="skill-label">Workflow & Soft Skills:</span>
+          <span class="skill-items">Agile/Scrum Methodologies, Cross-Functional Collaboration, Technical Documentation, Critical Thinking, Project Coordination</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. WORK EXPERIENCE -->
+    <section class="resume-section editable-zone" aria-labelledby="sec-experience">
+      <h2 class="section-title" id="sec-experience">Work Experience</h2>
+
+      <!-- Role 1: Current / Most Recent -->
+      <article class="timeline-item">
+        <div class="timeline-header">
+          <span class="item-role-title">[Job Title / Role Specialization]</span>
+          <span class="item-date">[Month Year] – Present</span>
+        </div>
+        <div class="timeline-sub">
+          <span class="item-company">[Company / Organization Name]</span>
+          <span class="item-location">[City, State or Remote]</span>
+        </div>
+        <ul class="bullet-list">
+          <li>
+            Spearheaded <strong>[core project or process name]</strong>, coordinating with <strong>[number]</strong> cross-functional team members to achieve delivery <strong>[X] weeks ahead of schedule</strong>.
+          </li>
+          <li>
+            Automated and standardized <strong>[workflow / operation]</strong>, resulting in a <span class="metric-highlight">[X]% reduction in manual processing time</span> and eliminating recurring error rates.
+          </li>
+          <li>
+            Engineered and executed <strong>[key product, feature, or service]</strong>, driving a <span class="metric-highlight">[X]% increase in key performance metric / customer satisfaction</span> across <strong>[number]</strong> stakeholders.
+          </li>
+          <li>
+            Formulated comprehensive technical documentation, training modules, and standard operating procedures (SOPs) adopted division-wide.
+          </li>
+        </ul>
+      </article>
+
+      <!-- Role 2: Previous Position (or Internship / Junior Role) -->
+      <article class="timeline-item">
+        <div class="timeline-header">
+          <span class="item-role-title">[Previous Job Title / Associate Role]</span>
+          <span class="item-date">[Month Year] – [Month Year]</span>
+        </div>
+        <div class="timeline-sub">
+          <span class="item-company">[Previous Company / Organization Name]</span>
+          <span class="item-location">[City, State]</span>
+        </div>
+        <ul class="bullet-list">
+          <li>
+            Delivered high-quality execution for <strong>[primary responsibility]</strong>, managing pipeline deliverables with an average turnaround time improved by <span class="metric-highlight">[X]%</span>.
+          </li>
+          <li>
+            Analyzed performance logs and dataset metrics using <strong>[tool/technology]</strong>, identifying operational bottlenecks that saved <strong>$[Amount]</strong> annually in wasted vendor costs.
+          </li>
+          <li>
+            Collaborated alongside senior management and department leads to research, pilot, and deploy <strong>[new tool / initiative]</strong> for <strong>[number]</strong> active users.
+          </li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- 5. PROJECTS OR INTERNSHIP EXPERIENCE -->
+    <section class="resume-section editable-zone" aria-labelledby="sec-projects">
+      <h2 class="section-title" id="sec-projects">Projects &amp; Practical Experience</h2>
+
+      <!-- Project 1 -->
+      <article class="timeline-item">
+        <div class="timeline-header">
+          <span class="item-role-title">[High-Impact Project Title / Capstone Initiative]</span>
+          <span class="item-date">[Month Year] – [Month Year]</span>
+        </div>
+        <div class="timeline-sub">
+          <span class="item-company"><strong>Tech / Tool Stack:</strong> [Tool 1, Tool 2, Platform / Framework, Cloud Service]</span>
+          <span class="item-location"><a href="#" target="_blank" style="color: var(--navy-accent); text-decoration: none;">[Live Link / Repo URL]</a></span>
+        </div>
+        <ul class="bullet-list">
+          <li>
+            Architected and deployed end-to-end <strong>[system/application/campaign]</strong> handling <span class="metric-highlight">[metric: e.g., 5,000+ queries/day, 99.8% uptime, or 35% engagement growth]</span>.
+          </li>
+          <li>
+            Implemented secure data validation, automated tests, and responsive UI components following industry-standard design specifications.
+          </li>
+        </ul>
+      </article>
+
+      <!-- Project 2 (Ideal for Students, New Grads & Career Changers) -->
+      <article class="timeline-item">
+        <div class="timeline-header">
+          <span class="item-role-title">[Collaborative Industry Project / Student Research]</span>
+          <span class="item-date">[Month Year]</span>
+        </div>
+        <div class="timeline-sub">
+          <span class="item-company"><strong>Focus Area:</strong> [Specialization / Subject Matter]</span>
+          <span class="item-location">[Institutional / Open Source Sponsor]</span>
+        </div>
+        <ul class="bullet-list">
+          <li>
+            Conducted empirical analysis on <strong>[topic / problem statement]</strong>, synthesizing insights into an executive findings report presented to faculty and industry mentors.
+          </li>
+          <li>
+            Awarded <strong>[Honors / Top Distinction / First Place in Hackathon]</strong> among <strong>[number]</strong> competing cohorts.
+          </li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- 6. EDUCATION -->
+    <section class="resume-section editable-zone" aria-labelledby="sec-education">
+      <h2 class="section-title" id="sec-education">Education</h2>
+      <div class="edu-grid">
+        <article class="timeline-item">
+          <div class="timeline-header">
+            <span class="item-role-title">Bachelor of Science in [Degree / Major Field of Study]</span>
+            <span class="item-date">[Graduation Year or Expected Month Year]</span>
+          </div>
+          <div class="timeline-sub">
+            <span class="item-company">[University or College Name]</span>
+            <span class="item-location">[City, State / Country]</span>
+          </div>
+          <ul class="bullet-list">
+            <li>
+              <strong>Academic Distinctions:</strong> [Magna Cum Laude / Dean's Honor List / GPA: 3.8/4.0 (Optional)]
+            </li>
+            <li>
+              <strong>Relevant Coursework:</strong> [Coursework 1], [Coursework 2], [Coursework 3], [Coursework 4], [Senior Design Capstone]
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- 7. CERTIFICATIONS & TRAINING (Optional / High-Value) -->
+    <section class="resume-section editable-zone" aria-labelledby="sec-certifications">
+      <h2 class="section-title" id="sec-certifications">Certifications &amp; Professional Development</h2>
+      <div class="cert-list">
+        <div class="cert-item">
+          <div>
+            <span class="cert-name">[Industry-Standard Certification Title]</span> — 
+            <span class="cert-issuer">[Issuing Authority / Cloud Provider / Institute]</span>
+          </div>
+          <span class="cert-date">[Year Issued • Credential ID: 123456]</span>
+        </div>
+        <div class="cert-item">
+          <div>
+            <span class="cert-name">[Specialized Training / Professional Accreditation]</span> — 
+            <span class="cert-issuer">[Recognized Organization / University]</span>
+          </div>
+          <span class="cert-date">[Year Issued]</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Screen-Only ATS Engineering Guidance -->
+  <section class="screen-guide no-print">
+    <h3>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      ATS Optimization &amp; Customization Rules
+    </h3>
+    <ul>
+      <li><strong>Linear Parsing Architecture:</strong> This blueprint strictly avoids multi-column tables, text boxes, and floating sidebars that scramble the reading order in parsers such as Workday, Greenhouse, Taleo, and Lever.</li>
+      <li><strong>Standard Heading Identifiers:</strong> Uses universal section labels (<em>Professional Summary, Key Skills, Work Experience, Education, Certifications</em>) that regex parsers categorize with 100% precision.</li>
+      <li><strong>Quantifiable Google Formula:</strong> Fill the bullet placeholders using: <em>"Accomplished [X], as measured by [Y], by doing [Z]"</em> with concrete metrics (%, $, time saved, user scale).</li>
+      <li><strong>Print to PDF Tip:</strong> Click the blue <strong>"Export as PDF / Print"</strong> button above. In your browser print dialog, choose destination <strong>"Save as PDF"</strong>, paper size <strong>"Letter"</strong>, and ensure <strong>"Background graphics"</strong> is checked for crisp navy blue lines.</li>
+    </ul>
+  </section>
+
+  <script>
+    // In-browser interactive editing toggle
+    let isEditing = false;
+    function toggleEditMode() {
+      isEditing = !isEditing;
+      const paper = document.getElementById('resumePaper');
+      const indicator = document.getElementById('editIndicator');
+      const btnText = document.getElementById('btnEditText');
+
+      paper.setAttribute('contenteditable', isEditing ? 'true' : 'false');
+      
+      if (isEditing) {
+        indicator.classList.add('active');
+        btnText.textContent = 'Editing Active (Click text to edit)';
+      } else {
+        indicator.classList.remove('active');
+        btnText.textContent = 'Enable Quick In-Page Editing';
+      }
+    }
+
+    function exportToPdf() {
+      // Temporarily disable edit outline if enabled
+      const paper = document.getElementById('resumePaper');
+      const wasEditing = isEditing;
+      if (wasEditing) {
+        paper.setAttribute('contenteditable', 'false');
+      }
+      
+      window.print();
+
+      if (wasEditing) {
+        paper.setAttribute('contenteditable', 'true');
+      }
+    }
+  </script>
+</body>
+</html>

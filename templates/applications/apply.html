@@ -38,11 +38,11 @@
         <span style="font-size: 0.75rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Compensation</span>
         <p style="font-size: 1.1rem; font-weight: 700; color: var(--color-text-primary); margin: var(--space-1) 0 0;">
           {% if job.salary_min and job.salary_max %}
-            ${{ job.salary_min|floatformat:0 }} – ${{ job.salary_max|floatformat:0 }}
+            {{ job.salary_currency }} {{ job.salary_min|floatformat:0 }} – {{ job.salary_max|floatformat:0 }}
           {% elif job.salary_min %}
-            From ${{ job.salary_min|floatformat:0 }}
+            From {{ job.salary_currency }} {{ job.salary_min|floatformat:0 }}
           {% elif job.salary_max %}
-            Up to ${{ job.salary_max|floatformat:0 }}
+            Up to {{ job.salary_currency }} {{ job.salary_max|floatformat:0 }}
           {% endif %}
           <span style="font-size: 0.8125rem; font-weight: normal; color: var(--color-text-muted);">/ {{ job.get_salary_period_display|lower }}</span>
         </p>

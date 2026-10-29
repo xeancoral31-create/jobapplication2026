@@ -56,6 +56,11 @@ class Application(models.Model):
         help_text="Employer rating 1-5",
     )
 
+    # Official Hire details
+    hire_message = models.TextField(blank=True, default="", help_text="Employer welcome message when hired")
+    start_date = models.DateField(blank=True, null=True, help_text="Confirmed official work start date")
+    hired_at = models.DateTimeField(blank=True, null=True, help_text="Timestamp when candidate was officially hired")
+
     # Timestamps
     applied_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

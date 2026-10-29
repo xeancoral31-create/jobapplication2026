@@ -306,19 +306,34 @@ def application_transition(request, pk):
     if not new_status:
         return HttpResponseBadRequest("Missing new_status parameter.")
 
+    start_date = request.POST.get("start_date")
+    hire_message = request.POST.get("hire_message")
+
     try:
-        transition_application_status(application, new_status, request.user)
+        transition_application_status(
+            application,
+            new_status,
+            request.user,
+            hire_message=hire_message,
+            start_date=start_date,
+        )
     except PermissionDenied as e:
         raise e
     except ValidationError as e:
-        return HttpResponseBadRequest(str(e.message if hasattr(e, "message") else e))
+        err_msg = e.message if hasattr(e, "message") else str(e)
+        return HttpResponseBadRequest(err_msg)
 
     if request.headers.get("HX-Request"):
         from jobs.views import get_pipeline_context
         context = get_pipeline_context(application.job, request.user)
-        return render(request, "jobs/partials/pipeline_board.html", context)
+        response = render(request, "jobs/partials/pipeline_board.html", context)
+        response["HX-Trigger"] = "applicationUpdated"
+        return response
 
-    messages.success(request, f"Candidate moved to {application.get_status_display()}.")
+    if new_status == Application.Status.HIRED:
+        messages.success(request, f"🎉 {application.applicant.get_full_name() or application.applicant.username} has been officially hired! Notification and start date delivered.")
+    else:
+        messages.success(request, f"Candidate moved to {application.get_status_display()}.")
     return redirect("jobs:pipeline", slug=application.job.slug)
 
 
@@ -357,6 +372,7 @@ def application_drawer(request, pk):
             "interview_formats": Interview.Format.choices,
             "interview_outcomes": Interview.Outcome.choices,
             "now": timezone.now(),
+            "today": timezone.now().date(),
         },
     )
 

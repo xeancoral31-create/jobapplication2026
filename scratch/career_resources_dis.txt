@@ -1,0 +1,2113 @@
+=== DISASSEMBLY OF core/__pycache__/career_resources.cpython-314.pyc ===
+co_consts:
+  [0]: 'core/career_resources.py — Real ATS Resume Templates & Interview Mastery Content.'
+  [1]: None
+  [2]: 'design'
+  [3]: 'badge'
+  [4]: 'Design & Product'
+  [5]: 'description'
+  [6]: 'ATS-optimized resume template tailored for UI/UX, Product Designers, and UX Researchers.'
+  [7]: 'filename_prefix'
+  [8]: 'WorkWise_2026_ATS_Product_Designer_Template'
+  [9]: 'id'
+  [10]: 'target_roles'
+  [11]: 'text_content'
+  [12]: 'MAYA SANTOS\nNew York, NY | (555) 876-5432 | maya.santos.design@email.com\nportfolio.mayasantos.design | linkedin.com/in/mayasantos-ux | figma.com/@mayaux\n\n──────────────────────────────────────────────────────────────────────────────\nPROFESSIONAL SUMMARY\n───────────────────────────────────────
+  [13]: 'title'
+  [14]: 'UI/UX & Product Designer'
+  [15]: 'manager'
+  [16]: 'Leadership & Strategy'
+  [17]: 'ATS-tailored template highlighting people leadership, technical vision, and strategic delivery.'
+  [18]: 'WorkWise_2026_ATS_Engineering_Manager_Template'
+  [19]: 'ELENA VARGAS\nSeattle, WA | (555) 432-1098 | elena.vargas.tech@email.com\nlinkedin.com/in/elena-vargas-leader | github.com/evargas-exec\n\n──────────────────────────────────────────────────────────────────────────────\nEXECUTIVE SUMMARY\n─────────────────────────────────────────────────────────────
+  [20]: 'Engineering Manager & Tech Lead'
+  [21]: 'tech'
+  [22]: 'Engineering & Tech'
+  [23]: 'ATS-scanned template optimized for Backend, Frontend, DevOps, and Full-Stack Developers.'
+  [24]: 'WorkWise_2026_ATS_Software_Engineer_Template'
+  [25]: 'ALEX RIVERA\nSan Francisco, CA | (555) 234-5678 | alex.rivera@email.com\nlinkedin.com/in/alex-rivera-dev | github.com/alexrivera-tech | portfolio.workwise.dev/alex\n\n──────────────────────────────────────────────────────────────────────────────\nPROFESSIONAL SUMMARY\n──────────────────────────────
+  [26]: 'Software Engineer & Cloud Architect'
+  [27]: 'Master behavioral and situational questions using the Situation, Task, Action, Result framework.'
+  [28]: 'icon'
+  [29]: '🎯'
+  [30]: 'behavioral'
+  [31]: 'name'
+  [32]: 'Behavioral (STAR Method)'
+  [33]: 'questions'
+  [34]: 'assessor_lookout'
+  [35]: 'Evaluates composure, systematic root-cause troubleshooting, clear stakeholder communication, and prevention mindset.'
+  [36]: 'pro_tip'
+  [37]: 'Never blame a teammate or vendor. Focus on accountability, systemic improvements, and quantitative business recovery metrics.'
+  [38]: 'question'
+  [39]: 'Tell me about a time you handled a high-stakes production incident or critical bug under tight deadlines.'
+  [40]: 'star_breakdown'
+  [41]: 'Action'
+  [42]: 'I immediately triggered our incident protocol, instituted a rollback to the last verified stable release, and spun up hotfix worker pods. Using Datadog logs and PostgreSQL slow query traces, I isolated a dead-lock in our inventory table. I wrote an atomic query migration patch and verified it in st
+  [43]: 'Result'
+  [44]: 'Resolved the outage in 22 minutes, recovered $68,000 in queued orders without customer data loss, and implemented an automated database index check that prevented recurrence.'
+  [45]: 'Situation'
+  [46]: 'During Black Friday peak traffic at my previous company, our payment processing webhook failed, blocking 15% of inbound checkout transactions.'
+  [47]: 'Task'
+  [48]: 'As the on-call engineer, I had to stop financial loss, diagnose the failure within our 30-minute SLA, and keep executive stakeholders updated.'
+  [49]: 'Resolving a Critical Production Outage Under Pressure'
+  [50]: 'Tests emotional intelligence, data-driven negotiation, business focus over ego, and commitment once decisions are made.'
+  [51]: 'Frame disagreements around customer impact, team velocity, and system risk rather than personal coding preferences.'
+  [52]: 'Describe a situation where you had a major disagreement with a team lead or product manager regarding technical direction.'
+  [53]: "Instead of saying 'no', I prepared a 1-page comparison matrix showing that embedding it in the monolith would risk 99.9% uptime for core billing. I proposed using a managed pub/sub service (Stream/Firebase) for MVP validation, which satisfied both the timeline and system stability."
+  [54]: 'The product lead embraced the managed approach, launching 4 days ahead of schedule with zero operational overhead on our core backend infrastructure.'
+  [55]: 'A product lead requested building a bespoke real-time in-app chat using raw WebSockets directly into our core monolith to hit an aggressive 3-week deadline.'
+  [56]: 'I needed to voice serious architectural concerns regarding database connection pool exhaustion without being perceived as an impediment to product velocity.'
+  [57]: 'Constructive Disagreement on Technical Architecture'
+  [58]: 'Checks humility, early risk communication, post-mortem methodology, and resilience.'
+  [59]: 'Choose a real failure with genuine stakes, and emphasize the systemic lesson that permanently altered your engineering habits.'
+  [60]: "Tell me about a project that didn't go as planned or missed an important deadline, and what you learned."
+  [61]: 'I immediately raised the blocker to our engineering director and product counterpart with 3 mitigation options rather than waiting until deadline day. We staged the release into Phase 1 (core metrics) and Phase 2 (historical exports), keeping the main customer promise intact while I restructured da
+  [62]: 'Phase 1 launched on time, and Phase 2 followed 10 days later with 3x query speeds. The team adopted early load-testing benchmarks into our definition of done.'
+  [63]: 'We committed to delivering a multi-tenant client reporting dashboard by the end of Q2. Two weeks before launch, we discovered severe query degradation with large datasets.'
+  [64]: 'I was responsible for the data aggregation backend and had to address the timeline gap transparently.'
+  [65]: 'Overcoming Project Failure or Missed Deadlines'
+  [66]: 'Architect scalable, fault-tolerant, and high-performance cloud applications.'
+  [67]: '🏗️'
+  [68]: 'system_design'
+  [69]: 'System Design & Architecture'
+  [70]: 'Assesses asynchronous message queues (Kafka, SQS), worker scaling, idempotency, failure retries, and multi-tenant rate limits.'
+  [71]: 'Always clarify scale requirements first: read vs. write ratios, acceptable delivery latency, and idempotency guarantees.'
+  [72]: 'How would you design a distributed notification engine that sends push, email, and SMS notifications at 10M messages per minute with rate limiting?'
+  [73]: 'Architecture Blueprint'
+  [74]: '1. API Gateway / Ingestion: Lightweight Go/FastAPI endpoints validating payloads and writing immediately to Apache Kafka partitioned by user ID.\n2. Rate Limiting & User Preferences: Redis token bucket algorithm checking user opt-outs and channel quiet hours.\n3. Fan-out Worker Pools: Autoscaling C
+  [75]: 'Key Trade-offs'
+  [76]: 'Eventual consistency over immediate consistency; prioritized queueing ensures transactional alerts are never blocked by bulk marketing campaigns.'
+  [77]: 'Designing a High-Throughput Notification Service (10M/min)'
+  [78]: 'Evaluates command of EXPLAIN ANALYZE, indexing strategies, connection pooling, and locking behavior.'
+  [79]: 'Mention caution when adding indexes in production—remember that indexes speed up reads but add write overhead on INSERT/UPDATE.'
+  [80]: 'A production endpoint is timing out during peak hours. How do you systematically identify and fix the database bottleneck?'
+  [81]: 'Result Outcome'
+  [82]: 'Transformed an 8.4-second full table scan into an 18-millisecond index seek, dropping database CPU from 92% to 24%.'
+  [83]: 'Troubleshooting Protocol'
+  [84]: '1. Telemetry: Check APM traces to confirm database execution time vs. application serialization time.\n2. Query Analysis: Run EXPLAIN (ANALYZE, BUFFERS) to detect sequential table scans, high shared hit ratios, and nested loop joins on unindexed foreign keys.\n3. Index Optimization: Add appropriate
+  [85]: 'Diagnosing and Resolving PostgreSQL Query Bottlenecks'
+  [86]: 'Strategies for live coding, algorithms, clean code principles, and whiteboard discussions.'
+  [87]: '⚡'
+  [88]: 'technical'
+  [89]: 'Live Technical & Problem Solving'
+  [90]: 'Assesses concurrency models: Optimistic Locking vs. Pessimistic Locking, atomic transactions, and distributed locks.'
+  [91]: 'Explain the trade-offs: Pessimistic locking guarantees safety but can bottleneck throughput; optimistic locking scales reads but requires retry logic.'
+  [92]: 'How do you prevent double-spending or stock overselling in concurrent e-commerce or booking environments?'
+  [93]: 'Core Solution Patterns'
+  [94]: '1. Database Level (Pessimistic): SELECT ... FOR UPDATE within an explicit database transaction to lock the exact inventory row.\n2. Optimistic Locking: Use a version column (UPDATE item SET stock = stock - 1, version = version + 1 WHERE id = ? AND version = ?).\n3. Atomic SQL Expressions: UPDATE it
+  [95]: 'Recommended Strategy'
+  [96]: 'For high-concurrency ticket/seat reservation, combine atomic SQL updates with a 10-minute Redis reservation lock.'
+  [97]: 'Handling Race Conditions in Financial & Inventory Transactions'
+  [98]: 'Tactfully handle compensation discussions and ask high-signal questions that impress executive interviewers.'
+  [99]: '💼'
+  [100]: 'negotiation'
+  [101]: 'Salary Negotiation & Closing Questions'
+  [102]: 'Tests negotiation poise, market awareness, and ability to keep options open until the offer stage.'
+  [103]: 'Never give a single fixed number; always provide a data-backed range with a focus on total compensation (base, bonus, equity, remote stipend).'
+  [104]: 'How do you respond when a recruiter asks for your target number early in the interview process?'
+  [105]: 'Model Response'
+  [106]: "'I want to ensure the compensation is aligned with the market value of the impact I will deliver in this role. Based on my research for a Senior Engineer in this market and the tech stack, I understand the range is typically between $130,000 and $160,000 base, plus equity and benefits. However, fin
+  [107]: 'Strategic Purpose'
+  [108]: 'Anchors in market data while turning the question back to the company to reveal their budgeted bracket.'
+  [109]: "Tactfully Answering: 'What are your salary expectations?'"
+  [110]: 'Assesses intellectual curiosity, understanding of business priorities, and cultural alignment.'
+  [111]: 'Avoid generic questions easily found on the company website. Ask questions that reveal day-to-day engineering culture and team autonomy.'
+  [112]: 'What questions should you ask at the end of an interview to stand out as a top candidate?'
+  [113]: 'Top 3 Questions'
+  [114]: "1. 'What does success look like for this role in the first 90 days, and what is the biggest technical blocker standing in the way today?'\n2. 'How does your engineering team manage the trade-off between shipping new product features and addressing technical debt?'\n3. 'Can you walk me through the m
+  [115]: 'High-Signal Closing Questions to Ask the Hiring Team'
+  [116]: <code object __annotate__ at 0x000002016E074330, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 737>
+  [117]: <code object _escape_rtf at 0x000002016DDDD7C0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 737>
+  [118]: <code object __annotate__ at 0x000002016E077030, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 749>
+  [119]: <code object _create_rtf_from_text at 0x000002016E20C4C0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 749>
+  [120]: <code object __annotate__ at 0x000002016E099570, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 776>
+  [121]: <code object get_resume_download at 0x000002016E22D890, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 776>
+  [122]: <code object __annotate__ at 0x000002016E095470, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 820>
+  [123]: <code object get_interview_guide_download at 0x000002016E1FC0C0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 820>
+  [124]: ('Product Designer', 'Senior UI/UX Designer', 'Design Systems Lead', 'UX Researcher')
+  [125]: ('Engineering Manager', 'Technical Lead', 'Director of Engineering', 'VP of Technology')
+  [126]: ('Full Stack Engineer', 'Backend Developer', 'DevOps / Cloud Engineer', 'Frontend Specialist')
+  [127]: ('tech', 'doc')
+
+co_names:
+  [0]: __doc__
+  [1]: io
+  [2]: zipfile
+  [3]: RESUME_TEMPLATES
+  [4]: INTERVIEW_CATEGORIES
+  [5]: _escape_rtf
+  [6]: _create_rtf_from_text
+  [7]: get_resume_download
+  [8]: get_interview_guide_download
+
+co_varnames:
+
+--- DIS ---
+  0           RESUME                   0
+
+  1           LOAD_CONST               0 ('core/career_resources.py — Real ATS Resume Templates & Interview Mastery Content.')
+              STORE_NAME               0 (__doc__)
+
+  2           LOAD_SMALL_INT           0
+              LOAD_CONST               1 (None)
+              IMPORT_NAME              1 (io)
+              STORE_NAME               1 (io)
+
+  3           LOAD_SMALL_INT           0
+              LOAD_CONST               1 (None)
+              IMPORT_NAME              2 (zipfile)
+              STORE_NAME               2 (zipfile)
+
+  5           LOAD_CONST               2 ('design')
+              LOAD_CONST               3 ('badge')
+              LOAD_CONST               4 ('Design & Product')
+
+  6           LOAD_CONST               5 ('description')
+              LOAD_CONST               6 ('ATS-optimized resume template tailored for UI/UX, Product Designers, and UX Researchers.')
+
+  8           LOAD_CONST               7 ('filename_prefix')
+              LOAD_CONST               8 ('WorkWise_2026_ATS_Product_Designer_Template')
+
+  9           LOAD_CONST               9 ('id')
+              LOAD_CONST               2 ('design')
+
+ 10           LOAD_CONST              10 ('target_roles')
+              BUILD_LIST               0
+              LOAD_CONST             124 (('Product Designer', 'Senior UI/UX Designer', 'Design Systems Lead', 'UX Researcher'))
+              LIST_EXTEND              1
+
+ 14           LOAD_CONST              11 ('text_content')
+              LOAD_CONST              12 ('MAYA SANTOS\nNew York, NY | (555) 876-5432 | maya.santos.design@email.com\nportfolio.mayasantos.design | linkedin.com/in/mayasantos-ux | figma.com/@mayaux\n\n──────────────────────────────────────────────────────────────────────────────\nPROFESSIONAL SUMMARY\n──────────────────────────────────────────────────────────────────────────────\nStrategic Senior Product Designer with 5+ years of experience leading end-to-end design for\nhigh-growth B2B and consumer web platforms. Specialized in design systems, conversion-driven\ninterfaces, user research, and interactive prototyping. Increased checkout completion by 23%\nand decreased task completion time by 35% through iterative usability testing and design thinking.\n\n──────────────────────────────────────────────────────────────────────────────\nCORE COMPETENCIES & TOOLS\n──────────────────────────────────────────────────────────────────────────────\n• Design Disciplines: Product Design, UI/UX, User Research, Wireframing, Rapid Prototyping, Design Systems\n• Methodologies: Usability Testing, Information Architecture, Heuristic Evaluation, User Journey Mapping\n• Design Software: Figma, FigJam, Adobe Creative Cloud (Illustrator, Photoshop), Principle, Miro\n• Technical Literacy: HTML5, CSS3, Flexbox/Grid, Design Tokens, Git basics, WCAG 2.1 AA Accessibility\n\n──────────────────────────────────────────────────────────────────────────────\nPROFESSIONAL EXPERIENCE\n──────────────────────────────────────────────────────────────────────────────\nSenior Product Designer | Apex Creative Co. — New York, NY\nJanuary 2023 – Present\n• Spearheaded the complete redesign of the core SaaS analytics platform, driving a 27% increase in\n  user engagement and reducing churn by 3.8% over 12 months.\n• Built and documented the company-wide multi-brand Design System in Figma with 180+ accessible components\n  and design tokens, cutting front-end design handoff time by 40%.\n• Conducted 45+ moderated user interviews and prototype usability tests to validate product assumptions\n  prior to engineering sprint kick-offs.\n• Collaborated daily with engineering leads and product managers to ensure 100% WCAG 2.1 AA compliance\n  and pixel-perfect implementation.\n\nUI/UX Designer | NovaTech Solutions — Boston, MA\nAugust 2020 – December 2022\n• Designed end-to-end mobile and web onboarding experiences for 200,000+ active enterprise professionals.\n• Redesigned subscription billing and account management flows, elevating funnel conversion by 19%.\n• Created interactive high-fidelity prototypes for stakeholder presentations, securing $1.5M in seed funding.\n• Mentored 2 junior designers in typography, auto-layout architecture, and UX research synthesis.\n\n──────────────────────────────────────────────────────────────────────────────\nSELECTED CASE STUDIES\n──────────────────────────────────────────────────────────────────────────────\nFinTech Global Mobile Checkout Redesign\n• Solved multi-currency transaction friction, leading to a 31% increase in international payment completion.\nEnterprise Design System (OmniUI)\n• Open-source Figma library featuring dark/light modes, accessible color contrasts, and auto-layout components.\n\n──────────────────────────────────────────────────────────────────────────────\nEDUCATION & CREDENTIALS\n──────────────────────────────────────────────────────────────────────────────\nBachelor of Fine Arts in Interaction Design | Rhode Island School of Design (RISD)\n• Nielsen Norman Group (NN/g) UX Master Certified\n• Interaction Design Foundation (IDF) Accessibility Specialist\n')
+
+110           LOAD_CONST              13 ('title')
+              LOAD_CONST              14 ('UI/UX & Product Designer')
+
+  5           BUILD_MAP                7
+
+111           LOAD_CONST              15 ('manager')
+              LOAD_CONST               3 ('badge')
+              LOAD_CONST              16 ('Leadership & Strategy')
+
+112           LOAD_CONST               5 ('description')
+              LOAD_CONST              17 ('ATS-tailored template highlighting people leadership, technical vision, and strategic delivery.')
+
+115           LOAD_CONST               7 ('filename_prefix')
+              LOAD_CONST              18 ('WorkWise_2026_ATS_Engineering_Manager_Template')
+
+116           LOAD_CONST               9 ('id')
+              LOAD_CONST              15 ('manager')
+
+117           LOAD_CONST              10 ('target_roles')
+              BUILD_LIST               0
+              LOAD_CONST             125 (('Engineering Manager', 'Technical Lead', 'Director of Engineering', 'VP of Technology'))
+              LIST_EXTEND              1
+
+121           LOAD_CONST              11 ('text_content')
+              LOAD_CONST              19 ('ELENA VARGAS\nSeattle, WA | (555) 432-1098 | elena.vargas.tech@email.com\nlinkedin.com/in/elena-vargas-leader | github.com/evargas-exec\n\n──────────────────────────────────────────────────────────────────────────────\nEXECUTIVE SUMMARY\n──────────────────────────────────────────────────────────────────────────────\nEngineering Leader with 9+ years in software engineering and 4+ years managing high-performing,\ndistributed teams across North America and Europe. Track record of scaling engineering headcount from\n8 to 30+, maintaining 96% talent retention, and driving enterprise product deliveries generating $18M+\nARR. Passionate about psychological safety, operational excellence, and clear technical roadmaps.\n\n──────────────────────────────────────────────────────────────────────────────\nLEADERSHIP & EXECUTIVE COMPETENCIES\n──────────────────────────────────────────────────────────────────────────────\n• People & Culture: Team Scaling & Hiring, 1-on-1 Mentorship, Performance Reviews, Retention & DEI\n• Engineering Operations: Agile/Scrum, OKR Alignment, CI/CD Automation, Incident Management & Post-Mortems\n• Technical Strategy: Distributed Architecture, Microservices, Cloud Modernization, Tech Debt Reduction\n• Business Alignment: Executive Stakeholder Management, Vendor Evaluation, Budget Planning ($4M+ P&L)\n\n──────────────────────────────────────────────────────────────────────────────\nPROFESSIONAL EXPERIENCE\n──────────────────────────────────────────────────────────────────────────────\nEngineering Manager | BrightWave Technologies — Seattle, WA\nFebruary 2022 – Present\n• Scale and lead an engineering department of 24 engineers and 3 tech leads across Infrastructure,\n  Core Platform, and Mobile squads.\n• Reduced sprint rollover rate by 34% through rigorous capacity planning, retrospectives, and WIP limits.\n• Partnered with VP of Product to establish annual technical roadmaps and OKRs, aligning engineering\n  deliverables with $22M enterprise company revenue targets.\n• Instituted blameless post-mortem culture and automated SLA monitoring, cutting mean time to recovery\n  (MTTR) from 4.2 hours to 28 minutes.\n• Achieved a 96% retention rate over a 24-month span by creating transparent engineering career progression ladders.\n\nTechnical Lead / Staff Engineer | CloudFrontier Systems — Denver, CO\nJune 2018 – January 2022\n• Led architectural modernization from a legacy monolithic codebase to microservices running on AWS EKS,\n  improving service uptime to 99.99%.\n• Managed a squad of 7 senior engineers while actively reviewing code, unblocking technical deadlocks,\n  and establishing code review guidelines.\n• Directed technical vendor negotiations and AWS reserved instance commitments, saving $120,000 annually.\n\n──────────────────────────────────────────────────────────────────────────────\nEDUCATION & LEADERSHIP CERTIFICATIONS\n──────────────────────────────────────────────────────────────────────────────\nMaster of Science in Software Engineering | University of Washington\nBachelor of Science in Information Systems | University of Colorado Boulder\n• Certified ScrumMaster (CSM) | Scrum Alliance\n• Executive Leadership Program | Stanford Graduate School of Business (Online)\n')
+
+210           LOAD_CONST              13 ('title')
+              LOAD_CONST              20 ('Engineering Manager & Tech Lead')
+
+111           BUILD_MAP                7
+
+211           LOAD_CONST              21 ('tech')
+              LOAD_CONST               3 ('badge')
+              LOAD_CONST              22 ('Engineering & Tech')
+
+212           LOAD_CONST               5 ('description')
+              LOAD_CONST              23 ('ATS-scanned template optimized for Backend, Frontend, DevOps, and Full-Stack Developers.')
+
+214           LOAD_CONST               7 ('filename_prefix')
+              LOAD_CONST              24 ('WorkWise_2026_ATS_Software_Engineer_Template')
+
+215           LOAD_CONST               9 ('id')
+              LOAD_CONST              21 ('tech')
+
+216           LOAD_CONST              10 ('target_roles')
+              BUILD_LIST               0
+              LOAD_CONST             126 (('Full Stack Engineer', 'Backend Developer', 'DevOps / Cloud Engineer', 'Frontend Specialist'))
+              LIST_EXTEND              1
+
+220           LOAD_CONST              11 ('text_content')
+              LOAD_CONST              25 ('ALEX RIVERA\nSan Francisco, CA | (555) 234-5678 | alex.rivera@email.com\nlinkedin.com/in/alex-rivera-dev | github.com/alexrivera-tech | portfolio.workwise.dev/alex\n\n──────────────────────────────────────────────────────────────────────────────\nPROFESSIONAL SUMMARY\n──────────────────────────────────────────────────────────────────────────────\nResults-driven Senior Full-Stack Software Engineer with 6+ years of experience designing,\nbuilding, and scaling distributed cloud applications. Proven track record of improving\nsystem throughput by 40%, reducing infrastructure costs by 28%, and delivering mission-critical\nmicroservices with 99.99% uptime. Expert in Python, Django, TypeScript, React, Docker, and AWS.\n\n──────────────────────────────────────────────────────────────────────────────\nTECHNICAL SKILLS\n──────────────────────────────────────────────────────────────────────────────\n• Languages: Python, TypeScript, JavaScript, SQL, Go, HTML5/CSS3\n• Frameworks & Libraries: Django, FastAPI, React, Next.js, Node.js, TailwindCSS\n• Databases & Caching: PostgreSQL, Redis, MySQL, MongoDB, Elasticsearch\n• Cloud & DevOps: AWS (EC2, S3, RDS, Lambda, ECS), Docker, Kubernetes, CI/CD (GitHub Actions, Terraform)\n• Architecture & Practices: RESTful APIs, GraphQL, Microservices, Event-Driven Architecture, TDD, Agile/Scrum\n\n──────────────────────────────────────────────────────────────────────────────\nPROFESSIONAL EXPERIENCE\n──────────────────────────────────────────────────────────────────────────────\nSenior Software Engineer | Synapse Labs — San Francisco, CA\nMarch 2023 – Present\n• Architected and deployed an event-driven data ingestion pipeline using Python, Kafka, and PostgreSQL,\n  processing 12M+ records daily with sub-200ms latency.\n• Optimized PostgreSQL query performance and caching layers with Redis, resulting in a 42% reduction\n  in p99 API response times and $14,000 annual cloud hosting savings.\n• Led a cross-functional team of 6 engineers across 8 two-week sprint cycles, achieving a 95% on-time\n  feature delivery rate for the enterprise B2B SaaS dashboard.\n• Authored comprehensive unit and integration test suites achieving 88% test coverage with automated\n  GitHub Actions CI/CD pipelines.\n\nFull Stack Developer | Orbit Systems — Austin, TX\nJuly 2020 – February 2023\n• Developed customer-facing web applications using React, TypeScript, and Django REST Framework,\n  serving over 450,000 monthly active users.\n• Migrated monolithic billing engine to microservices with Stripe API integration, processing $3.2M\n  in annual recurring subscriptions with zero payment loss incidents.\n• Built role-based access control (RBAC) and OAuth2/JWT authentication protocols adhering to SOC2\n  and GDPR compliance standards.\n• Collaborated closely with Product and UI/UX designers to reduce user onboarding drop-off by 18%.\n\n──────────────────────────────────────────────────────────────────────────────\nSELECTED PROJECTS\n──────────────────────────────────────────────────────────────────────────────\nCloudScale Distributed Task Worker | Open Source\n• Engineered a distributed task queue in Go and Redis with automatic retries and exponential backoff,\n  securing 1,200+ GitHub stars.\n\nReal-Time Candidate Pipeline Tracker | Personal Project\n• Built a full-stack recruiting kanban dashboard with Django Channels and WebSockets supporting live\n  drag-and-drop state transitions.\n\n──────────────────────────────────────────────────────────────────────────────\nEDUCATION & CERTIFICATIONS\n──────────────────────────────────────────────────────────────────────────────\nBachelor of Science in Computer Science | University of California, Berkeley (2020)\n• AWS Certified Solutions Architect – Associate (Active)\n• Certified Kubernetes Administrator (CKA, Active)\n')
+
+322           LOAD_CONST              13 ('title')
+              LOAD_CONST              26 ('Software Engineer & Cloud Architect')
+
+211           BUILD_MAP                7
+
+  5           BUILD_MAP                3
+              STORE_NAME               3 (RESUME_TEMPLATES)
+
+324           LOAD_CONST               5 ('description')
+              LOAD_CONST              27 ('Master behavioral and situational questions using the Situation, Task, Action, Result framework.')
+
+326           LOAD_CONST              28 ('icon')
+              LOAD_CONST              29 ('🎯')
+
+327           LOAD_CONST               9 ('id')
+              LOAD_CONST              30 ('behavioral')
+
+328           LOAD_CONST              31 ('name')
+              LOAD_CONST              32 ('Behavioral (STAR Method)')
+
+329           LOAD_CONST              33 ('questions')
+              LOAD_CONST              34 ('assessor_lookout')
+              LOAD_CONST              35 ('Evaluates composure, systematic root-cause troubleshooting, clear stakeholder communication, and prevention mindset.')
+
+333           LOAD_CONST              36 ('pro_tip')
+              LOAD_CONST              37 ('Never blame a teammate or vendor. Focus on accountability, systemic improvements, and quantitative business recovery metrics.')
+
+336           LOAD_CONST              38 ('question')
+              LOAD_CONST              39 ('Tell me about a time you handled a high-stakes production incident or critical bug under tight deadlines.')
+
+339           LOAD_CONST              40 ('star_breakdown')
+              LOAD_CONST              41 ('Action')
+              LOAD_CONST              42 ('I immediately triggered our incident protocol, instituted a rollback to the last verified stable release, and spun up hotfix worker pods. Using Datadog logs and PostgreSQL slow query traces, I isolated a dead-lock in our inventory table. I wrote an atomic query migration patch and verified it in staging before deploying.')
+
+350           LOAD_CONST              43 ('Result')
+              LOAD_CONST              44 ('Resolved the outage in 22 minutes, recovered $68,000 in queued orders without customer data loss, and implemented an automated database index check that prevented recurrence.')
+
+356           LOAD_CONST              45 ('Situation')
+              LOAD_CONST              46 ('During Black Friday peak traffic at my previous company, our payment processing webhook failed, blocking 15% of inbound checkout transactions.')
+
+362           LOAD_CONST              47 ('Task')
+              LOAD_CONST              48 ('As the on-call engineer, I had to stop financial loss, diagnose the failure within our 30-minute SLA, and keep executive stakeholders updated.')
+
+339           BUILD_MAP                4
+
+367           LOAD_CONST              13 ('title')
+              LOAD_CONST              49 ('Resolving a Critical Production Outage Under Pressure')
+
+329           BUILD_MAP                5
+
+369           LOAD_CONST              34 ('assessor_lookout')
+              LOAD_CONST              50 ('Tests emotional intelligence, data-driven negotiation, business focus over ego, and commitment once decisions are made.')
+
+373           LOAD_CONST              36 ('pro_tip')
+              LOAD_CONST              51 ('Frame disagreements around customer impact, team velocity, and system risk rather than personal coding preferences.')
+
+376           LOAD_CONST              38 ('question')
+              LOAD_CONST              52 ('Describe a situation where you had a major disagreement with a team lead or product manager regarding technical direction.')
+
+379           LOAD_CONST              40 ('star_breakdown')
+              LOAD_CONST              41 ('Action')
+              LOAD_CONST              53 ("Instead of saying 'no', I prepared a 1-page comparison matrix showing that embedding it in the monolith would risk 99.9% uptime for core billing. I proposed using a managed pub/sub service (Stream/Firebase) for MVP validation, which satisfied both the timeline and system stability.")
+
+390           LOAD_CONST              43 ('Result')
+              LOAD_CONST              54 ('The product lead embraced the managed approach, launching 4 days ahead of schedule with zero operational overhead on our core backend infrastructure.')
+
+396           LOAD_CONST              45 ('Situation')
+              LOAD_CONST              55 ('A product lead requested building a bespoke real-time in-app chat using raw WebSockets directly into our core monolith to hit an aggressive 3-week deadline.')
+
+402           LOAD_CONST              47 ('Task')
+              LOAD_CONST              56 ('I needed to voice serious architectural concerns regarding database connection pool exhaustion without being perceived as an impediment to product velocity.')
+
+379           BUILD_MAP                4
+
+408           LOAD_CONST              13 ('title')
+              LOAD_CONST              57 ('Constructive Disagreement on Technical Architecture')
+
+369           BUILD_MAP                5
+
+410           LOAD_CONST              34 ('assessor_lookout')
+              LOAD_CONST              58 ('Checks humility, early risk communication, post-mortem methodology, and resilience.')
+
+413           LOAD_CONST              36 ('pro_tip')
+              LOAD_CONST              59 ('Choose a real failure with genuine stakes, and emphasize the systemic lesson that permanently altered your engineering habits.')
+
+416           LOAD_CONST              38 ('question')
+              LOAD_CONST              60 ("Tell me about a project that didn't go as planned or missed an important deadline, and what you learned.")
+
+419           LOAD_CONST              40 ('star_breakdown')
+              LOAD_CONST              41 ('Action')
+              LOAD_CONST              61 ('I immediately raised the blocker to our engineering director and product counterpart with 3 mitigation options rather than waiting until deadline day. We staged the release into Phase 1 (core metrics) and Phase 2 (historical exports), keeping the main customer promise intact while I restructured data partitioning.')
+
+431           LOAD_CONST              43 ('Result')
+              LOAD_CONST              62 ('Phase 1 launched on time, and Phase 2 followed 10 days later with 3x query speeds. The team adopted early load-testing benchmarks into our definition of done.')
+
+437           LOAD_CONST              45 ('Situation')
+              LOAD_CONST              63 ('We committed to delivering a multi-tenant client reporting dashboard by the end of Q2. Two weeks before launch, we discovered severe query degradation with large datasets.')
+
+444           LOAD_CONST              47 ('Task')
+              LOAD_CONST              64 ('I was responsible for the data aggregation backend and had to address the timeline gap transparently.')
+
+419           BUILD_MAP                4
+
+448           LOAD_CONST              13 ('title')
+              LOAD_CONST              65 ('Overcoming Project Failure or Missed Deadlines')
+
+410           BUILD_MAP                5
+
+329           BUILD_LIST               3
+
+324           BUILD_MAP                5
+
+449           LOAD_CONST               5 ('description')
+              LOAD_CONST              66 ('Architect scalable, fault-tolerant, and high-performance cloud applications.')
+
+451           LOAD_CONST              28 ('icon')
+              LOAD_CONST              67 ('🏗️')
+
+452           LOAD_CONST               9 ('id')
+              LOAD_CONST              68 ('system_design')
+
+453           LOAD_CONST              31 ('name')
+              LOAD_CONST              69 ('System Design & Architecture')
+
+454           LOAD_CONST              33 ('questions')
+              LOAD_CONST              34 ('assessor_lookout')
+              LOAD_CONST              70 ('Assesses asynchronous message queues (Kafka, SQS), worker scaling, idempotency, failure retries, and multi-tenant rate limits.')
+
+458           LOAD_CONST              36 ('pro_tip')
+              LOAD_CONST              71 ('Always clarify scale requirements first: read vs. write ratios, acceptable delivery latency, and idempotency guarantees.')
+
+461           LOAD_CONST              38 ('question')
+              LOAD_CONST              72 ('How would you design a distributed notification engine that sends push, email, and SMS notifications at 10M messages per minute with rate limiting?')
+
+465           LOAD_CONST              40 ('star_breakdown')
+              LOAD_CONST              73 ('Architecture Blueprint')
+              LOAD_CONST              74 ('1. API Gateway / Ingestion: Lightweight Go/FastAPI endpoints validating payloads and writing immediately to Apache Kafka partitioned by user ID.\n2. Rate Limiting & User Preferences: Redis token bucket algorithm checking user opt-outs and channel quiet hours.\n3. Fan-out Worker Pools: Autoscaling Celery/Go workers pulling from priority topics (e.g. Critical 2FA > Marketing).\n4. Vendor Abstraction Layer: Multi-provider failover (Twilio, SendGrid, APNS) with circuit breakers.\n5. Idempotency & Deduplication: SHA-256 hash of payload stored in Redis with 24-hour TTL.')
+
+512           LOAD_CONST              75 ('Key Trade-offs')
+              LOAD_CONST              76 ('Eventual consistency over immediate consistency; prioritized queueing ensures transactional alerts are never blocked by bulk marketing campaigns.')
+
+465           BUILD_MAP                2
+
+520           LOAD_CONST              13 ('title')
+              LOAD_CONST              77 ('Designing a High-Throughput Notification Service (10M/min)')
+
+454           BUILD_MAP                5
+
+522           LOAD_CONST              34 ('assessor_lookout')
+              LOAD_CONST              78 ('Evaluates command of EXPLAIN ANALYZE, indexing strategies, connection pooling, and locking behavior.')
+
+525           LOAD_CONST              36 ('pro_tip')
+              LOAD_CONST              79 ('Mention caution when adding indexes in production—remember that indexes speed up reads but add write overhead on INSERT/UPDATE.')
+
+528           LOAD_CONST              38 ('question')
+              LOAD_CONST              80 ('A production endpoint is timing out during peak hours. How do you systematically identify and fix the database bottleneck?')
+
+531           LOAD_CONST              40 ('star_breakdown')
+              LOAD_CONST              81 ('Result Outcome')
+              LOAD_CONST              82 ('Transformed an 8.4-second full table scan into an 18-millisecond index seek, dropping database CPU from 92% to 24%.')
+
+537           LOAD_CONST              83 ('Troubleshooting Protocol')
+              LOAD_CONST              84 ('1. Telemetry: Check APM traces to confirm database execution time vs. application serialization time.\n2. Query Analysis: Run EXPLAIN (ANALYZE, BUFFERS) to detect sequential table scans, high shared hit ratios, and nested loop joins on unindexed foreign keys.\n3. Index Optimization: Add appropriate composite or partial B-Tree indexes matching filter & sort clauses.\n4. Connection Health: Inspect pg_stat_activity to check for long-running transactions holding row/table locks.\n5. Architecture Remediation: Implement Redis caching for read-heavy static data or route reporting queries to a read replica.')
+
+531           BUILD_MAP                2
+
+596           LOAD_CONST              13 ('title')
+              LOAD_CONST              85 ('Diagnosing and Resolving PostgreSQL Query Bottlenecks')
+
+522           BUILD_MAP                5
+
+454           BUILD_LIST               2
+
+449           BUILD_MAP                5
+
+598           LOAD_CONST               5 ('description')
+              LOAD_CONST              86 ('Strategies for live coding, algorithms, clean code principles, and whiteboard discussions.')
+
+600           LOAD_CONST              28 ('icon')
+              LOAD_CONST              87 ('⚡')
+
+601           LOAD_CONST               9 ('id')
+              LOAD_CONST              88 ('technical')
+
+602           LOAD_CONST              31 ('name')
+              LOAD_CONST              89 ('Live Technical & Problem Solving')
+
+603           LOAD_CONST              33 ('questions')
+              LOAD_CONST              34 ('assessor_lookout')
+              LOAD_CONST              90 ('Assesses concurrency models: Optimistic Locking vs. Pessimistic Locking, atomic transactions, and distributed locks.')
+
+606           LOAD_CONST              36 ('pro_tip')
+              LOAD_CONST              91 ('Explain the trade-offs: Pessimistic locking guarantees safety but can bottleneck throughput; optimistic locking scales reads but requires retry logic.')
+
+610           LOAD_CONST              38 ('question')
+              LOAD_CONST              92 ('How do you prevent double-spending or stock overselling in concurrent e-commerce or booking environments?')
+
+613           LOAD_CONST              40 ('star_breakdown')
+              LOAD_CONST              93 ('Core Solution Patterns')
+              LOAD_CONST              94 ('1. Database Level (Pessimistic): SELECT ... FOR UPDATE within an explicit database transaction to lock the exact inventory row.\n2. Optimistic Locking: Use a version column (UPDATE item SET stock = stock - 1, version = version + 1 WHERE id = ? AND version = ?).\n3. Atomic SQL Expressions: UPDATE items SET stock = stock - 1 WHERE id = ? AND stock >= 1; check affected rows.\n4. Distributed Locks: Use Redis Redlock for cross-service distributed resource synchronization.')
+
+651           LOAD_CONST              95 ('Recommended Strategy')
+              LOAD_CONST              96 ('For high-concurrency ticket/seat reservation, combine atomic SQL updates with a 10-minute Redis reservation lock.')
+
+613           BUILD_MAP                2
+
+660           LOAD_CONST              13 ('title')
+              LOAD_CONST              97 ('Handling Race Conditions in Financial & Inventory Transactions')
+
+603           BUILD_MAP                5
+              BUILD_LIST               1
+
+598           BUILD_MAP                5
+
+662           LOAD_CONST               5 ('description')
+              LOAD_CONST              98 ('Tactfully handle compensation discussions and ask high-signal questions that impress executive interviewers.')
+
+664           LOAD_CONST              28 ('icon')
+              LOAD_CONST              99 ('💼')
+
+665           LOAD_CONST               9 ('id')
+              LOAD_CONST             100 ('negotiation')
+
+666           LOAD_CONST              31 ('name')
+              LOAD_CONST             101 ('Salary Negotiation & Closing Questions')
+
+667           LOAD_CONST              33 ('questions')
+              LOAD_CONST              34 ('assessor_lookout')
+              LOAD_CONST             102 ('Tests negotiation poise, market awareness, and ability to keep options open until the offer stage.')
+
+670           LOAD_CONST              36 ('pro_tip')
+              LOAD_CONST             103 ('Never give a single fixed number; always provide a data-backed range with a focus on total compensation (base, bonus, equity, remote stipend).')
+
+674           LOAD_CONST              38 ('question')
+              LOAD_CONST             104 ('How do you respond when a recruiter asks for your target number early in the interview process?')
+
+677           LOAD_CONST              40 ('star_breakdown')
+              LOAD_CONST             105 ('Model Response')
+              LOAD_CONST             106 ("'I want to ensure the compensation is aligned with the market value of the impact I will deliver in this role. Based on my research for a Senior Engineer in this market and the tech stack, I understand the range is typically between $130,000 and $160,000 base, plus equity and benefits. However, finding the right technical culture and scope is my highest priority. What is the budgeted range for this position?'")
+
+697           LOAD_CONST             107 ('Strategic Purpose')
+              LOAD_CONST             108 ('Anchors in market data while turning the question back to the company to reveal their budgeted bracket.')
+
+677           BUILD_MAP                2
+
+703           LOAD_CONST              13 ('title')
+              LOAD_CONST             109 ("Tactfully Answering: 'What are your salary expectations?'")
+
+667           BUILD_MAP                5
+
+705           LOAD_CONST              34 ('assessor_lookout')
+              LOAD_CONST             110 ('Assesses intellectual curiosity, understanding of business priorities, and cultural alignment.')
+
+708           LOAD_CONST              36 ('pro_tip')
+              LOAD_CONST             111 ('Avoid generic questions easily found on the company website. Ask questions that reveal day-to-day engineering culture and team autonomy.')
+
+711           LOAD_CONST              38 ('question')
+              LOAD_CONST             112 ('What questions should you ask at the end of an interview to stand out as a top candidate?')
+
+713           LOAD_CONST              40 ('star_breakdown')
+              LOAD_CONST             113 ('Top 3 Questions')
+              LOAD_CONST             114 ("1. 'What does success look like for this role in the first 90 days, and what is the biggest technical blocker standing in the way today?'\n2. 'How does your engineering team manage the trade-off between shipping new product features and addressing technical debt?'\n3. 'Can you walk me through the most recent incident or failed release and how the post-mortem was conducted?'")
+              BUILD_MAP                1
+
+733           LOAD_CONST              13 ('title')
+              LOAD_CONST             115 ('High-Signal Closing Questions to Ask the Hiring Team')
+
+705           BUILD_MAP                5
+
+667           BUILD_LIST               2
+
+662           BUILD_MAP                5
+
+324           BUILD_LIST               4
+              STORE_NAME               4 (INTERVIEW_CATEGORIES)
+
+737           LOAD_CONST             116 (<code object __annotate__ at 0x000002016E074330, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 737>)
+              MAKE_FUNCTION
+              LOAD_CONST             117 (<code object _escape_rtf at 0x000002016DDDD7C0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 737>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE  16 (annotate)
+              STORE_NAME               5 (_escape_rtf)
+
+749           LOAD_CONST             118 (<code object __annotate__ at 0x000002016E077030, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 749>)
+              MAKE_FUNCTION
+              LOAD_CONST             119 (<code object _create_rtf_from_text at 0x000002016E20C4C0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 749>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE  16 (annotate)
+              STORE_NAME               6 (_create_rtf_from_text)
+
+776           LOAD_CONST             127 (('tech', 'doc'))
+              LOAD_CONST             120 (<code object __annotate__ at 0x000002016E099570, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 776>)
+              MAKE_FUNCTION
+              LOAD_CONST             121 (<code object get_resume_download at 0x000002016E22D890, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 776>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE  16 (annotate)
+              SET_FUNCTION_ATTRIBUTE   1 (defaults)
+              STORE_NAME               7 (get_resume_download)
+
+820           LOAD_CONST             122 (<code object __annotate__ at 0x000002016E095470, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 820>)
+              MAKE_FUNCTION
+              LOAD_CONST             123 (<code object get_interview_guide_download at 0x000002016E1FC0C0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 820>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE  16 (annotate)
+              STORE_NAME               8 (get_interview_guide_download)
+              LOAD_CONST               1 (None)
+              RETURN_VALUE
+
+Disassembly of <code object __annotate__ at 0x000002016E074330, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 737>:
+737           RESUME                   0
+              LOAD_FAST_BORROW         0 (format)
+              LOAD_SMALL_INT           2
+              COMPARE_OP             132 (>)
+              POP_JUMP_IF_FALSE        3 (to L1)
+              NOT_TAKEN
+              LOAD_COMMON_CONSTANT     1 (NotImplementedError)
+              RAISE_VARARGS            1
+      L1:     LOAD_CONST               1 ('text')
+              LOAD_GLOBAL              0 (str)
+              LOAD_CONST               2 ('return')
+              LOAD_GLOBAL              0 (str)
+              BUILD_MAP                2
+              RETURN_VALUE
+
+Disassembly of <code object _escape_rtf at 0x000002016DDDD7C0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 737>:
+737           RESUME                   0
+
+738           BUILD_LIST               0
+              STORE_FAST               1 (out)
+
+739           LOAD_FAST_BORROW         0 (text)
+              GET_ITER
+      L1:     FOR_ITER               101 (to L4)
+              STORE_FAST               2 (char)
+
+740           LOAD_FAST_BORROW         2 (char)
+              LOAD_CONST               0 ('\\{}')
+              CONTAINS_OP              0 (in)
+              POP_JUMP_IF_FALSE       27 (to L2)
+              NOT_TAKEN
+
+741           LOAD_FAST_BORROW         1 (out)
+              LOAD_ATTR                1 (append + NULL|self)
+              LOAD_CONST               1 ('\\')
+              LOAD_FAST_BORROW         2 (char)
+              BINARY_OP                0 (+)
+              CALL                     1
+              POP_TOP
+              JUMP_BACKWARD           36 (to L1)
+
+742   L2:     LOAD_GLOBAL              3 (ord + NULL)
+              LOAD_FAST_BORROW         2 (char)
+              CALL                     1
+              LOAD_SMALL_INT         127
+              COMPARE_OP             148 (bool(>))
+              POP_JUMP_IF_FALSE       33 (to L3)
+              NOT_TAKEN
+
+743           LOAD_FAST_BORROW         1 (out)
+              LOAD_ATTR                1 (append + NULL|self)
+              LOAD_CONST               2 ('\\u')
+              LOAD_GLOBAL              3 (ord + NULL)
+              LOAD_FAST_BORROW         2 (char)
+              CALL                     1
+              FORMAT_SIMPLE
+              LOAD_CONST               3 ('?')
+              BUILD_STRING             3
+              CALL                     1
+              POP_TOP
+              JUMP_BACKWARD           84 (to L1)
+
+745   L3:     LOAD_FAST_BORROW         1 (out)
+              LOAD_ATTR                1 (append + NULL|self)
+              LOAD_FAST_BORROW         2 (char)
+              CALL                     1
+              POP_TOP
+              JUMP_BACKWARD          103 (to L1)
+
+739   L4:     END_FOR
+              POP_ITER
+
+746           LOAD_CONST               4 ('')
+              LOAD_ATTR                5 (join + NULL|self)
+              LOAD_FAST_BORROW         1 (out)
+              CALL                     1
+              RETURN_VALUE
+
+Disassembly of <code object __annotate__ at 0x000002016E077030, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 749>:
+749           RESUME                   0
+              LOAD_FAST_BORROW         0 (format)
+              LOAD_SMALL_INT           2
+              COMPARE_OP             132 (>)
+              POP_JUMP_IF_FALSE        3 (to L1)
+              NOT_TAKEN
+              LOAD_COMMON_CONSTANT     1 (NotImplementedError)
+              RAISE_VARARGS            1
+      L1:     LOAD_CONST               1 ('text')
+              LOAD_GLOBAL              0 (str)
+              LOAD_CONST               2 ('return')
+              LOAD_GLOBAL              2 (bytes)
+              BUILD_MAP                2
+              RETURN_VALUE
+
+Disassembly of <code object _create_rtf_from_text at 0x000002016E20C4C0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 749>:
+749           RESUME                   0
+
+750           LOAD_FAST_BORROW         0 (text)
+              LOAD_ATTR                1 (split + NULL|self)
+              LOAD_CONST               0 ('\n')
+              CALL                     1
+              STORE_FAST               1 (lines)
+
+751           BUILD_LIST               0
+              LOAD_CONST              14 (('{\\rtf1\\ansi\\deff0', '{\\fonttbl{\\f0\\fswiss\\fcharset0 Arial;}{\\f1\\fmodern\\fcharset0 Courier New;}}', '{\\colortbl ;\\red15\\green23\\blue42;\\red56\\green189\\blue248;\\red100\\green116\\blue139;}', '\\margl1440\\margr1440\\margt1440\\margb1440', '\\viewkind4\\uc1\\pard\\f0\\fs20'))
+              LIST_EXTEND              1
+              STORE_FAST               2 (rtf_lines)
+
+758           LOAD_FAST_BORROW         1 (lines)
+              GET_ITER
+      L1:     EXTENDED_ARG             1
+              FOR_ITER               385 (to L7)
+              STORE_FAST               3 (line)
+
+759           LOAD_FAST_BORROW         3 (line)
+              LOAD_ATTR                3 (strip + NULL|self)
+              CALL                     0
+              STORE_FAST               4 (stripped)
+
+760           LOAD_FAST_BORROW         4 (stripped)
+              TO_BOOL
+              POP_JUMP_IF_TRUE        20 (to L2)
+              NOT_TAKEN
+
+761           LOAD_FAST_BORROW         2 (rtf_lines)
+              LOAD_ATTR                5 (append + NULL|self)
+              LOAD_CONST               1 ('\\par')
+              CALL                     1
+              POP_TOP
+              JUMP_BACKWARD           47 (to L1)
+
+762   L2:     LOAD_FAST_BORROW         4 (stripped)
+              LOAD_ATTR                7 (isupper + NULL|self)
+              CALL                     0
+              TO_BOOL
+              POP_JUMP_IF_FALSE       82 (to L3)
+              NOT_TAKEN
+              LOAD_GLOBAL              9 (len + NULL)
+              LOAD_FAST_BORROW         4 (stripped)
+              CALL                     1
+              LOAD_SMALL_INT          40
+              COMPARE_OP              18 (bool(<))
+              POP_JUMP_IF_FALSE       66 (to L3)
+              NOT_TAKEN
+              LOAD_FAST_BORROW         4 (stripped)
+              LOAD_ATTR               11 (startswith + NULL|self)
+              LOAD_CONST               2 ('─')
+              CALL                     1
+              TO_BOOL
+              POP_JUMP_IF_TRUE        43 (to L3)
+              NOT_TAKEN
+
+763           LOAD_FAST_BORROW         2 (rtf_lines)
+              LOAD_ATTR                5 (append + NULL|self)
+              LOAD_CONST               3 ('\\par\\b\\fs26 ')
+              LOAD_GLOBAL             13 (_escape_rtf + NULL)
+              LOAD_FAST_BORROW         4 (stripped)
+              CALL                     1
+              BINARY_OP                0 (+)
+              LOAD_CONST               4 ('\\b0\\fs20\\par')
+              BINARY_OP                0 (+)
+              CALL                     1
+              POP_TOP
+              JUMP_BACKWARD          150 (to L1)
+
+764   L3:     LOAD_FAST_BORROW         4 (stripped)
+              LOAD_ATTR               11 (startswith + NULL|self)
+              LOAD_CONST               2 ('─')
+              CALL                     1
+              TO_BOOL
+              POP_JUMP_IF_FALSE       20 (to L4)
+              NOT_TAKEN
+
+765           LOAD_FAST_BORROW         2 (rtf_lines)
+              LOAD_ATTR                5 (append + NULL|self)
+              LOAD_CONST               5 ('{\\cf3 ──────────────────────────────────────────────────────────────}\\par')
+              CALL                     1
+              POP_TOP
+              JUMP_BACKWARD          192 (to L1)
+
+766   L4:     LOAD_CONST               6 (' | ')
+              LOAD_FAST_BORROW         4 (stripped)
+              CONTAINS_OP              0 (in)
+              POP_JUMP_IF_FALSE       67 (to L5)
+              NOT_TAKEN
+              LOAD_FAST_BORROW         4 (stripped)
+              LOAD_ATTR               11 (startswith + NULL|self)
+              LOAD_CONST               7 ('•')
+              CALL                     1
+              TO_BOOL
+              POP_JUMP_IF_TRUE        44 (to L5)
+              NOT_TAKEN
+
+767           LOAD_FAST_BORROW         2 (rtf_lines)
+              LOAD_ATTR                5 (append + NULL|self)
+              LOAD_CONST               8 ('\\b ')
+              LOAD_GLOBAL             13 (_escape_rtf + NULL)
+              LOAD_FAST_BORROW         4 (stripped)
+              CALL                     1
+              BINARY_OP                0 (+)
+              LOAD_CONST               9 ('\\b0\\par')
+              BINARY_OP                0 (+)
+              CALL                     1
+              POP_TOP
+              EXTENDED_ARG             1
+              JUMP_BACKWARD          265 (to L1)
+
+768   L5:     LOAD_FAST_BORROW         4 (stripped)
+              LOAD_ATTR               11 (startswith + NULL|self)
+              LOAD_CONST               7 ('•')
+              CALL                     1
+              TO_BOOL
+              POP_JUMP_IF_FALSE       65 (to L6)
+              NOT_TAKEN
+
+769           LOAD_FAST_BORROW         2 (rtf_lines)
+              LOAD_ATTR                5 (append + NULL|self)
+              LOAD_CONST              10 ('\\bullet  ')
+              LOAD_GLOBAL             13 (_escape_rtf + NULL)
+              LOAD_FAST_BORROW         4 (stripped)
+              LOAD_CONST              11 (slice(1, None, None))
+              BINARY_OP               26 ([])
+              LOAD_ATTR                3 (strip + NULL|self)
+              CALL                     0
+              CALL                     1
+              BINARY_OP                0 (+)
+              LOAD_CONST               1 ('\\par')
+              BINARY_OP                0 (+)
+              CALL                     1
+              POP_TOP
+              EXTENDED_ARG             1
+              JUMP_BACKWARD          352 (to L1)
+
+771   L6:     LOAD_FAST_BORROW         2 (rtf_lines)
+              LOAD_ATTR                5 (append + NULL|self)
+              LOAD_GLOBAL             13 (_escape_rtf + NULL)
+              LOAD_FAST_BORROW         4 (stripped)
+              CALL                     1
+              LOAD_CONST               1 ('\\par')
+              BINARY_OP                0 (+)
+              CALL                     1
+              POP_TOP
+              EXTENDED_ARG             1
+              JUMP_BACKWARD          388 (to L1)
+
+758   L7:     END_FOR
+              POP_ITER
+
+772           LOAD_FAST_BORROW         2 (rtf_lines)
+              LOAD_ATTR                5 (append + NULL|self)
+              LOAD_CONST              12 ('}')
+              CALL                     1
+              POP_TOP
+
+773           LOAD_CONST               0 ('\n')
+              LOAD_ATTR               15 (join + NULL|self)
+              LOAD_FAST_BORROW         2 (rtf_lines)
+              CALL                     1
+              LOAD_ATTR               17 (encode + NULL|self)
+              LOAD_CONST              13 ('utf-8')
+              CALL                     1
+              RETURN_VALUE
+
+Disassembly of <code object __annotate__ at 0x000002016E099570, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 776>:
+776           RESUME                   0
+              LOAD_FAST_BORROW         0 (format)
+              LOAD_SMALL_INT           2
+              COMPARE_OP             132 (>)
+              POP_JUMP_IF_FALSE        3 (to L1)
+              NOT_TAKEN
+              LOAD_COMMON_CONSTANT     1 (NotImplementedError)
+              RAISE_VARARGS            1
+      L1:     LOAD_CONST               1 ('template_id')
+              LOAD_GLOBAL              0 (str)
+              LOAD_CONST               2 ('file_format')
+              LOAD_GLOBAL              0 (str)
+              LOAD_CONST               3 ('return')
+              LOAD_GLOBAL              2 (tuple)
+              LOAD_GLOBAL              4 (bytes)
+              LOAD_GLOBAL              0 (str)
+              LOAD_GLOBAL              0 (str)
+              BUILD_TUPLE              3
+              BINARY_OP               26 ([])
+              BUILD_MAP                3
+              RETURN_VALUE
+
+Disassembly of <code object get_resume_download at 0x000002016E22D890, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 776>:
+ 776            RESUME                   0
+
+ 777            LOAD_FAST_BORROW         0 (template_id)
+                LOAD_CONST               0 ('bundle')
+                COMPARE_OP              88 (bool(==))
+                EXTENDED_ARG             1
+                POP_JUMP_IF_FALSE      258 (to L6)
+                NOT_TAKEN
+
+ 778            LOAD_GLOBAL              0 (io)
+                LOAD_ATTR                2 (BytesIO)
+                PUSH_NULL
+                CALL                     0
+                STORE_FAST               2 (buffer)
+
+ 779            LOAD_GLOBAL              4 (zipfile)
+                LOAD_ATTR                6 (ZipFile)
+                PUSH_NULL
+                LOAD_FAST_BORROW         2 (buffer)
+                LOAD_CONST               1 ('w')
+                LOAD_GLOBAL              4 (zipfile)
+                LOAD_ATTR                8 (ZIP_DEFLATED)
+                CALL                     3
+                COPY                     1
+                LOAD_SPECIAL             1 (__exit__)
+                SWAP                     2
+                SWAP                     3
+                LOAD_SPECIAL             0 (__enter__)
+                CALL                     0
+        L1:     STORE_FAST               3 (zf)
+
+ 781            LOAD_CONST               2 ('WorkWise Career Hub — ATS Resume Blueprint 2026 Bundle\n====================================================\n\nIncluded Templates:\n1. Software Engineer & Cloud Architect (.rtf / Word & .txt)\n2. UI/UX & Product Designer (.rtf / Word & .txt)\n3. Engineering Manager & Tech Lead (.rtf / Word & .txt)\n\nATS 2026 Golden Rules:\n- Keep margins between 0.5 and 1.0 inch.\n- Use standard font hierarchies (Arial, Calibri, Helvetica).\n- Avoid tables, multi-column text boxes, and complex graphics in parsing regions.\n- Use the Google formula for bullet points: Accomplished [X], measured by [Y], by doing [Z].\n')
+
+ 780            STORE_FAST               4 (readme)
+
+ 793            LOAD_FAST_BORROW         3 (zf)
+                LOAD_ATTR               11 (writestr + NULL|self)
+                LOAD_CONST               3 ('README_ATS_2026_GUIDE.txt')
+                LOAD_FAST_BORROW         4 (readme)
+                CALL                     2
+                POP_TOP
+
+ 794            LOAD_GLOBAL             12 (RESUME_TEMPLATES)
+                LOAD_ATTR               15 (items + NULL|self)
+                CALL                     0
+                GET_ITER
+        L2:     FOR_ITER               101 (to L3)
+                UNPACK_SEQUENCE          2
+                STORE_FAST_STORE_FAST   86 (key, tpl)
+
+ 795            LOAD_GLOBAL             17 (_create_rtf_from_text + NULL)
+                LOAD_FAST_BORROW         6 (tpl)
+                LOAD_CONST               4 ('text_content')
+                BINARY_OP               26 ([])
+                CALL                     1
+                STORE_FAST               7 (rtf_bytes)
+
+ 796            LOAD_FAST_BORROW         3 (zf)
+                LOAD_ATTR               11 (writestr + NULL|self)
+                LOAD_FAST_BORROW         6 (tpl)
+                LOAD_CONST               5 ('filename_prefix')
+                BINARY_OP               26 ([])
+                FORMAT_SIMPLE
+                LOAD_CONST               6 ('.doc')
+                BUILD_STRING             2
+                LOAD_FAST_BORROW         7 (rtf_bytes)
+                CALL                     2
+                POP_TOP
+
+ 797            LOAD_FAST_BORROW         3 (zf)
+                LOAD_ATTR               11 (writestr + NULL|self)
+                LOAD_FAST_BORROW         6 (tpl)
+                LOAD_CONST               5 ('filename_prefix')
+                BINARY_OP               26 ([])
+                FORMAT_SIMPLE
+                LOAD_CONST               7 ('.txt')
+                BUILD_STRING             2
+                LOAD_FAST_BORROW         6 (tpl)
+                LOAD_CONST               4 ('text_content')
+                BINARY_OP               26 ([])
+                LOAD_ATTR               19 (encode + NULL|self)
+                LOAD_CONST               8 ('utf-8')
+                CALL                     1
+                CALL                     2
+                POP_TOP
+                JUMP_BACKWARD          103 (to L2)
+
+ 794    L3:     END_FOR
+                POP_ITER
+
+ 779    L4:     LOAD_CONST               9 (None)
+                LOAD_CONST               9 (None)
+                LOAD_CONST               9 (None)
+                CALL                     3
+                POP_TOP
+
+ 798    L5:     LOAD_FAST_BORROW         2 (buffer)
+                LOAD_ATTR               21 (seek + NULL|self)
+                LOAD_SMALL_INT           0
+                CALL                     1
+                POP_TOP
+
+ 800            LOAD_FAST_BORROW         2 (buffer)
+                LOAD_ATTR               23 (getvalue + NULL|self)
+                CALL                     0
+
+ 801            LOAD_CONST              10 ('WorkWise_2026_ATS_Resume_Blueprint_Complete_Bundle.zip')
+
+ 802            LOAD_CONST              11 ('application/zip')
+
+ 799            BUILD_TUPLE              3
+                RETURN_VALUE
+
+ 805    L6:     LOAD_GLOBAL             12 (RESUME_TEMPLATES)
+                LOAD_ATTR               25 (get + NULL|self)
+                LOAD_FAST_BORROW         0 (template_id)
+                LOAD_GLOBAL             12 (RESUME_TEMPLATES)
+                LOAD_CONST              12 ('tech')
+                BINARY_OP               26 ([])
+                CALL                     2
+                STORE_FAST               8 (template)
+
+ 806            LOAD_FAST_BORROW         1 (file_format)
+                LOAD_CONST              13 ('txt')
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_FALSE       38 (to L7)
+                NOT_TAKEN
+
+ 808            LOAD_FAST_BORROW         8 (template)
+                LOAD_CONST               4 ('text_content')
+                BINARY_OP               26 ([])
+                LOAD_ATTR               19 (encode + NULL|self)
+                LOAD_CONST               8 ('utf-8')
+                CALL                     1
+
+ 809            LOAD_FAST_BORROW         8 (template)
+                LOAD_CONST               5 ('filename_prefix')
+                BINARY_OP               26 ([])
+                FORMAT_SIMPLE
+                LOAD_CONST               7 ('.txt')
+                BUILD_STRING             2
+
+ 810            LOAD_CONST              14 ('text/plain; charset=utf-8')
+
+ 807            BUILD_TUPLE              3
+                RETURN_VALUE
+
+ 812    L7:     LOAD_GLOBAL             17 (_create_rtf_from_text + NULL)
+                LOAD_FAST_BORROW         8 (template)
+                LOAD_CONST               4 ('text_content')
+                BINARY_OP               26 ([])
+                CALL                     1
+                STORE_FAST               9 (content)
+
+ 814            LOAD_FAST_BORROW         9 (content)
+
+ 815            LOAD_FAST_BORROW         8 (template)
+                LOAD_CONST               5 ('filename_prefix')
+                BINARY_OP               26 ([])
+                FORMAT_SIMPLE
+                LOAD_CONST               6 ('.doc')
+                BUILD_STRING             2
+
+ 816            LOAD_CONST              15 ('application/msword')
+
+ 813            BUILD_TUPLE              3
+                RETURN_VALUE
+
+ 779    L8:     PUSH_EXC_INFO
+                WITH_EXCEPT_START
+                TO_BOOL
+                POP_JUMP_IF_TRUE         2 (to L9)
+                NOT_TAKEN
+                RERAISE                  2
+        L9:     POP_TOP
+       L10:     POP_EXCEPT
+                POP_TOP
+                POP_TOP
+                POP_TOP
+                JUMP_BACKWARD_NO_INTERRUPT 162 (to L5)
+
+  --   L11:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+ExceptionTable:
+  L1 to L4 -> L8 [2] lasti
+  L8 to L10 -> L11 [4] lasti
+
+Disassembly of <code object __annotate__ at 0x000002016E095470, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 820>:
+820           RESUME                   0
+              LOAD_FAST_BORROW         0 (format)
+              LOAD_SMALL_INT           2
+              COMPARE_OP             132 (>)
+              POP_JUMP_IF_FALSE        3 (to L1)
+              NOT_TAKEN
+              LOAD_COMMON_CONSTANT     1 (NotImplementedError)
+              RAISE_VARARGS            1
+      L1:     LOAD_CONST               1 ('return')
+              LOAD_GLOBAL              0 (tuple)
+              LOAD_GLOBAL              2 (bytes)
+              LOAD_GLOBAL              4 (str)
+              LOAD_GLOBAL              4 (str)
+              BUILD_TUPLE              3
+              BINARY_OP               26 ([])
+              BUILD_MAP                1
+              RETURN_VALUE
+
+Disassembly of <code object get_interview_guide_download at 0x000002016E1FC0C0, file "C:\Users\USER\OneDrive\Desktop\Xean\Job Appilication (test)\core\career_resources.py", line 820>:
+820           RESUME                   0
+
+821           BUILD_LIST               0
+              LOAD_CONST              27 (('================================================================================', 'WORKWISE CAREER HUB — 2026 INTERVIEW MASTERY HANDBOOK', 'Ace Behavioral, System Design, Live Technical & Negotiation Rounds', '================================================================================\n'))
+              LIST_EXTEND              1
+              STORE_FAST               0 (lines)
+
+827           LOAD_GLOBAL              0 (INTERVIEW_CATEGORIES)
+              GET_ITER
+      L1:     EXTENDED_ARG             1
+              FOR_ITER               389 (to L8)
+              STORE_FAST               1 (cat)
+
+828           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST               1 ('\n')
+              LOAD_CONST              26 ('================================================================================')
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+829           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST               2 ('SECTION: ')
+              LOAD_FAST_BORROW         1 (cat)
+              LOAD_CONST               3 ('name')
+              BINARY_OP               26 ([])
+              LOAD_ATTR                5 (upper + NULL|self)
+              CALL                     0
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+830           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST               4 ('Description: ')
+              LOAD_FAST_BORROW         1 (cat)
+              LOAD_CONST               5 ('description')
+              BINARY_OP               26 ([])
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+831           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST              26 ('================================================================================')
+              FORMAT_SIMPLE
+              LOAD_CONST               1 ('\n')
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+832           LOAD_GLOBAL              7 (enumerate + NULL)
+              LOAD_FAST_BORROW         1 (cat)
+              LOAD_CONST               6 ('questions')
+              BINARY_OP               26 ([])
+              LOAD_SMALL_INT           1
+              LOAD_CONST               7 (('start',))
+              CALL_KW                  2
+              GET_ITER
+      L2:     FOR_ITER               253 (to L7)
+              UNPACK_SEQUENCE          2
+              STORE_FAST_STORE_FAST   35 (idx, q)
+
+833           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST               8 ('Q')
+              LOAD_FAST_BORROW         2 (idx)
+              FORMAT_SIMPLE
+              LOAD_CONST               9 ('. ')
+              LOAD_FAST_BORROW         3 (q)
+              LOAD_CONST              10 ('title')
+              BINARY_OP               26 ([])
+              FORMAT_SIMPLE
+              BUILD_STRING             4
+              CALL                     1
+              POP_TOP
+
+834           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST              11 ('Prompt: "')
+              LOAD_FAST_BORROW         3 (q)
+              LOAD_CONST              12 ('question')
+              BINARY_OP               26 ([])
+              FORMAT_SIMPLE
+              LOAD_CONST              13 ('"')
+              BUILD_STRING             3
+              CALL                     1
+              POP_TOP
+
+835           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST              14 ('What Assessors Look For: ')
+              LOAD_FAST_BORROW         3 (q)
+              LOAD_CONST              15 ('assessor_lookout')
+              BINARY_OP               26 ([])
+              FORMAT_SIMPLE
+              LOAD_CONST               1 ('\n')
+              BUILD_STRING             3
+              CALL                     1
+              POP_TOP
+
+836           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST              16 ('MODEL ANSWER BREAKDOWN:')
+              CALL                     1
+              POP_TOP
+
+837           LOAD_FAST_BORROW         3 (q)
+              LOAD_CONST              17 ('star_breakdown')
+              BINARY_OP               26 ([])
+              LOAD_ATTR                9 (items + NULL|self)
+              CALL                     0
+              GET_ITER
+      L3:     FOR_ITER                70 (to L6)
+              UNPACK_SEQUENCE          2
+              STORE_FAST_STORE_FAST   69 (step, detail)
+
+838           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST              18 ('  [')
+              LOAD_FAST_BORROW         4 (step)
+              FORMAT_SIMPLE
+              LOAD_CONST              19 (']:')
+              BUILD_STRING             3
+              CALL                     1
+              POP_TOP
+
+839           LOAD_FAST_BORROW         5 (detail)
+              LOAD_ATTR               11 (split + NULL|self)
+              LOAD_CONST               1 ('\n')
+              CALL                     1
+              GET_ITER
+      L4:     FOR_ITER                23 (to L5)
+              STORE_FAST               6 (subline)
+
+840           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST              20 ('    ')
+              LOAD_FAST_BORROW         6 (subline)
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+              JUMP_BACKWARD           25 (to L4)
+
+839   L5:     END_FOR
+              POP_ITER
+              JUMP_BACKWARD           72 (to L3)
+
+837   L6:     END_FOR
+              POP_ITER
+
+841           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST              21 ('\nPRO-TIP: ')
+              LOAD_FAST_BORROW         3 (q)
+              LOAD_CONST              22 ('pro_tip')
+              BINARY_OP               26 ([])
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+842           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST               1 ('\n')
+              LOAD_CONST              28 ('--------------------------------------------------------------------------------')
+              FORMAT_SIMPLE
+              LOAD_CONST               1 ('\n')
+              BUILD_STRING             3
+              CALL                     1
+              POP_TOP
+              JUMP_BACKWARD          255 (to L2)
+
+832   L7:     END_FOR
+              POP_ITER
+              EXTENDED_ARG             1
+              JUMP_BACKWARD          392 (to L1)
+
+827   L8:     END_FOR
+              POP_ITER
+
+843           LOAD_CONST               1 ('\n')
+              LOAD_ATTR               13 (join + NULL|self)
+              LOAD_FAST_BORROW         0 (lines)
+              CALL                     1
+              LOAD_ATTR               15 (encode + NULL|self)
+              LOAD_CONST              23 ('utf-8')
+              CALL                     1
+              STORE_FAST               7 (content)
+
+845           LOAD_FAST_BORROW         7 (content)
+
+846           LOAD_CONST              24 ('WorkWise_2026_Interview_Mastery_Complete_Guide.txt')
+
+847           LOAD_CONST              25 ('text/plain; charset=utf-8')
+
+844           BUILD_TUPLE              3
+              RETURN_VALUE
+
+=== CHILD CODE OBJECT: __annotate__ ===
+co_consts:
+  [0]: 2
+  [1]: 'text'
+  [2]: 'return'
+co_names:
+  [0]: str
+co_varnames:
+  [0]: format
+737           RESUME                   0
+              LOAD_FAST_BORROW         0 (format)
+              LOAD_SMALL_INT           2
+              COMPARE_OP             132 (>)
+              POP_JUMP_IF_FALSE        3 (to L1)
+              NOT_TAKEN
+              LOAD_COMMON_CONSTANT     1 (NotImplementedError)
+              RAISE_VARARGS            1
+      L1:     LOAD_CONST               1 ('text')
+              LOAD_GLOBAL              0 (str)
+              LOAD_CONST               2 ('return')
+              LOAD_GLOBAL              0 (str)
+              BUILD_MAP                2
+              RETURN_VALUE
+
+=== CHILD CODE OBJECT: _escape_rtf ===
+co_consts:
+  [0]: '\\{}'
+  [1]: '\\'
+  [2]: '\\u'
+  [3]: '?'
+  [4]: ''
+co_names:
+  [0]: append
+  [1]: ord
+  [2]: join
+co_varnames:
+  [0]: text
+  [1]: out
+  [2]: char
+737           RESUME                   0
+
+738           BUILD_LIST               0
+              STORE_FAST               1 (out)
+
+739           LOAD_FAST_BORROW         0 (text)
+              GET_ITER
+      L1:     FOR_ITER               101 (to L4)
+              STORE_FAST               2 (char)
+
+740           LOAD_FAST_BORROW         2 (char)
+              LOAD_CONST               0 ('\\{}')
+              CONTAINS_OP              0 (in)
+              POP_JUMP_IF_FALSE       27 (to L2)
+              NOT_TAKEN
+
+741           LOAD_FAST_BORROW         1 (out)
+              LOAD_ATTR                1 (append + NULL|self)
+              LOAD_CONST               1 ('\\')
+              LOAD_FAST_BORROW         2 (char)
+              BINARY_OP                0 (+)
+              CALL                     1
+              POP_TOP
+              JUMP_BACKWARD           36 (to L1)
+
+742   L2:     LOAD_GLOBAL              3 (ord + NULL)
+              LOAD_FAST_BORROW         2 (char)
+              CALL                     1
+              LOAD_SMALL_INT         127
+              COMPARE_OP             148 (bool(>))
+              POP_JUMP_IF_FALSE       33 (to L3)
+              NOT_TAKEN
+
+743           LOAD_FAST_BORROW         1 (out)
+              LOAD_ATTR                1 (append + NULL|self)
+              LOAD_CONST               2 ('\\u')
+              LOAD_GLOBAL              3 (ord + NULL)
+              LOAD_FAST_BORROW         2 (char)
+              CALL                     1
+              FORMAT_SIMPLE
+              LOAD_CONST               3 ('?')
+              BUILD_STRING             3
+              CALL                     1
+              POP_TOP
+              JUMP_BACKWARD           84 (to L1)
+
+745   L3:     LOAD_FAST_BORROW         1 (out)
+              LOAD_ATTR                1 (append + NULL|self)
+              LOAD_FAST_BORROW         2 (char)
+              CALL                     1
+              POP_TOP
+              JUMP_BACKWARD          103 (to L1)
+
+739   L4:     END_FOR
+              POP_ITER
+
+746           LOAD_CONST               4 ('')
+              LOAD_ATTR                5 (join + NULL|self)
+              LOAD_FAST_BORROW         1 (out)
+              CALL                     1
+              RETURN_VALUE
+
+=== CHILD CODE OBJECT: __annotate__ ===
+co_consts:
+  [0]: 2
+  [1]: 'text'
+  [2]: 'return'
+co_names:
+  [0]: str
+  [1]: bytes
+co_varnames:
+  [0]: format
+749           RESUME                   0
+              LOAD_FAST_BORROW         0 (format)
+              LOAD_SMALL_INT           2
+              COMPARE_OP             132 (>)
+              POP_JUMP_IF_FALSE        3 (to L1)
+              NOT_TAKEN
+              LOAD_COMMON_CONSTANT     1 (NotImplementedError)
+              RAISE_VARARGS            1
+      L1:     LOAD_CONST               1 ('text')
+              LOAD_GLOBAL              0 (str)
+              LOAD_CONST               2 ('return')
+              LOAD_GLOBAL              2 (bytes)
+              BUILD_MAP                2
+              RETURN_VALUE
+
+=== CHILD CODE OBJECT: _create_rtf_from_text ===
+co_consts:
+  [0]: '\n'
+  [1]: '\\par'
+  [2]: '─'
+  [3]: '\\par\\b\\fs26 '
+  [4]: '\\b0\\fs20\\par'
+  [5]: '{\\cf3 ──────────────────────────────────────────────────────────────}\\par'
+  [6]: ' | '
+  [7]: '•'
+  [8]: '\\b '
+  [9]: '\\b0\\par'
+  [10]: '\\bullet  '
+  [11]: slice(1, None, None)
+  [12]: '}'
+  [13]: 'utf-8'
+  [14]: ('{\\rtf1\\ansi\\deff0', '{\\fonttbl{\\f0\\fswiss\\fcharset0 Arial;}{\\f1\\fmodern\\fcharset0 Courier New;}}', '{\\colortbl ;\\red15\\green23\\blue42;\\red56\\green189\\blue248;\\red100\\green116\\blue139;}', '\\margl1440\\margr1440\\margt1440\\margb1440', '\\viewkind4\\uc1\\pard\\f0\\fs20')
+co_names:
+  [0]: split
+  [1]: strip
+  [2]: append
+  [3]: isupper
+  [4]: len
+  [5]: startswith
+  [6]: _escape_rtf
+  [7]: join
+  [8]: encode
+co_varnames:
+  [0]: text
+  [1]: lines
+  [2]: rtf_lines
+  [3]: line
+  [4]: stripped
+749           RESUME                   0
+
+750           LOAD_FAST_BORROW         0 (text)
+              LOAD_ATTR                1 (split + NULL|self)
+              LOAD_CONST               0 ('\n')
+              CALL                     1
+              STORE_FAST               1 (lines)
+
+751           BUILD_LIST               0
+              LOAD_CONST              14 (('{\\rtf1\\ansi\\deff0', '{\\fonttbl{\\f0\\fswiss\\fcharset0 Arial;}{\\f1\\fmodern\\fcharset0 Courier New;}}', '{\\colortbl ;\\red15\\green23\\blue42;\\red56\\green189\\blue248;\\red100\\green116\\blue139;}', '\\margl1440\\margr1440\\margt1440\\margb1440', '\\viewkind4\\uc1\\pard\\f0\\fs20'))
+              LIST_EXTEND              1
+              STORE_FAST               2 (rtf_lines)
+
+758           LOAD_FAST_BORROW         1 (lines)
+              GET_ITER
+      L1:     EXTENDED_ARG             1
+              FOR_ITER               385 (to L7)
+              STORE_FAST               3 (line)
+
+759           LOAD_FAST_BORROW         3 (line)
+              LOAD_ATTR                3 (strip + NULL|self)
+              CALL                     0
+              STORE_FAST               4 (stripped)
+
+760           LOAD_FAST_BORROW         4 (stripped)
+              TO_BOOL
+              POP_JUMP_IF_TRUE        20 (to L2)
+              NOT_TAKEN
+
+761           LOAD_FAST_BORROW         2 (rtf_lines)
+              LOAD_ATTR                5 (append + NULL|self)
+              LOAD_CONST               1 ('\\par')
+              CALL                     1
+              POP_TOP
+              JUMP_BACKWARD           47 (to L1)
+
+762   L2:     LOAD_FAST_BORROW         4 (stripped)
+              LOAD_ATTR                7 (isupper + NULL|self)
+              CALL                     0
+              TO_BOOL
+              POP_JUMP_IF_FALSE       82 (to L3)
+              NOT_TAKEN
+              LOAD_GLOBAL              9 (len + NULL)
+              LOAD_FAST_BORROW         4 (stripped)
+              CALL                     1
+              LOAD_SMALL_INT          40
+              COMPARE_OP              18 (bool(<))
+              POP_JUMP_IF_FALSE       66 (to L3)
+              NOT_TAKEN
+              LOAD_FAST_BORROW         4 (stripped)
+              LOAD_ATTR               11 (startswith + NULL|self)
+              LOAD_CONST               2 ('─')
+              CALL                     1
+              TO_BOOL
+              POP_JUMP_IF_TRUE        43 (to L3)
+              NOT_TAKEN
+
+763           LOAD_FAST_BORROW         2 (rtf_lines)
+              LOAD_ATTR                5 (append + NULL|self)
+              LOAD_CONST               3 ('\\par\\b\\fs26 ')
+              LOAD_GLOBAL             13 (_escape_rtf + NULL)
+              LOAD_FAST_BORROW         4 (stripped)
+              CALL                     1
+              BINARY_OP                0 (+)
+              LOAD_CONST               4 ('\\b0\\fs20\\par')
+              BINARY_OP                0 (+)
+              CALL                     1
+              POP_TOP
+              JUMP_BACKWARD          150 (to L1)
+
+764   L3:     LOAD_FAST_BORROW         4 (stripped)
+              LOAD_ATTR               11 (startswith + NULL|self)
+              LOAD_CONST               2 ('─')
+              CALL                     1
+              TO_BOOL
+              POP_JUMP_IF_FALSE       20 (to L4)
+              NOT_TAKEN
+
+765           LOAD_FAST_BORROW         2 (rtf_lines)
+              LOAD_ATTR                5 (append + NULL|self)
+              LOAD_CONST               5 ('{\\cf3 ──────────────────────────────────────────────────────────────}\\par')
+              CALL                     1
+              POP_TOP
+              JUMP_BACKWARD          192 (to L1)
+
+766   L4:     LOAD_CONST               6 (' | ')
+              LOAD_FAST_BORROW         4 (stripped)
+              CONTAINS_OP              0 (in)
+              POP_JUMP_IF_FALSE       67 (to L5)
+              NOT_TAKEN
+              LOAD_FAST_BORROW         4 (stripped)
+              LOAD_ATTR               11 (startswith + NULL|self)
+              LOAD_CONST               7 ('•')
+              CALL                     1
+              TO_BOOL
+              POP_JUMP_IF_TRUE        44 (to L5)
+              NOT_TAKEN
+
+767           LOAD_FAST_BORROW         2 (rtf_lines)
+              LOAD_ATTR                5 (append + NULL|self)
+              LOAD_CONST               8 ('\\b ')
+              LOAD_GLOBAL             13 (_escape_rtf + NULL)
+              LOAD_FAST_BORROW         4 (stripped)
+              CALL                     1
+              BINARY_OP                0 (+)
+              LOAD_CONST               9 ('\\b0\\par')
+              BINARY_OP                0 (+)
+              CALL                     1
+              POP_TOP
+              EXTENDED_ARG             1
+              JUMP_BACKWARD          265 (to L1)
+
+768   L5:     LOAD_FAST_BORROW         4 (stripped)
+              LOAD_ATTR               11 (startswith + NULL|self)
+              LOAD_CONST               7 ('•')
+              CALL                     1
+              TO_BOOL
+              POP_JUMP_IF_FALSE       65 (to L6)
+              NOT_TAKEN
+
+769           LOAD_FAST_BORROW         2 (rtf_lines)
+              LOAD_ATTR                5 (append + NULL|self)
+              LOAD_CONST              10 ('\\bullet  ')
+              LOAD_GLOBAL             13 (_escape_rtf + NULL)
+              LOAD_FAST_BORROW         4 (stripped)
+              LOAD_CONST              11 (slice(1, None, None))
+              BINARY_OP               26 ([])
+              LOAD_ATTR                3 (strip + NULL|self)
+              CALL                     0
+              CALL                     1
+              BINARY_OP                0 (+)
+              LOAD_CONST               1 ('\\par')
+              BINARY_OP                0 (+)
+              CALL                     1
+              POP_TOP
+              EXTENDED_ARG             1
+              JUMP_BACKWARD          352 (to L1)
+
+771   L6:     LOAD_FAST_BORROW         2 (rtf_lines)
+              LOAD_ATTR                5 (append + NULL|self)
+              LOAD_GLOBAL             13 (_escape_rtf + NULL)
+              LOAD_FAST_BORROW         4 (stripped)
+              CALL                     1
+              LOAD_CONST               1 ('\\par')
+              BINARY_OP                0 (+)
+              CALL                     1
+              POP_TOP
+              EXTENDED_ARG             1
+              JUMP_BACKWARD          388 (to L1)
+
+758   L7:     END_FOR
+              POP_ITER
+
+772           LOAD_FAST_BORROW         2 (rtf_lines)
+              LOAD_ATTR                5 (append + NULL|self)
+              LOAD_CONST              12 ('}')
+              CALL                     1
+              POP_TOP
+
+773           LOAD_CONST               0 ('\n')
+              LOAD_ATTR               15 (join + NULL|self)
+              LOAD_FAST_BORROW         2 (rtf_lines)
+              CALL                     1
+              LOAD_ATTR               17 (encode + NULL|self)
+              LOAD_CONST              13 ('utf-8')
+              CALL                     1
+              RETURN_VALUE
+
+=== CHILD CODE OBJECT: __annotate__ ===
+co_consts:
+  [0]: 2
+  [1]: 'template_id'
+  [2]: 'file_format'
+  [3]: 'return'
+co_names:
+  [0]: str
+  [1]: tuple
+  [2]: bytes
+co_varnames:
+  [0]: format
+776           RESUME                   0
+              LOAD_FAST_BORROW         0 (format)
+              LOAD_SMALL_INT           2
+              COMPARE_OP             132 (>)
+              POP_JUMP_IF_FALSE        3 (to L1)
+              NOT_TAKEN
+              LOAD_COMMON_CONSTANT     1 (NotImplementedError)
+              RAISE_VARARGS            1
+      L1:     LOAD_CONST               1 ('template_id')
+              LOAD_GLOBAL              0 (str)
+              LOAD_CONST               2 ('file_format')
+              LOAD_GLOBAL              0 (str)
+              LOAD_CONST               3 ('return')
+              LOAD_GLOBAL              2 (tuple)
+              LOAD_GLOBAL              4 (bytes)
+              LOAD_GLOBAL              0 (str)
+              LOAD_GLOBAL              0 (str)
+              BUILD_TUPLE              3
+              BINARY_OP               26 ([])
+              BUILD_MAP                3
+              RETURN_VALUE
+
+=== CHILD CODE OBJECT: get_resume_download ===
+co_consts:
+  [0]: 'bundle'
+  [1]: 'w'
+  [2]: 'WorkWise Career Hub — ATS Resume Blueprint 2026 Bundle\n====================================================\n\nIncluded Templates:\n1. Software Engineer & Cloud Architect (.rtf / Word & .txt)\n2. UI/UX & Product Designer (.rtf / Word & .txt)\n3. Engineering Manager & Tech Lead (.rtf / Word & .txt)
+  [3]: 'README_ATS_2026_GUIDE.txt'
+  [4]: 'text_content'
+  [5]: 'filename_prefix'
+  [6]: '.doc'
+  [7]: '.txt'
+  [8]: 'utf-8'
+  [9]: None
+  [10]: 'WorkWise_2026_ATS_Resume_Blueprint_Complete_Bundle.zip'
+  [11]: 'application/zip'
+  [12]: 'tech'
+  [13]: 'txt'
+  [14]: 'text/plain; charset=utf-8'
+  [15]: 'application/msword'
+co_names:
+  [0]: io
+  [1]: BytesIO
+  [2]: zipfile
+  [3]: ZipFile
+  [4]: ZIP_DEFLATED
+  [5]: writestr
+  [6]: RESUME_TEMPLATES
+  [7]: items
+  [8]: _create_rtf_from_text
+  [9]: encode
+  [10]: seek
+  [11]: getvalue
+  [12]: get
+co_varnames:
+  [0]: template_id
+  [1]: file_format
+  [2]: buffer
+  [3]: zf
+  [4]: readme
+  [5]: key
+  [6]: tpl
+  [7]: rtf_bytes
+  [8]: template
+  [9]: content
+ 776            RESUME                   0
+
+ 777            LOAD_FAST_BORROW         0 (template_id)
+                LOAD_CONST               0 ('bundle')
+                COMPARE_OP              88 (bool(==))
+                EXTENDED_ARG             1
+                POP_JUMP_IF_FALSE      258 (to L6)
+                NOT_TAKEN
+
+ 778            LOAD_GLOBAL              0 (io)
+                LOAD_ATTR                2 (BytesIO)
+                PUSH_NULL
+                CALL                     0
+                STORE_FAST               2 (buffer)
+
+ 779            LOAD_GLOBAL              4 (zipfile)
+                LOAD_ATTR                6 (ZipFile)
+                PUSH_NULL
+                LOAD_FAST_BORROW         2 (buffer)
+                LOAD_CONST               1 ('w')
+                LOAD_GLOBAL              4 (zipfile)
+                LOAD_ATTR                8 (ZIP_DEFLATED)
+                CALL                     3
+                COPY                     1
+                LOAD_SPECIAL             1 (__exit__)
+                SWAP                     2
+                SWAP                     3
+                LOAD_SPECIAL             0 (__enter__)
+                CALL                     0
+        L1:     STORE_FAST               3 (zf)
+
+ 781            LOAD_CONST               2 ('WorkWise Career Hub — ATS Resume Blueprint 2026 Bundle\n====================================================\n\nIncluded Templates:\n1. Software Engineer & Cloud Architect (.rtf / Word & .txt)\n2. UI/UX & Product Designer (.rtf / Word & .txt)\n3. Engineering Manager & Tech Lead (.rtf / Word & .txt)\n\nATS 2026 Golden Rules:\n- Keep margins between 0.5 and 1.0 inch.\n- Use standard font hierarchies (Arial, Calibri, Helvetica).\n- Avoid tables, multi-column text boxes, and complex graphics in parsing regions.\n- Use the Google formula for bullet points: Accomplished [X], measured by [Y], by doing [Z].\n')
+
+ 780            STORE_FAST               4 (readme)
+
+ 793            LOAD_FAST_BORROW         3 (zf)
+                LOAD_ATTR               11 (writestr + NULL|self)
+                LOAD_CONST               3 ('README_ATS_2026_GUIDE.txt')
+                LOAD_FAST_BORROW         4 (readme)
+                CALL                     2
+                POP_TOP
+
+ 794            LOAD_GLOBAL             12 (RESUME_TEMPLATES)
+                LOAD_ATTR               15 (items + NULL|self)
+                CALL                     0
+                GET_ITER
+        L2:     FOR_ITER               101 (to L3)
+                UNPACK_SEQUENCE          2
+                STORE_FAST_STORE_FAST   86 (key, tpl)
+
+ 795            LOAD_GLOBAL             17 (_create_rtf_from_text + NULL)
+                LOAD_FAST_BORROW         6 (tpl)
+                LOAD_CONST               4 ('text_content')
+                BINARY_OP               26 ([])
+                CALL                     1
+                STORE_FAST               7 (rtf_bytes)
+
+ 796            LOAD_FAST_BORROW         3 (zf)
+                LOAD_ATTR               11 (writestr + NULL|self)
+                LOAD_FAST_BORROW         6 (tpl)
+                LOAD_CONST               5 ('filename_prefix')
+                BINARY_OP               26 ([])
+                FORMAT_SIMPLE
+                LOAD_CONST               6 ('.doc')
+                BUILD_STRING             2
+                LOAD_FAST_BORROW         7 (rtf_bytes)
+                CALL                     2
+                POP_TOP
+
+ 797            LOAD_FAST_BORROW         3 (zf)
+                LOAD_ATTR               11 (writestr + NULL|self)
+                LOAD_FAST_BORROW         6 (tpl)
+                LOAD_CONST               5 ('filename_prefix')
+                BINARY_OP               26 ([])
+                FORMAT_SIMPLE
+                LOAD_CONST               7 ('.txt')
+                BUILD_STRING             2
+                LOAD_FAST_BORROW         6 (tpl)
+                LOAD_CONST               4 ('text_content')
+                BINARY_OP               26 ([])
+                LOAD_ATTR               19 (encode + NULL|self)
+                LOAD_CONST               8 ('utf-8')
+                CALL                     1
+                CALL                     2
+                POP_TOP
+                JUMP_BACKWARD          103 (to L2)
+
+ 794    L3:     END_FOR
+                POP_ITER
+
+ 779    L4:     LOAD_CONST               9 (None)
+                LOAD_CONST               9 (None)
+                LOAD_CONST               9 (None)
+                CALL                     3
+                POP_TOP
+
+ 798    L5:     LOAD_FAST_BORROW         2 (buffer)
+                LOAD_ATTR               21 (seek + NULL|self)
+                LOAD_SMALL_INT           0
+                CALL                     1
+                POP_TOP
+
+ 800            LOAD_FAST_BORROW         2 (buffer)
+                LOAD_ATTR               23 (getvalue + NULL|self)
+                CALL                     0
+
+ 801            LOAD_CONST              10 ('WorkWise_2026_ATS_Resume_Blueprint_Complete_Bundle.zip')
+
+ 802            LOAD_CONST              11 ('application/zip')
+
+ 799            BUILD_TUPLE              3
+                RETURN_VALUE
+
+ 805    L6:     LOAD_GLOBAL             12 (RESUME_TEMPLATES)
+                LOAD_ATTR               25 (get + NULL|self)
+                LOAD_FAST_BORROW         0 (template_id)
+                LOAD_GLOBAL             12 (RESUME_TEMPLATES)
+                LOAD_CONST              12 ('tech')
+                BINARY_OP               26 ([])
+                CALL                     2
+                STORE_FAST               8 (template)
+
+ 806            LOAD_FAST_BORROW         1 (file_format)
+                LOAD_CONST              13 ('txt')
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_FALSE       38 (to L7)
+                NOT_TAKEN
+
+ 808            LOAD_FAST_BORROW         8 (template)
+                LOAD_CONST               4 ('text_content')
+                BINARY_OP               26 ([])
+                LOAD_ATTR               19 (encode + NULL|self)
+                LOAD_CONST               8 ('utf-8')
+                CALL                     1
+
+ 809            LOAD_FAST_BORROW         8 (template)
+                LOAD_CONST               5 ('filename_prefix')
+                BINARY_OP               26 ([])
+                FORMAT_SIMPLE
+                LOAD_CONST               7 ('.txt')
+                BUILD_STRING             2
+
+ 810            LOAD_CONST              14 ('text/plain; charset=utf-8')
+
+ 807            BUILD_TUPLE              3
+                RETURN_VALUE
+
+ 812    L7:     LOAD_GLOBAL             17 (_create_rtf_from_text + NULL)
+                LOAD_FAST_BORROW         8 (template)
+                LOAD_CONST               4 ('text_content')
+                BINARY_OP               26 ([])
+                CALL                     1
+                STORE_FAST               9 (content)
+
+ 814            LOAD_FAST_BORROW         9 (content)
+
+ 815            LOAD_FAST_BORROW         8 (template)
+                LOAD_CONST               5 ('filename_prefix')
+                BINARY_OP               26 ([])
+                FORMAT_SIMPLE
+                LOAD_CONST               6 ('.doc')
+                BUILD_STRING             2
+
+ 816            LOAD_CONST              15 ('application/msword')
+
+ 813            BUILD_TUPLE              3
+                RETURN_VALUE
+
+ 779    L8:     PUSH_EXC_INFO
+                WITH_EXCEPT_START
+                TO_BOOL
+                POP_JUMP_IF_TRUE         2 (to L9)
+                NOT_TAKEN
+                RERAISE                  2
+        L9:     POP_TOP
+       L10:     POP_EXCEPT
+                POP_TOP
+                POP_TOP
+                POP_TOP
+                JUMP_BACKWARD_NO_INTERRUPT 162 (to L5)
+
+  --   L11:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+ExceptionTable:
+  L1 to L4 -> L8 [2] lasti
+  L8 to L10 -> L11 [4] lasti
+
+=== CHILD CODE OBJECT: __annotate__ ===
+co_consts:
+  [0]: 2
+  [1]: 'return'
+co_names:
+  [0]: tuple
+  [1]: bytes
+  [2]: str
+co_varnames:
+  [0]: format
+820           RESUME                   0
+              LOAD_FAST_BORROW         0 (format)
+              LOAD_SMALL_INT           2
+              COMPARE_OP             132 (>)
+              POP_JUMP_IF_FALSE        3 (to L1)
+              NOT_TAKEN
+              LOAD_COMMON_CONSTANT     1 (NotImplementedError)
+              RAISE_VARARGS            1
+      L1:     LOAD_CONST               1 ('return')
+              LOAD_GLOBAL              0 (tuple)
+              LOAD_GLOBAL              2 (bytes)
+              LOAD_GLOBAL              4 (str)
+              LOAD_GLOBAL              4 (str)
+              BUILD_TUPLE              3
+              BINARY_OP               26 ([])
+              BUILD_MAP                1
+              RETURN_VALUE
+
+=== CHILD CODE OBJECT: get_interview_guide_download ===
+co_consts:
+  [0]: '='
+  [1]: '\n'
+  [2]: 'SECTION: '
+  [3]: 'name'
+  [4]: 'Description: '
+  [5]: 'description'
+  [6]: 'questions'
+  [7]: ('start',)
+  [8]: 'Q'
+  [9]: '. '
+  [10]: 'title'
+  [11]: 'Prompt: "'
+  [12]: 'question'
+  [13]: '"'
+  [14]: 'What Assessors Look For: '
+  [15]: 'assessor_lookout'
+  [16]: 'MODEL ANSWER BREAKDOWN:'
+  [17]: 'star_breakdown'
+  [18]: '  ['
+  [19]: ']:'
+  [20]: '    '
+  [21]: '\nPRO-TIP: '
+  [22]: 'pro_tip'
+  [23]: 'utf-8'
+  [24]: 'WorkWise_2026_Interview_Mastery_Complete_Guide.txt'
+  [25]: 'text/plain; charset=utf-8'
+  [26]: '================================================================================'
+  [27]: ('================================================================================', 'WORKWISE CAREER HUB — 2026 INTERVIEW MASTERY HANDBOOK', 'Ace Behavioral, System Design, Live Technical & Negotiation Rounds', '================================================================================\n')
+  [28]: '--------------------------------------------------------------------------------'
+co_names:
+  [0]: INTERVIEW_CATEGORIES
+  [1]: append
+  [2]: upper
+  [3]: enumerate
+  [4]: items
+  [5]: split
+  [6]: join
+  [7]: encode
+co_varnames:
+  [0]: lines
+  [1]: cat
+  [2]: idx
+  [3]: q
+  [4]: step
+  [5]: detail
+  [6]: subline
+  [7]: content
+820           RESUME                   0
+
+821           BUILD_LIST               0
+              LOAD_CONST              27 (('================================================================================', 'WORKWISE CAREER HUB — 2026 INTERVIEW MASTERY HANDBOOK', 'Ace Behavioral, System Design, Live Technical & Negotiation Rounds', '================================================================================\n'))
+              LIST_EXTEND              1
+              STORE_FAST               0 (lines)
+
+827           LOAD_GLOBAL              0 (INTERVIEW_CATEGORIES)
+              GET_ITER
+      L1:     EXTENDED_ARG             1
+              FOR_ITER               389 (to L8)
+              STORE_FAST               1 (cat)
+
+828           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST               1 ('\n')
+              LOAD_CONST              26 ('================================================================================')
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+829           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST               2 ('SECTION: ')
+              LOAD_FAST_BORROW         1 (cat)
+              LOAD_CONST               3 ('name')
+              BINARY_OP               26 ([])
+              LOAD_ATTR                5 (upper + NULL|self)
+              CALL                     0
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+830           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST               4 ('Description: ')
+              LOAD_FAST_BORROW         1 (cat)
+              LOAD_CONST               5 ('description')
+              BINARY_OP               26 ([])
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+831           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST              26 ('================================================================================')
+              FORMAT_SIMPLE
+              LOAD_CONST               1 ('\n')
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+832           LOAD_GLOBAL              7 (enumerate + NULL)
+              LOAD_FAST_BORROW         1 (cat)
+              LOAD_CONST               6 ('questions')
+              BINARY_OP               26 ([])
+              LOAD_SMALL_INT           1
+              LOAD_CONST               7 (('start',))
+              CALL_KW                  2
+              GET_ITER
+      L2:     FOR_ITER               253 (to L7)
+              UNPACK_SEQUENCE          2
+              STORE_FAST_STORE_FAST   35 (idx, q)
+
+833           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST               8 ('Q')
+              LOAD_FAST_BORROW         2 (idx)
+              FORMAT_SIMPLE
+              LOAD_CONST               9 ('. ')
+              LOAD_FAST_BORROW         3 (q)
+              LOAD_CONST              10 ('title')
+              BINARY_OP               26 ([])
+              FORMAT_SIMPLE
+              BUILD_STRING             4
+              CALL                     1
+              POP_TOP
+
+834           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST              11 ('Prompt: "')
+              LOAD_FAST_BORROW         3 (q)
+              LOAD_CONST              12 ('question')
+              BINARY_OP               26 ([])
+              FORMAT_SIMPLE
+              LOAD_CONST              13 ('"')
+              BUILD_STRING             3
+              CALL                     1
+              POP_TOP
+
+835           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST              14 ('What Assessors Look For: ')
+              LOAD_FAST_BORROW         3 (q)
+              LOAD_CONST              15 ('assessor_lookout')
+              BINARY_OP               26 ([])
+              FORMAT_SIMPLE
+              LOAD_CONST               1 ('\n')
+              BUILD_STRING             3
+              CALL                     1
+              POP_TOP
+
+836           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST              16 ('MODEL ANSWER BREAKDOWN:')
+              CALL                     1
+              POP_TOP
+
+837           LOAD_FAST_BORROW         3 (q)
+              LOAD_CONST              17 ('star_breakdown')
+              BINARY_OP               26 ([])
+              LOAD_ATTR                9 (items + NULL|self)
+              CALL                     0
+              GET_ITER
+      L3:     FOR_ITER                70 (to L6)
+              UNPACK_SEQUENCE          2
+              STORE_FAST_STORE_FAST   69 (step, detail)
+
+838           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST              18 ('  [')
+              LOAD_FAST_BORROW         4 (step)
+              FORMAT_SIMPLE
+              LOAD_CONST              19 (']:')
+              BUILD_STRING             3
+              CALL                     1
+              POP_TOP
+
+839           LOAD_FAST_BORROW         5 (detail)
+              LOAD_ATTR               11 (split + NULL|self)
+              LOAD_CONST               1 ('\n')
+              CALL                     1
+              GET_ITER
+      L4:     FOR_ITER                23 (to L5)
+              STORE_FAST               6 (subline)
+
+840           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST              20 ('    ')
+              LOAD_FAST_BORROW         6 (subline)
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+              JUMP_BACKWARD           25 (to L4)
+
+839   L5:     END_FOR
+              POP_ITER
+              JUMP_BACKWARD           72 (to L3)
+
+837   L6:     END_FOR
+              POP_ITER
+
+841           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST              21 ('\nPRO-TIP: ')
+              LOAD_FAST_BORROW         3 (q)
+              LOAD_CONST              22 ('pro_tip')
+              BINARY_OP               26 ([])
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+842           LOAD_FAST_BORROW         0 (lines)
+              LOAD_ATTR                3 (append + NULL|self)
+              LOAD_CONST               1 ('\n')
+              LOAD_CONST              28 ('--------------------------------------------------------------------------------')
+              FORMAT_SIMPLE
+              LOAD_CONST               1 ('\n')
+              BUILD_STRING             3
+              CALL                     1
+              POP_TOP
+              JUMP_BACKWARD          255 (to L2)
+
+832   L7:     END_FOR
+              POP_ITER
+              EXTENDED_ARG             1
+              JUMP_BACKWARD          392 (to L1)
+
+827   L8:     END_FOR
+              POP_ITER
+
+843           LOAD_CONST               1 ('\n')
+              LOAD_ATTR               13 (join + NULL|self)
+              LOAD_FAST_BORROW         0 (lines)
+              CALL                     1
+              LOAD_ATTR               15 (encode + NULL|self)
+              LOAD_CONST              23 ('utf-8')
+              CALL                     1
+              STORE_FAST               7 (content)
+
+845           LOAD_FAST_BORROW         7 (content)
+
+846           LOAD_CONST              24 ('WorkWise_2026_Interview_Mastery_Complete_Guide.txt')
+
+847           LOAD_CONST              25 ('text/plain; charset=utf-8')
+
+844           BUILD_TUPLE              3
+              RETURN_VALUE
